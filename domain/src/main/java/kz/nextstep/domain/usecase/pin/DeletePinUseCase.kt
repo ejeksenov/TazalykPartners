@@ -10,8 +10,8 @@ import rx.Scheduler
 class DeletePinUseCase(val pinRepository: PinRepository,
                        @NonNull mainScheduler: Scheduler,
                        @NonNull ioScheduler: Scheduler
-): BaseUseCase<Boolean>(mainScheduler, ioScheduler) {
-    override fun buildUseCaseObservable(params: String, pin: Pin): Observable<Boolean> {
+): BaseUseCase<Boolean, String, String>(mainScheduler, ioScheduler) {
+    override fun buildUseCaseObservable(params: String, param2: String): Observable<Boolean> {
         return pinRepository.deletePin(params)
     }
 }

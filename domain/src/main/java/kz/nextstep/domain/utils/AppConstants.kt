@@ -7,7 +7,7 @@ object AppConstants{
     const val userTree = "Users_new"
     const val requestsTree = "Requests"
     const val userPartnerTree = "UserPartner"
-    val emptyPin = Pin("",
+    /*val emptyPin = Pin("",
         "",
         "",
         "",
@@ -21,6 +21,6 @@ object AppConstants{
         "",
         "",
         "",
-        "")
+        "")*/
     const val emptyParam = ""
 }

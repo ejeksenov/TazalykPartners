@@ -3,11 +3,16 @@ package kz.nextstep.tazalykpartners.di
 import dagger.Module
 import dagger.Provides
 import kz.nextstep.domain.PinRepository
+import kz.nextstep.domain.repository.UserPartnerRepository
 import kz.nextstep.domain.repository.UserRepository
-import kz.nextstep.domain.usecase.AddPinUseCase
-import kz.nextstep.domain.usecase.GetPinListUseCase
-import kz.nextstep.domain.usecase.GetPinUseCase
-import kz.nextstep.domain.usecase.UpdatePinDataUseCase
+import kz.nextstep.domain.usecase.partner.GetCurrentUserPartnerUseCase
+import kz.nextstep.domain.usecase.partner.GetUserPartnerByIdUseCase
+import kz.nextstep.domain.usecase.partner.GetUserPartnerIdUseCase
+import kz.nextstep.domain.usecase.partner.SignInWithEmailAndPasswordUseCase
+import kz.nextstep.domain.usecase.pin.AddPinUseCase
+import kz.nextstep.domain.usecase.pin.GetPinListUseCase
+import kz.nextstep.domain.usecase.pin.GetPinUseCase
+import kz.nextstep.domain.usecase.pin.UpdatePinDataUseCase
 import kz.nextstep.domain.usecase.pin.DeletePinUseCase
 import kz.nextstep.domain.usecase.user.GetUserByIdUseCase
 import kz.nextstep.domain.usecase.user.GetUserListByIdsUseCase
@@ -59,6 +64,7 @@ class DomainModule {
 
 
     //Providing User use cases
+    @Provides
     fun provideGetUserByIdUseCase(
         userRepository: UserRepository,
         @Named(RxModule.MAIN) mainScheduler: Scheduler,
@@ -66,10 +72,38 @@ class DomainModule {
     ) = GetUserByIdUseCase(userRepository, mainScheduler, ioScheduler)
 
 
+    @Provides
     fun provideGetUserListByIdsUseCase(
         userRepository: UserRepository,
         @Named(RxModule.MAIN) mainScheduler: Scheduler,
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = GetUserListByIdsUseCase(userRepository, mainScheduler, ioScheduler)
 
+
+    //Providing User partner use cases
+    @Provides
+    fun provideGetCurrentUserPartnerUseCase(
+        userPartnerRepository: UserPartnerRepository
+    ) = GetCurrentUserPartnerUseCase(userPartnerRepository)
+
+    @Provides
+    fun provideGetUserPartnerByIdUseCase(
+        userPartnerRepository: UserPartnerRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = GetUserPartnerByIdUseCase(userPartnerRepository, mainScheduler, ioScheduler)
+
+
+    @Provides
+    fun provideGetUserPartnerIdUseCase(
+        userPartnerRepository: UserPartnerRepository
+    ) = GetUserPartnerIdUseCase(userPartnerRepository)
+
+
+    @Provides
+    fun provideSignInWithEmailAndPasswordUseCase(
+        userPartnerRepository: UserPartnerRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = SignInWithEmailAndPasswordUseCase(userPartnerRepository, mainScheduler, ioScheduler)
 }

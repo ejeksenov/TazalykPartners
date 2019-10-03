@@ -12,7 +12,7 @@ import kz.nextstep.tazalykpartners.base.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var getPinByIdViewModel: GetPinByIdViewModel
+    lateinit var addPinViewModel: AddPinViewModel
     lateinit var mainApplication: MainApplication
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,14 +23,12 @@ class MainActivity : AppCompatActivity() {
 
        // mainApplication.getApplicationComponent().inject(this)
 
-        getPinByIdViewModel = ViewModelProviders.of(this, ViewModelFactory(mainApplication)).get(GetPinByIdViewModel::class.java)
+        addPinViewModel = ViewModelProviders.of(this, ViewModelFactory(mainApplication)).get(AddPinViewModel::class.java)
 
-        getPinByIdViewModel.bound(
-            "-LlH9lF07EgGbG2S8PfH"
-        )
+        addPinViewModel.bound()
 
 
-        getPinByIdViewModel.mutabLiveData.observe(this, Observer {
+        addPinViewModel.message.observe(this, Observer {
             anyText.text = it
         })
 

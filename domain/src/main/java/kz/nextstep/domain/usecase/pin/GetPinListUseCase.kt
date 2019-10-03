@@ -1,16 +1,17 @@
-package kz.nextstep.domain.usecase
+package kz.nextstep.domain.usecase.pin
 
 import io.reactivex.annotations.NonNull
 import kz.nextstep.domain.PinRepository
 import kz.nextstep.domain.model.Pin
+import kz.nextstep.domain.usecase.BaseUseCase
 import rx.Observable
 import rx.Scheduler
 
 class GetPinListUseCase(val pinRepository: PinRepository,
                         @NonNull mainScheduler: Scheduler,
                         @NonNull ioScheduler: Scheduler
-): BaseUseCase<List<Pin>>(mainScheduler, ioScheduler) {
-    override fun buildUseCaseObservable(params: String, pin: Pin): Observable<List<Pin>> {
+): BaseUseCase<List<Pin>, String, String>(mainScheduler, ioScheduler) {
+    override fun buildUseCaseObservable(params: String, param2: String): Observable<List<Pin>> {
         return pinRepository.getPinList(params)
     }
 

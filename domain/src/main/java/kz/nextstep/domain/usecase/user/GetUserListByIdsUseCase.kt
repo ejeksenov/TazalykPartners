@@ -12,8 +12,8 @@ class GetUserListByIdsUseCase(
     private val userRepository: UserRepository,
     @NonNull mainScheduler: Scheduler,
     @NonNull ioScheduler: Scheduler
-): BaseUseCase<List<User>>(mainScheduler, ioScheduler) {
-    override fun buildUseCaseObservable(params: String, pin: Pin): Observable<List<User>> {
+): BaseUseCase<List<User>, String, String>(mainScheduler, ioScheduler) {
+    override fun buildUseCaseObservable(params: String, param2: String): Observable<List<User>> {
         return userRepository.getUserListByIds(params)
     }
 }

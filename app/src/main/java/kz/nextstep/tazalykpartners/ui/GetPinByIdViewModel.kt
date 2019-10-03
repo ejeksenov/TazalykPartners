@@ -2,7 +2,7 @@ package kz.nextstep.tazalykpartners.ui
 
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.Pin
-import kz.nextstep.domain.usecase.GetPinUseCase
+import kz.nextstep.domain.usecase.pin.GetPinUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
@@ -32,6 +32,6 @@ class GetPinByIdViewModel(mainApplication: MainApplication): BaseViewModel(mainA
                 }
 
             }
-        , pinId, AppConstants.emptyPin)
+        , pinId, AppConstants.emptyParam)
     }
 }
