@@ -9,13 +9,16 @@ import kz.nextstep.domain.repository.UserRepository
 import kz.nextstep.domain.utils.AppConstants
 import rx.Observable
 import rx.subscriptions.Subscriptions
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class UserRepositoryImpl(val userMapper: UserMapper) : UserRepository {
 
     private var databaseReference: DatabaseReference =
         FirebaseDatabase.getInstance().reference.child(AppConstants.userTree)
 
-    override fun getUserById(userId: String): Observable<User> {
+    override fun getUserById(userId: String): Observable<HashMap<String,User>> {
         return Observable.create {
             val valueEventListener = object : ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -23,10 +26,12 @@ class UserRepositoryImpl(val userMapper: UserMapper) : UserRepository {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val userHashMap: HashMap<String,User> = HashMap()
                     for (ds in dataSnapshot.children) {
                         if (ds != null) {
                             val userEntity = ds.getValue(UserEntity::class.java)
-                            it.onNext(userMapper.map(userEntity!!))
+                            userHashMap[ds.key!!] = userMapper.map(userEntity!!)
+                            it.onNext(userHashMap)
                         }
                     }
                 }
@@ -40,7 +45,7 @@ class UserRepositoryImpl(val userMapper: UserMapper) : UserRepository {
         }
     }
 
-    override fun getUserListByIds(userIds: String): Observable<List<User>> {
+    override fun getUserListByIds(userIds: String): Observable<HashMap<String,User>> {
         return Observable.create {
             val valueEventListener = object : ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -48,14 +53,14 @@ class UserRepositoryImpl(val userMapper: UserMapper) : UserRepository {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val userList: ArrayList<User>? = ArrayList()
+                    val userHashMap: HashMap<String,User> = HashMap()
                     for (ds in dataSnapshot.children) {
                         if (ds != null && userIds.contains(ds.key.toString())) {
                             val userEntity = ds.getValue(UserEntity::class.java)
-                            userList?.add(userMapper.map(userEntity!!))
+                            userHashMap[ds.key!!] = userMapper.map(userEntity!!)
                         }
                     }
-                    it.onNext(userList)
+                    it.onNext(userHashMap)
                 }
 
             }

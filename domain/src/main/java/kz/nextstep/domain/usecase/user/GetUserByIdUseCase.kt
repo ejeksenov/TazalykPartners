@@ -13,8 +13,8 @@ class GetUserByIdUseCase(
     private val userRepository: UserRepository,
     @NonNull mainScheduler: Scheduler,
     @NonNull ioScheduler: Scheduler
-): BaseUseCase<User, String, String>(mainScheduler, ioScheduler) {
-    override fun buildUseCaseObservable(params: String, param2: String): Observable<User> {
+): BaseUseCase<HashMap<String,User>, String, String>(mainScheduler, ioScheduler) {
+    override fun buildUseCaseObservable(params: String, param2: String): Observable<HashMap<String,User>> {
         return userRepository.getUserById(params)
     }
 }

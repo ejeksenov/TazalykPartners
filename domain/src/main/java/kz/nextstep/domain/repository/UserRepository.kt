@@ -4,6 +4,6 @@ import kz.nextstep.domain.model.User
 import rx.Observable
 
 interface UserRepository {
-    fun getUserById(userId: String): Observable<User>
-    fun getUserListByIds(userIds: String): Observable<List<User>>
+    fun getUserById(userId: String): Observable<HashMap<String,User>>
+    fun getUserListByIds(userIds: String): Observable<HashMap<String,User>>
 }

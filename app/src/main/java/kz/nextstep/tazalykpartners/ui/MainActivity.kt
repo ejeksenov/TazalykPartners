@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         addPinViewModel = ViewModelProviders.of(this, ViewModelFactory(mainApplication)).get(AddPinViewModel::class.java)
 
-        addPinViewModel.bound()
+        addPinViewModel.bound("-LlGw_rESobK_UGiX3y5")
 
 
         addPinViewModel.message.observe(this, Observer {

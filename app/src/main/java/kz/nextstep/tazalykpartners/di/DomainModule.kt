@@ -3,6 +3,7 @@ package kz.nextstep.tazalykpartners.di
 import dagger.Module
 import dagger.Provides
 import kz.nextstep.domain.PinRepository
+import kz.nextstep.domain.repository.RequestRepository
 import kz.nextstep.domain.repository.UserPartnerRepository
 import kz.nextstep.domain.repository.UserRepository
 import kz.nextstep.domain.usecase.partner.GetCurrentUserPartnerUseCase
@@ -14,6 +15,7 @@ import kz.nextstep.domain.usecase.pin.GetPinListUseCase
 import kz.nextstep.domain.usecase.pin.GetPinUseCase
 import kz.nextstep.domain.usecase.pin.UpdatePinDataUseCase
 import kz.nextstep.domain.usecase.pin.DeletePinUseCase
+import kz.nextstep.domain.usecase.request.GetRequestsByPinIdUseCase
 import kz.nextstep.domain.usecase.user.GetUserByIdUseCase
 import kz.nextstep.domain.usecase.user.GetUserListByIdsUseCase
 import rx.Scheduler
@@ -106,4 +108,11 @@ class DomainModule {
         @Named(RxModule.MAIN) mainScheduler: Scheduler,
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = SignInWithEmailAndPasswordUseCase(userPartnerRepository, mainScheduler, ioScheduler)
+
+    @Provides
+    fun provideGetRequestsByPinIdUseCase(
+        requestRepository: RequestRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = GetRequestsByPinIdUseCase(requestRepository, mainScheduler, ioScheduler)
 }

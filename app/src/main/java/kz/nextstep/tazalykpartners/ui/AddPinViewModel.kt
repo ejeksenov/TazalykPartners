@@ -2,8 +2,10 @@ package kz.nextstep.tazalykpartners.ui
 
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.Pin
+import kz.nextstep.domain.model.Requests
 import kz.nextstep.domain.usecase.partner.GetCurrentUserPartnerUseCase
 import kz.nextstep.domain.usecase.pin.AddPinUseCase
+import kz.nextstep.domain.usecase.request.GetRequestsByPinIdUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
@@ -42,11 +44,29 @@ class AddPinViewModel(mainApplication: MainApplication) : BaseViewModel(mainAppl
 
 
     @Inject
-    lateinit var getCurrentUserPartnerUseCase: GetCurrentUserPartnerUseCase
+    lateinit var getRequestsByPinIdUseCase: GetRequestsByPinIdUseCase
     var message = MutableLiveData<String>()
 
-    fun bound() {
-        message.value = getCurrentUserPartnerUseCase.execute().toString()
+    fun bound(params: String) {
+        getRequestsByPinIdUseCase.execute(object : Subscriber<HashMap<String, Requests>>() {
+            override fun onNext(t: HashMap<String, Requests>?) {
+                var anyString = ""
+                for (key in t?.keys!!) {
+                    val requests = t[key]
+                    anyString += requests?.address_city + ", "
+                }
+                message.value = anyString
+            }
+
+            override fun onCompleted() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onError(e: Throwable?) {
+                message.value = e?.message
+            }
+
+        }, params, AppConstants.emptyParam)
     }
 
 

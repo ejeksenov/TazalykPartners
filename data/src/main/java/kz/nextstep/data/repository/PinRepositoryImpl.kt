@@ -57,19 +57,19 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
         }
     }
 
-    override fun getPinList(pinIds: String): Observable<List<Pin>> {
+    override fun getPinList(pinIds: String): Observable<HashMap<String, Pin>> {
         return Observable.create {
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val pinList: ArrayList<Pin>? = ArrayList()
+                    val pinHashMap: HashMap<String, Pin> = HashMap()
                     for (ds in dataSnapshot.children) {
                         val pinEntity = ds.getValue(PinEntity::class.java)
                         if (pinIds in ds.key.toString()) {
                             val pin = pinMapper.map(pinEntity!!)
-                            pinList?.add(pin)
+                            pinHashMap[ds.key!!] = pin
                         }
                     }
-                    it.onNext(pinList)
+                    it.onNext(pinHashMap)
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -85,7 +85,7 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
     }
 
 
-    override fun getPinById(pinId: String): Observable<Pin> {
+    override fun getPinById(pinId: String): Observable<HashMap<String,Pin>> {
         return Observable.create {
             val valueEventListener = object : ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -93,10 +93,12 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val pinHashMap: HashMap<String, Pin> = HashMap()
                     for (ds in dataSnapshot.children) {
                         if (ds != null) {
                             val pinEntity = ds.getValue(PinEntity::class.java)
-                            it.onNext(pinMapper.map(pinEntity!!))
+                            pinHashMap[ds.key!!] = pinMapper.map(pinEntity!!)
+                            it.onNext(pinHashMap)
                         }
                     }
                 }

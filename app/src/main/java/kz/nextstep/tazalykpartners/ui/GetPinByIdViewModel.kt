@@ -18,9 +18,9 @@ class GetPinByIdViewModel(mainApplication: MainApplication): BaseViewModel(mainA
 
     fun bound(pinId: String) {
         getPinUseCase.execute(
-            object : Subscriber<Pin>() {
-                override fun onNext(t: Pin?) {
-                    mutabLiveData.value = t?.address
+            object : Subscriber<HashMap<String,Pin>>() {
+                override fun onNext(t: HashMap<String, Pin>?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
                 override fun onCompleted() {

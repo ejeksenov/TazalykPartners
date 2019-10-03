@@ -10,8 +10,8 @@ import rx.Scheduler
 class GetPinUseCase(val pinRepository: PinRepository,
                     @NonNull mainScheduler: Scheduler,
                     @NonNull ioScheduler: Scheduler
-): BaseUseCase<Pin, String, String>(mainScheduler, ioScheduler) {
-    override fun buildUseCaseObservable(params: String, param2: String): Observable<Pin> {
+): BaseUseCase<HashMap<String,Pin>, String, String>(mainScheduler, ioScheduler) {
+    override fun buildUseCaseObservable(params: String, param2: String): Observable<HashMap<String,Pin>> {
         return pinRepository.getPinById(params)
     }
 }

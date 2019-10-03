@@ -5,15 +5,19 @@ import dagger.Module
 import dagger.Provides
 import kz.nextstep.data.FirebaseHelper
 import kz.nextstep.data.mapper.PinMapper
+import kz.nextstep.data.mapper.RequestsMapper
 import kz.nextstep.data.mapper.UserMapper
 import kz.nextstep.data.mapper.UserPartnerMapper
 import kz.nextstep.data.repository.PinRepositoryImpl
+import kz.nextstep.data.repository.RequestsRepositoryImpl
 import kz.nextstep.data.repository.UserPartnerRepositoryImpl
 import kz.nextstep.data.repository.UserRepositoryImpl
 import kz.nextstep.domain.PinRepository
 import kz.nextstep.domain.model.Pin
+import kz.nextstep.domain.model.Requests
 import kz.nextstep.domain.model.User
 import kz.nextstep.domain.model.UserPartner
+import kz.nextstep.domain.repository.RequestRepository
 import kz.nextstep.domain.repository.UserPartnerRepository
 import kz.nextstep.domain.repository.UserRepository
 import kz.nextstep.tazalykpartners.MainApplication
@@ -45,6 +49,11 @@ class DataModule(private val mainApplication: MainApplication) {
     }
 
     @Provides
+    fun provideRequestMapper(): RequestsMapper {
+        return RequestsMapper
+    }
+
+    @Provides
     fun provideFirebaseHelper(): FirebaseHelper {
         return FirebaseHelper
     }
@@ -57,11 +66,11 @@ class DataModule(private val mainApplication: MainApplication) {
             return PinRepositoryImpl(pinMapper)
         else {
             return object : PinRepository {
-                override fun getPinList(pinIds: String): Observable<List<Pin>> {
+                override fun getPinList(pinIds: String): Observable<HashMap<String,Pin>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 
-                override fun getPinById(pinId: String): Observable<Pin> {
+                override fun getPinById(pinId: String): Observable<HashMap<String,Pin>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 
@@ -88,11 +97,11 @@ class DataModule(private val mainApplication: MainApplication) {
             return UserRepositoryImpl(userMapper)
         else {
             return object : UserRepository {
-                override fun getUserById(userId: String): Observable<User> {
+                override fun getUserById(userId: String): Observable<HashMap<String,User>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 
-                override fun getUserListByIds(userIds: String): Observable<List<User>> {
+                override fun getUserListByIds(userIds: String): Observable<HashMap<String,User>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 
@@ -121,6 +130,22 @@ class DataModule(private val mainApplication: MainApplication) {
 
                 override fun getCurrentUserPartnerId(): String {
                     return ""
+                }
+
+            }
+        }
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideRequestsRepositoryImpl(requestsMapper: RequestsMapper, firebaseHelper: FirebaseHelper, mainApplication: MainApplication): RequestRepository {
+        if (firebaseHelper.playServiceStatus(mainApplication))
+            return RequestsRepositoryImpl(requestsMapper)
+        else {
+            return object : RequestRepository {
+                override fun getRequestsByPinId(pinId: String): Observable<HashMap<String, Requests>> {
+                    return Observable.error(RuntimeException(errorFirebase))
                 }
 
             }
