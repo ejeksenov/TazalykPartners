@@ -7,6 +7,7 @@ import kz.nextstep.tazalykpartners.di.AppComponent
 import kz.nextstep.tazalykpartners.di.DaggerAppComponent
 import kz.nextstep.tazalykpartners.di.DataModule
 import kz.nextstep.tazalykpartners.ui.AddPinViewModel
+import kz.nextstep.tazalykpartners.ui.GetPinByIdViewModel
 
 open class BaseViewModel(mainApplication: MainApplication) : ViewModel() {
     private val injector: AppComponent = DaggerAppComponent.builder().dataModule(DataModule(mainApplication)).build()
@@ -18,6 +19,7 @@ open class BaseViewModel(mainApplication: MainApplication) : ViewModel() {
     private fun inject() {
         when(this) {
             is AddPinViewModel -> injector.inject(this)
+            is GetPinByIdViewModel -> injector.inject(this)
         }
     }
 }

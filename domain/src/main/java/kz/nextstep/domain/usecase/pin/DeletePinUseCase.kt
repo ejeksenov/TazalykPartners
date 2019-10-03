@@ -3,7 +3,7 @@ package kz.nextstep.domain.usecase.pin
 import io.reactivex.annotations.NonNull
 import kz.nextstep.domain.PinRepository
 import kz.nextstep.domain.model.Pin
-import org.jetbrains.annotations.NotNull
+import kz.nextstep.domain.usecase.BaseUseCase
 import rx.Observable
 import rx.Scheduler
 

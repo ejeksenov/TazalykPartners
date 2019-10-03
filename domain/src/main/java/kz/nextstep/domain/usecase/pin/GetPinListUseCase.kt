@@ -3,8 +3,6 @@ package kz.nextstep.domain.usecase
 import io.reactivex.annotations.NonNull
 import kz.nextstep.domain.PinRepository
 import kz.nextstep.domain.model.Pin
-import kz.nextstep.domain.usecase.pin.BaseUseCase
-import org.jetbrains.annotations.NotNull
 import rx.Observable
 import rx.Scheduler
 

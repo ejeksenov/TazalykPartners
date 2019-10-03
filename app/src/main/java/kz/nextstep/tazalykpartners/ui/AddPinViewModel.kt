@@ -3,6 +3,7 @@ package kz.nextstep.tazalykpartners.ui
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.Pin
 import kz.nextstep.domain.usecase.AddPinUseCase
+import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
 import rx.Subscriber
@@ -12,8 +13,6 @@ class AddPinViewModel(mainApplication: MainApplication) : BaseViewModel(mainAppl
 
     @Inject
     lateinit var addPinUseCase: AddPinUseCase
-
-
 
     var message = MutableLiveData<String>()
     fun bound(pin: Pin) {
@@ -30,7 +29,7 @@ class AddPinViewModel(mainApplication: MainApplication) : BaseViewModel(mainAppl
                     message.value = e?.message
                 }
 
-            }, "",
+            }, AppConstants.emptyParam,
             pin
         )
     }

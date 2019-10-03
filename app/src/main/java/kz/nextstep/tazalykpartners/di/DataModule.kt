@@ -4,9 +4,13 @@ import dagger.Module
 import dagger.Provides
 import kz.nextstep.data.FirebaseHelper
 import kz.nextstep.data.mapper.PinMapper
+import kz.nextstep.data.mapper.UserMapper
 import kz.nextstep.data.repository.PinRepositoryImpl
+import kz.nextstep.data.repository.UserRepositoryImpl
 import kz.nextstep.domain.PinRepository
 import kz.nextstep.domain.model.Pin
+import kz.nextstep.domain.model.User
+import kz.nextstep.domain.repository.UserRepository
 import kz.nextstep.tazalykpartners.MainApplication
 import rx.Observable
 import java.lang.RuntimeException
@@ -14,6 +18,8 @@ import javax.inject.Singleton
 
 @Module
 class DataModule(private val mainApplication: MainApplication) {
+
+    val errorFirebase = "Firebase not supported!"
 
     @Provides
     fun provideApplication() = mainApplication
@@ -24,6 +30,11 @@ class DataModule(private val mainApplication: MainApplication) {
     }
 
     @Provides
+    fun provideUserMapper(): UserMapper {
+        return UserMapper
+    }
+
+    @Provides
     fun provideFirebaseHelper(): FirebaseHelper {
         return FirebaseHelper
     }
@@ -31,7 +42,7 @@ class DataModule(private val mainApplication: MainApplication) {
     @Singleton
     @Provides
     fun providePinRepositoryImpl(pinMapper: PinMapper, firebaseHelper: FirebaseHelper, mainApplication: MainApplication) : PinRepository {
-        val errorFirebase = "Проблема с базой!"
+
         if (firebaseHelper.playServiceStatus(mainApplication))
             return PinRepositoryImpl(pinMapper)
         else {
@@ -53,6 +64,25 @@ class DataModule(private val mainApplication: MainApplication) {
                 }
 
                 override fun updatePinData(pinId: String, pin: Pin): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+            }
+        }
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserRepositoryImpl(userMapper: UserMapper, firebaseHelper: FirebaseHelper, mainApplication: MainApplication): UserRepository {
+        if (firebaseHelper.playServiceStatus(mainApplication))
+            return UserRepositoryImpl(userMapper)
+        else {
+            return object : UserRepository {
+                override fun getUserById(userId: String): Observable<User> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+                override fun getUserListByIds(userIds: String): Observable<List<User>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 

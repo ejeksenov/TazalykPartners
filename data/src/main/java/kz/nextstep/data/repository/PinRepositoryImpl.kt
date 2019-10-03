@@ -69,6 +69,7 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
                             pinList?.add(pin)
                         }
                     }
+                    it.onNext(pinList)
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
