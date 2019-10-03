@@ -1,0 +1,159 @@
+{
+  "project_info": {
+    "project_number": "894664352481",
+    "firebase_url": "https://tazalyk-95a5a.firebaseio.com",
+    "project_id": "tazalyk-95a5a",
+    "storage_bucket": "tazalyk-95a5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894664352481:android:b2ff9929f7009ec0d34da0",
+        "android_client_info": {
+          "package_name": "kz.nextstep.data"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894664352481-22r3o47hev7ni2ql6beoi4e6pfdj8oba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.nextstep.data",
+            "certificate_hash": "61df8439d71413b3540d8cbaf5a24430a3c0e6c9"
+          }
+        },
+        {
+          "client_id": "894664352481-oe3c1sprfl01efcgh145jat42cji0feh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArjjotikHdlULkHwvhYCAQGa54I9MZ-0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894664352481-oe3c1sprfl01efcgh145jat42cji0feh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "894664352481-ojgks6kvahor58ghm1l3r9hesq5ibvll.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kz.ibek.Tazalyk"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894664352481:android:fceca2495c640b70",
+        "android_client_info": {
+          "package_name": "kz.nextstep.tazalykhistory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894664352481-2ll41cgg7a0joi6htcm3sut1odttogrb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.nextstep.tazalykhistory",
+            "certificate_hash": "61df8439d71413b3540d8cbaf5a24430a3c0e6c9"
+          }
+        },
+        {
+          "client_id": "894664352481-oe3c1sprfl01efcgh145jat42cji0feh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArjjotikHdlULkHwvhYCAQGa54I9MZ-0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894664352481-oe3c1sprfl01efcgh145jat42cji0feh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "894664352481-ojgks6kvahor58ghm1l3r9hesq5ibvll.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kz.ibek.Tazalyk"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894664352481:android:ff5927b05604c37f",
+        "android_client_info": {
+          "package_name": "nextstep.kz.tazalyk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894664352481-hpj9gi57qi3d46v43lp3vj0tf91m7rko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nextstep.kz.tazalyk",
+            "certificate_hash": "124d39929090fab61a36a8cf8b9c4d19d35ef72d"
+          }
+        },
+        {
+          "client_id": "894664352481-v7bv6e92p5q2d9k409vpkrj840lpco7p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nextstep.kz.tazalyk",
+            "certificate_hash": "708f70bdd7daff5fb6c93a6fd554900b1873103c"
+          }
+        },
+        {
+          "client_id": "894664352481-bkqa5kifhjrm36f8lm1co9jtie8trj3b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nextstep.kz.tazalyk",
+            "certificate_hash": "53933b7f1657bd3fb186d3bdd392e9c5dbf4db15"
+          }
+        },
+        {
+          "client_id": "894664352481-oe3c1sprfl01efcgh145jat42cji0feh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArjjotikHdlULkHwvhYCAQGa54I9MZ-0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894664352481-oe3c1sprfl01efcgh145jat42cji0feh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "894664352481-ojgks6kvahor58ghm1l3r9hesq5ibvll.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kz.ibek.Tazalyk"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
