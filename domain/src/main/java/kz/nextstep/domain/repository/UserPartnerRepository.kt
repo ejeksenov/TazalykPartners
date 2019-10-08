@@ -8,4 +8,6 @@ interface UserPartnerRepository {
     fun signInWithEmailAndPassword(email: String, password: String): Observable<Boolean>
     fun getCurrentUserPartner(): Boolean
     fun getCurrentUserPartnerId(): String
+    fun signOut(): Boolean
+    fun sendResetPassword(email: String) : Observable<Boolean>
 }

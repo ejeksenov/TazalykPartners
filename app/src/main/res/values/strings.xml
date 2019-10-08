@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Tazalyk Partners</string>
+    <string name="signIn">Войти</string>
+    <string name="password">Пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="email">Email</string>
+    <string name="correctEmail">Введите корректный e-mail</string>
+    <string name="wrongLoginOrPassword">Неверный логин или пароль</string>
+    <string name="enter_login_email">Напишите email</string>
 </resources>

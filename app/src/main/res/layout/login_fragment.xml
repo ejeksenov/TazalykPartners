@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="viewModel"
+                type="kz.nextstep.tazalykpartners.ui.login.LoginViewModel"/>
+    </data>
+    <ScrollView
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            tools:context=".ui.login.LoginFragment">
+
+        <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_gravity="center">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="1.0">
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:minHeight="@dimen/standard_200">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/logo_login_page"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layout_login_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/standard_22"
+                            android:layout_marginRight="@dimen/standard_22">
+
+                        <EditText
+                                android:id="@+id/edt_login_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/email"
+                                android:inputType="textEmailAddress"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layout_login_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/layout_login_email"
+                            android:layout_marginLeft="@dimen/standard_22"
+                            android:layout_marginTop="@dimen/standard_8"
+                            android:layout_marginRight="@dimen/standard_22">
+
+                        <EditText
+                                android:id="@+id/edt_login_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/password"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPassword"
+                                android:paddingBottom="@dimen/standard_22"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                            android:id="@+id/btn_login_sign_in"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/layout_login_password"
+                            android:layout_marginLeft="@dimen/standard_22"
+                            android:layout_marginTop="@dimen/standard_12"
+                            android:layout_marginRight="@dimen/standard_22"
+                            android:background="@drawable/rounded_corner_active_button"
+                            android:text="@string/signIn"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"/>
+
+                    <Button
+                            android:id="@+id/btn_login_forgot_password"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/btn_login_sign_in"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:text="@string/forgot_password"
+                            android:textAllCaps="false"
+                            android:textColor="@color/mainBackgroundColor"
+                            android:textSize="14sp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</layout>

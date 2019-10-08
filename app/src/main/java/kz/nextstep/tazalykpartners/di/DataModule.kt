@@ -1,5 +1,6 @@
 package kz.nextstep.tazalykpartners.di
 
+import android.app.Application
 import android.view.inspector.PropertyMapper
 import dagger.Module
 import dagger.Provides
@@ -26,7 +27,7 @@ import java.lang.RuntimeException
 import javax.inject.Singleton
 
 @Module
-class DataModule(private val mainApplication: MainApplication) {
+class DataModule(private val mainApplication: Application) {
 
     val errorFirebase = "Firebase not supported!"
 
@@ -60,7 +61,7 @@ class DataModule(private val mainApplication: MainApplication) {
 
     @Singleton
     @Provides
-    fun providePinRepositoryImpl(pinMapper: PinMapper, firebaseHelper: FirebaseHelper, mainApplication: MainApplication) : PinRepository {
+    fun providePinRepositoryImpl(pinMapper: PinMapper, firebaseHelper: FirebaseHelper, mainApplication: Application) : PinRepository {
 
         if (firebaseHelper.playServiceStatus(mainApplication))
             return PinRepositoryImpl(pinMapper)
@@ -92,7 +93,7 @@ class DataModule(private val mainApplication: MainApplication) {
 
     @Singleton
     @Provides
-    fun provideUserRepositoryImpl(userMapper: UserMapper, firebaseHelper: FirebaseHelper, mainApplication: MainApplication): UserRepository {
+    fun provideUserRepositoryImpl(userMapper: UserMapper, firebaseHelper: FirebaseHelper, mainApplication: Application): UserRepository {
         if (firebaseHelper.playServiceStatus(mainApplication))
             return UserRepositoryImpl(userMapper)
         else {
@@ -111,11 +112,19 @@ class DataModule(private val mainApplication: MainApplication) {
 
     @Singleton
     @Provides
-    fun provideUserPartnerRepositoryImpl(userPartnerMapper: UserPartnerMapper, firebaseHelper: FirebaseHelper, mainApplication: MainApplication): UserPartnerRepository {
+    fun provideUserPartnerRepositoryImpl(userPartnerMapper: UserPartnerMapper, firebaseHelper: FirebaseHelper, mainApplication: Application): UserPartnerRepository {
         if (firebaseHelper.playServiceStatus(mainApplication))
             return UserPartnerRepositoryImpl(userPartnerMapper)
         else {
             return object : UserPartnerRepository {
+                override fun sendResetPassword(email: String): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+                override fun signOut(): Boolean {
+                    return false
+                }
+
                 override fun getUserPartnerById(userPartnerId: String): Observable<UserPartner> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
@@ -139,7 +148,7 @@ class DataModule(private val mainApplication: MainApplication) {
 
     @Singleton
     @Provides
-    fun provideRequestsRepositoryImpl(requestsMapper: RequestsMapper, firebaseHelper: FirebaseHelper, mainApplication: MainApplication): RequestRepository {
+    fun provideRequestsRepositoryImpl(requestsMapper: RequestsMapper, firebaseHelper: FirebaseHelper, mainApplication: Application): RequestRepository {
         if (firebaseHelper.playServiceStatus(mainApplication))
             return RequestsRepositoryImpl(requestsMapper)
         else {

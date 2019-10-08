@@ -6,10 +6,7 @@ import kz.nextstep.domain.PinRepository
 import kz.nextstep.domain.repository.RequestRepository
 import kz.nextstep.domain.repository.UserPartnerRepository
 import kz.nextstep.domain.repository.UserRepository
-import kz.nextstep.domain.usecase.partner.GetCurrentUserPartnerUseCase
-import kz.nextstep.domain.usecase.partner.GetUserPartnerByIdUseCase
-import kz.nextstep.domain.usecase.partner.GetUserPartnerIdUseCase
-import kz.nextstep.domain.usecase.partner.SignInWithEmailAndPasswordUseCase
+import kz.nextstep.domain.usecase.partner.*
 import kz.nextstep.domain.usecase.pin.AddPinUseCase
 import kz.nextstep.domain.usecase.pin.GetPinListUseCase
 import kz.nextstep.domain.usecase.pin.GetPinUseCase
@@ -110,9 +107,23 @@ class DomainModule {
     ) = SignInWithEmailAndPasswordUseCase(userPartnerRepository, mainScheduler, ioScheduler)
 
     @Provides
+    fun provideSignOutUseCase(
+        userPartnerRepository: UserPartnerRepository
+    ) = SignOutUseCase(userPartnerRepository)
+
+    @Provides
+    fun provideSendResetPasswordUseCase(
+        userPartnerRepository: UserPartnerRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = SendResetPasswordUseCase(userPartnerRepository, mainScheduler, ioScheduler)
+
+    // Providing requests use case
+    @Provides
     fun provideGetRequestsByPinIdUseCase(
         requestRepository: RequestRepository,
         @Named(RxModule.MAIN) mainScheduler: Scheduler,
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = GetRequestsByPinIdUseCase(requestRepository, mainScheduler, ioScheduler)
+
 }

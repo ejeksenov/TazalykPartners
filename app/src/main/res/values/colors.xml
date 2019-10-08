@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#62CC3D</color>
+    <color name="colorPrimaryDark">#62CC3D</color>
+    <color name="colorAccent">#62CC3D</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="top_background_color">#1Ad3d3d3</color>
+    <color name="mainBackgroundColor">#62CC3D</color>
+    <color name="textColor">#202020</color>
+    <color name="unactiveTextColor">#ADADAD</color>
+    <color name="searchEditText">#268E8E93</color>
+    <color name="wrong_color">#ff0000</color>
+    <color name="top_bottom_layout_border">#D8D8D8</color>
+    <color name="not_selected_grid_item_color">#646464</color>
+    <color name="grayColor">#CACACA</color>
+    <color name="red">#ff4d4d</color>
 </resources>

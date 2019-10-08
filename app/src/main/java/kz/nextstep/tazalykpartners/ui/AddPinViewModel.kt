@@ -1,5 +1,7 @@
 package kz.nextstep.tazalykpartners.ui
+/*
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.Pin
 import kz.nextstep.domain.model.Requests
@@ -12,9 +14,10 @@ import kz.nextstep.tazalykpartners.base.BaseViewModel
 import rx.Subscriber
 import javax.inject.Inject
 
-class AddPinViewModel(mainApplication: MainApplication) : BaseViewModel(mainApplication) {
+class AddPinViewModel(mainApplication: Application) : BaseViewModel(mainApplication) {
 
-    /*@Inject
+    */
+/*@Inject
     lateinit var addPinUseCase: AddPinUseCase
 
     var message = MutableLiveData<String>()
@@ -40,7 +43,8 @@ class AddPinViewModel(mainApplication: MainApplication) : BaseViewModel(mainAppl
     override fun onCleared() {
         super.onCleared()
         addPinUseCase.unsubscribe()
-    }*/
+    }*//*
+
 
 
     @Inject
@@ -71,3 +75,4 @@ class AddPinViewModel(mainApplication: MainApplication) : BaseViewModel(mainAppl
 
 
 }
+*/
