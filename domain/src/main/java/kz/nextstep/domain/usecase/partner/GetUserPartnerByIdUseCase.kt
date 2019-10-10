@@ -1,8 +1,6 @@
 package kz.nextstep.domain.usecase.partner
 
 import io.reactivex.annotations.NonNull
-import kz.nextstep.domain.PinRepository
-import kz.nextstep.domain.model.Pin
 import kz.nextstep.domain.model.UserPartner
 import kz.nextstep.domain.repository.UserPartnerRepository
 import kz.nextstep.domain.usecase.BaseUseCase

@@ -7,7 +7,8 @@ object UserPartnerMapper {
     fun map(userPartnerEntity: UserPartnerEntity) = UserPartner(
         email = userPartnerEntity.email,
         name = userPartnerEntity.name,
-        pinIds = userPartnerEntity.pinIds
+        pinIds = userPartnerEntity.pinIds,
+        imageUrl = userPartnerEntity.imageUrl
     )
 
 }

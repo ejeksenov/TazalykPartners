@@ -6,5 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class UserPartnerEntity(
     val email: String? = "",
     val name: String? = "",
-    val pinIds: String? = ""
+    val pinIds: String? = "",
+    val imageUrl: String? = "",
+    val productIds: String? = ""
 )

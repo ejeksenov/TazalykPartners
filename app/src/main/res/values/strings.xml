@@ -4,7 +4,23 @@
     <string name="password">Пароль</string>
     <string name="forgot_password">Забыли пароль?</string>
     <string name="email">Email</string>
-    <string name="correctEmail">Введите корректный e-mail</string>
+    <string name="correct_login_email">Введите корректный e-mail</string>
     <string name="wrongLoginOrPassword">Неверный логин или пароль</string>
     <string name="enter_login_email">Напишите email</string>
+    <string name="login_send">Отправить</string>
+    <string name="login_cancel">Отмена</string>
+
+
+    <string name="nav_pin_list">Пункты приема</string>
+    <string name="nav_statistics">Статистика</string>
+    <string name="nav_edit_profile">Редактировать профиль</string>
+    <string name="nav_sign_out">Выход</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

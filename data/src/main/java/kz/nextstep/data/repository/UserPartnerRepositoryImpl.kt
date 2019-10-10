@@ -12,6 +12,10 @@ import rx.Observable
 import rx.subscriptions.Subscriptions
 
 class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : UserPartnerRepository {
+
+    private var databaseReference: DatabaseReference =
+        FirebaseDatabase.getInstance().reference.child(AppConstants.userPartnerTree)
+
     override fun sendResetPassword(email: String): Observable<Boolean> {
         return Observable.create { subscription ->
             FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener {
@@ -41,13 +45,8 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
 
     override fun getCurrentUserPartnerId(): String {
         val mUser = FirebaseAuth.getInstance().currentUser
-        if (mUser != null)
-            return mUser.uid
-        return ""
+        return mUser?.uid ?: ""
     }
-
-    private var databaseReference: DatabaseReference =
-        FirebaseDatabase.getInstance().reference.child(AppConstants.userPartnerTree)
 
     override fun getUserPartnerById(userPartnerId: String): Observable<UserPartner> {
         return Observable.create {
@@ -57,17 +56,17 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for (ds in dataSnapshot.children) {
-                        if (ds != null) {
-                            val userPartnerEntity = ds.getValue(UserPartnerEntity::class.java)
-                            it.onNext(userPartnerMapper.map(userPartnerEntity!!))
-                        }
-                    }
+                    if (dataSnapshot.value != null) {
+                        val userPartnerEntity = dataSnapshot.getValue(UserPartnerEntity::class.java)
+                        it.onNext(userPartnerMapper.map(userPartnerEntity!!))
+
+                    } else
+                        it.onError(FirebaseException(/*AppConstants.ERROR_USER_NOT_FOUND*/"Пользователь не зарегистрированtyu"))
                 }
 
             }
 
-            databaseReference.orderByKey().equalTo(userPartnerId).addValueEventListener(valueEventListener)
+            databaseReference.child(userPartnerId).addValueEventListener(valueEventListener)
 
             it.add(Subscriptions.create {
                 databaseReference.removeEventListener(valueEventListener)
@@ -76,22 +75,36 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
 
     }
 
-    override fun signInWithEmailAndPassword(email: String, password: String): Observable<Boolean> {
+    override fun signInWithEmailAndPassword(email: String, password: String): Observable<String> {
         return Observable.create { subscription ->
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var responseString: String? = null
                     if (dataSnapshot.value != null) {
+                        for (ds in dataSnapshot.children) {
+                            val userPartnerEntity = ds.getValue(UserPartnerEntity::class.java)
+                            val pinIds = userPartnerEntity?.pinIds
+                            val productIds = userPartnerEntity?.productIds
+                            if (pinIds == "" && productIds == "")
+                                subscription.onError(FirebaseException(/*AppConstants.ERROR_USER_NOT_FOUND*/"Пользователь не зарегистрированBla"))
+                            else if (pinIds?.contains(",")!!)
+                                responseString = AppConstants.SUCCESS_PIN_DIRECTOR
+                            else if (pinIds != "" && !pinIds.contains(","))
+                                responseString = AppConstants.SUCCESS_PIN_ADMIN
+                            else if (productIds != "")
+                                responseString = AppConstants.SUCCESS_PRODUCT_SPONSOR
+                        }
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnFailureListener {
                             if (it.message?.toLowerCase()?.contains("password")!!)
-                                subscription.onError(FirebaseException("Неверный пароль. Попробуйте заново"))
+                                subscription.onError(FirebaseException(/*AppConstants.ERROR_INVALID_PASSWORD*/"Пользователь не зарегистрированADF"))
                             else
                                 subscription.onError(FirebaseException(it.message!!))
                         }.addOnCompleteListener {
-                            subscription.onNext(it.isSuccessful)
+                            subscription.onNext(responseString)
                             subscription.onCompleted()
                         }
                     } else
-                        subscription.onError(FirebaseException("Пользователь не зарегистрирован"))
+                        subscription.onError(FirebaseException(/*AppConstants.ERROR_USER_NOT_FOUND*/"Пользователь не зарегистрированjkl"))
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {

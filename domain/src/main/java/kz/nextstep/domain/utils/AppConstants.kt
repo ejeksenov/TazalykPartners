@@ -7,20 +7,12 @@ object AppConstants{
     const val userTree = "Users_new"
     const val requestsTree = "Requests"
     const val userPartnerTree = "UserPartner"
-    /*val emptyPin = Pin("",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "")*/
     const val emptyParam = ""
+
+    const val SUCCESS_PIN_DIRECTOR = "success_pin_director"
+    const val SUCCESS_PIN_ADMIN = "success_pin_admin"
+    const val SUCCESS_PRODUCT_SPONSOR = "success_product_sponsor"
+
+    const val ERROR_USER_NOT_FOUND = "Пользователь не зарегистрирован"
+    const val ERROR_INVALID_PASSWORD = "Неверный пароль. Попробуйте заново"
 }

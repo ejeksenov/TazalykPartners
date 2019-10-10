@@ -7,6 +7,7 @@ import kz.nextstep.tazalykpartners.di.AppComponent
 import kz.nextstep.tazalykpartners.di.DaggerAppComponent
 import kz.nextstep.tazalykpartners.di.DataModule
 import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
+import kz.nextstep.tazalykpartners.ui.main.MainViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 
 open class BaseViewModel : ViewModel() {
@@ -25,6 +26,7 @@ open class BaseViewModel : ViewModel() {
             //is AddPinViewModel -> injector.inject(this)
             is LoginViewModel -> injector.inject(this)
             is PinListViewModel -> injector.inject(this)
+            is MainViewModel -> injector.inject(this)
         }
     }
 

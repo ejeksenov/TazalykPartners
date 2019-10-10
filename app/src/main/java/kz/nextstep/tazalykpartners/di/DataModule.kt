@@ -129,7 +129,7 @@ class DataModule(private val mainApplication: Application) {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 
-                override fun signInWithEmailAndPassword(email: String, password: String): Observable<Boolean> {
+                override fun signInWithEmailAndPassword(email: String, password: String): Observable<String> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 

@@ -10,8 +10,8 @@ class SignInWithEmailAndPasswordUseCase(
     private val userPartnerRepository: UserPartnerRepository,
     @NonNull mainScheduler: Scheduler,
     @NonNull ioScheduler: Scheduler
-): BaseUseCase<Boolean, String, String>(mainScheduler, ioScheduler)  {
-    override fun buildUseCaseObservable(params: String, param2: String): Observable<Boolean> {
+): BaseUseCase<String, String, String>(mainScheduler, ioScheduler)  {
+    override fun buildUseCaseObservable(params: String, param2: String): Observable<String> {
         return userPartnerRepository.signInWithEmailAndPassword(params, param2)
     }
 }
