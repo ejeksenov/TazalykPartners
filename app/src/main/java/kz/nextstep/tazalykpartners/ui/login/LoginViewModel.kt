@@ -81,9 +81,9 @@ class LoginViewModel : BaseViewModel(){
         sendResetPasswordUseCase.execute(object : Subscriber<Boolean>() {
             override fun onNext(t: Boolean?) {
                 if (t!!)
-                    showToastMessage("Сообщение успешно отправлено. Пожалуйста, проверьте почту")
+                    showToastMessage(AppConstants.SUCCESS_MESSAGE_SENT)
                 else
-                    showToastMessage("Не удалось отправить сообщение!")
+                    showToastMessage(AppConstants.ERROR_MESSAGE_NOT_SENT)
             }
 
             override fun onCompleted() {}

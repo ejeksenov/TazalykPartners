@@ -61,7 +61,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                         it.onNext(userPartnerMapper.map(userPartnerEntity!!))
 
                     } else
-                        it.onError(FirebaseException(/*AppConstants.ERROR_USER_NOT_FOUND*/"Пользователь не зарегистрированtyu"))
+                        it.onError(FirebaseException(AppConstants.ERROR_USER_NOT_FOUND))
                 }
 
             }
@@ -86,7 +86,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                             val pinIds = userPartnerEntity?.pinIds
                             val productIds = userPartnerEntity?.productIds
                             if (pinIds == "" && productIds == "")
-                                subscription.onError(FirebaseException(/*AppConstants.ERROR_USER_NOT_FOUND*/"Пользователь не зарегистрированBla"))
+                                subscription.onError(FirebaseException(AppConstants.ERROR_USER_NOT_FOUND))
                             else if (pinIds?.contains(",")!!)
                                 responseString = AppConstants.SUCCESS_PIN_DIRECTOR
                             else if (pinIds != "" && !pinIds.contains(","))
@@ -96,7 +96,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                         }
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnFailureListener {
                             if (it.message?.toLowerCase()?.contains("password")!!)
-                                subscription.onError(FirebaseException(/*AppConstants.ERROR_INVALID_PASSWORD*/"Пользователь не зарегистрированADF"))
+                                subscription.onError(FirebaseException(AppConstants.ERROR_INVALID_PASSWORD))
                             else
                                 subscription.onError(FirebaseException(it.message!!))
                         }.addOnCompleteListener {
@@ -104,7 +104,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                             subscription.onCompleted()
                         }
                     } else
-                        subscription.onError(FirebaseException(/*AppConstants.ERROR_USER_NOT_FOUND*/"Пользователь не зарегистрированjkl"))
+                        subscription.onError(FirebaseException(AppConstants.ERROR_USER_NOT_FOUND))
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {

@@ -15,12 +15,13 @@
     <string name="nav_statistics">Статистика</string>
     <string name="nav_edit_profile">Редактировать профиль</string>
     <string name="nav_sign_out">Выход</string>
+
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="ask_sign_out">Вы хотите выйти из аккаунта?</string>
 
 </resources>

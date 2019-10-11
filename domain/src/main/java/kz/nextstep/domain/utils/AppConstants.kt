@@ -15,4 +15,7 @@ object AppConstants{
 
     const val ERROR_USER_NOT_FOUND = "Пользователь не зарегистрирован"
     const val ERROR_INVALID_PASSWORD = "Неверный пароль. Попробуйте заново"
+
+    const val SUCCESS_MESSAGE_SENT = "Сообщение успешно отправлено. Пожалуйста, проверьте почту"
+    const val ERROR_MESSAGE_NOT_SENT = "Не удалось отправить сообщение!"
 }

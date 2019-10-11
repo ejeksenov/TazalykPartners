@@ -5,6 +5,7 @@ import kz.nextstep.tazalykpartners.ui.main.MainActivity
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
 import kz.nextstep.tazalykpartners.ui.main.MainViewModel
+import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 import javax.inject.Singleton
 
@@ -17,4 +18,5 @@ interface AppComponent {
     fun inject(loginViewModel: LoginViewModel)
     fun inject(pinListViewModel: PinListViewModel)
     fun inject(mainViewModel: MainViewModel)
+    fun inject(navigationDrawerViewModel: NavigationDrawerViewModel)
 }

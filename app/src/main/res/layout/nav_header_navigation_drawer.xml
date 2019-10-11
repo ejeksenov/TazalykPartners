@@ -14,8 +14,8 @@
         android:gravity="bottom">
     <ImageView
             android:id="@+id/iv_main_nav_profile"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:paddingTop="@dimen/standard_16"
             android:src="@drawable/user_placeholder_image"
     />
@@ -24,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Surname Name"
-            android:textSize="18sp"
             android:paddingTop="@dimen/standard_16"
             android:textColor="@color/white"/>
 

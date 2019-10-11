@@ -6,6 +6,7 @@ import kz.nextstep.domain.model.UserPartner
 import kz.nextstep.domain.usecase.partner.GetCurrentUserPartnerUseCase
 import kz.nextstep.domain.usecase.partner.GetUserPartnerByIdUseCase
 import kz.nextstep.domain.usecase.partner.GetUserPartnerIdUseCase
+import kz.nextstep.domain.usecase.partner.SignOutUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
@@ -14,20 +15,16 @@ import javax.inject.Inject
 
 class NavigationDrawerViewModel: BaseViewModel() {
     @Inject
-    lateinit var getCurrentUserPartnerUseCase: GetCurrentUserPartnerUseCase
-
-    @Inject
     lateinit var getUserPartnerIdUseCase: GetUserPartnerIdUseCase
 
     @Inject
     lateinit var getUserPartnerByIdUseCase: GetUserPartnerByIdUseCase
 
+    @Inject
+    lateinit var signOutUseCase: SignOutUseCase
+
     val userPartnerLiveData = MutableLiveData<UserPartner>()
 
-
-    fun getCurrentUser(): Boolean {
-        return getCurrentUserPartnerUseCase.execute()
-    }
 
     fun getCurrentUserPartner() {
         val mUserId = getUserPartnerIdUseCase.execute()
@@ -45,4 +42,6 @@ class NavigationDrawerViewModel: BaseViewModel() {
 
         }, mUserId, AppConstants.emptyParam)
     }
+
+    fun signOut() = signOutUseCase.execute()
 }
