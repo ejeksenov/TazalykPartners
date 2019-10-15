@@ -57,16 +57,42 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
         }
     }
 
-    override fun getPinList(pinIds: String): Observable<HashMap<String, Pin>> {
+    override fun getPinList(pinIds: String, filterTypes: String): Observable<HashMap<String, Pin>> {
         return Observable.create {
             val valueEventListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val pinHashMap: HashMap<String, Pin> = HashMap()
                     for (ds in dataSnapshot.children) {
-                        val pinEntity = ds.getValue(PinEntity::class.java)
-                        if (pinIds in ds.key.toString()) {
+                        if (pinIds.contains(ds.key!!)) {
+                            val pinEntity = ds.getValue(PinEntity::class.java)
                             val pin = pinMapper.map(pinEntity!!)
-                            pinHashMap[ds.key!!] = pin
+                            if (filterTypes != "") {
+                                val pinTypes = pinEntity.wasteId
+                                val pinFilterTypeArray = filterTypes.split(";")
+                                for (pinTypeItem in pinFilterTypeArray) {
+                                    val pinTypeItemArray = pinTypeItem.split(",")
+                                    var isMarkingContains = false
+                                    if (pinTypeItemArray.size >= 3) {
+                                        if (pinTypeItemArray[2].contains(".")) {
+                                            for (pinFilterTypeMarking in pinTypeItemArray[2].split(".")) {
+                                                if (pinTypes?.contains(pinFilterTypeMarking)!!) {
+                                                    pinHashMap[ds.key!!] = pin
+                                                    isMarkingContains = true
+                                                    break
+                                                }
+                                            }
+                                            if (isMarkingContains)
+                                                break
+                                        } else if (pinTypes?.contains(pinTypeItem)!!) {
+                                            pinHashMap[ds.key!!] = pin
+                                            break
+                                        }
+                                    }
+
+                                }
+                            } else {
+                                pinHashMap[ds.key!!] = pin
+                            }
                         }
                     }
                     it.onNext(pinHashMap)
@@ -85,7 +111,7 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
     }
 
 
-    override fun getPinById(pinId: String): Observable<HashMap<String,Pin>> {
+    override fun getPinById(pinId: String): Observable<HashMap<String, Pin>> {
         return Observable.create {
             val valueEventListener = object : ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {

@@ -1,6 +1,5 @@
 package kz.nextstep.tazalykpartners.base
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.di.AppComponent
@@ -10,6 +9,7 @@ import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
 import kz.nextstep.tazalykpartners.ui.main.MainViewModel
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
+import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
 
 open class BaseViewModel : ViewModel() {
     private val injector: AppComponent = DaggerAppComponent.builder().dataModule(MainApplication.INSTANCE?.let {
@@ -29,6 +29,7 @@ open class BaseViewModel : ViewModel() {
             is PinListViewModel -> injector.inject(this)
             is MainViewModel -> injector.inject(this)
             is NavigationDrawerViewModel -> injector.inject(this)
+            is PinViewModel -> injector.inject(this)
         }
     }
 

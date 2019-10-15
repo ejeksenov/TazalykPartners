@@ -1,10 +1,7 @@
 package kz.nextstep.tazalykpartners.ui.navigationDrawer
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -29,7 +26,6 @@ import kz.nextstep.tazalykpartners.ui.editProfile.EditProfileActivity
 import kz.nextstep.tazalykpartners.ui.filterByDate.FilterByDateActivity
 import kz.nextstep.tazalykpartners.ui.filterByType.FilterByTypeActivity
 import kz.nextstep.tazalykpartners.ui.login.LoginActivity
-import kz.nextstep.tazalykpartners.ui.main.MainActivity
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListFragment
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsFragment
 import kz.nextstep.tazalykpartners.utils.CircleTransform
@@ -49,6 +45,8 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
 
     private var navItemIndex = 0
     private var cntPressed = 0
+
+    val REQUEST_CODE = 1
 
     private val navigator = SupportAppNavigator(this, R.id.activity_navigation_drawer_container)
 
@@ -127,7 +125,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
                 } else {
                     Intent(this, FilterByDateActivity::class.java)
                 }
-                router.navigateTo(SampleScreen(intent))
+                startActivityForResult(intent,REQUEST_CODE)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -196,8 +194,6 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
             dialogInterface.dismiss()
         }
         alertDialog.show()
-        selectNavMenu()
-        selectToolbarTitle()
     }
 
     private fun goToEditProfileAcitivity() {
@@ -215,6 +211,5 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
     override fun onPause() {
         MainApplication.INSTANCE?.getNavigatorHolder()?.removeNavigator()
         super.onPause()
-        selectNavMenu()
     }
 }

@@ -37,7 +37,8 @@ fun setImageUrl(view: ImageView, text: MutableLiveData<String>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && text != null) {
         text.observe(parentActivity, Observer { value ->
-            Picasso.get().load(value).into(view)
+            if (value != "")
+                Picasso.get().load(value).into(view)
         })
     }
 }
@@ -48,7 +49,8 @@ fun setCircleImageUrl(view: ImageView, text: MutableLiveData<String>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && text != null) {
         text.observe(parentActivity, Observer { value ->
-            Picasso.get().load(value).transform(CircleTransform()).into(view)
+            if (value != "")
+                Picasso.get().load(value).transform(CircleTransform()).into(view)
         })
     }
 }

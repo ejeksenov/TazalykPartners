@@ -44,4 +44,5 @@ class NavigationDrawerViewModel: BaseViewModel() {
     }
 
     fun signOut() = signOutUseCase.execute()
+
 }

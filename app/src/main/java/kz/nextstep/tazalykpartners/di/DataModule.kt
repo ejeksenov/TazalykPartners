@@ -67,7 +67,7 @@ class DataModule(private val mainApplication: Application) {
             return PinRepositoryImpl(pinMapper)
         else {
             return object : PinRepository {
-                override fun getPinList(pinIds: String): Observable<HashMap<String,Pin>> {
+                override fun getPinList(pinIds: String, filterTypes: String): Observable<HashMap<String, Pin>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 

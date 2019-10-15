@@ -1,9 +1,11 @@
 package kz.nextstep.tazalykpartners
 
 import android.app.Application
+import kz.nextstep.data.FirebaseHelper
 import kz.nextstep.tazalykpartners.di.AppComponent
 import kz.nextstep.tazalykpartners.di.DaggerAppComponent
 import kz.nextstep.tazalykpartners.di.DataModule
+import kz.nextstep.tazalykpartners.utils.TypefaceUtil
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
@@ -22,7 +24,13 @@ class MainApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         inject()
+
+        TypefaceUtil.overrideFont(this.applicationContext, "SERIF", "fonts/Montserrat-Regular.ttf")
+
+        FirebaseHelper.setPersistanceEnabled()
+
         INSTANCE = this
         cicerone = Cicerone.create()
     }
