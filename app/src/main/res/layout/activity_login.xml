@@ -5,13 +5,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:fillViewport="true">
-
     <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_gravity="center">
-
         <LinearLayout
+                android:id="@+id/layout_login_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"

@@ -1,4 +1,4 @@
-package kz.nextstep.movify.utils.extension
+package kz.nextstep.tazalykpartners.utils.extension
 
 import android.content.ContextWrapper
 import android.view.View

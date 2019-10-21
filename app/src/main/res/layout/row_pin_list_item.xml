@@ -5,7 +5,7 @@
                   type="kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel"/>
     </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/peek_height_layout"
+                    android:id="@+id/layout_pin_detailed_info_peek_height"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="100dp"
@@ -45,16 +45,16 @@
                 android:layout_marginRight="@dimen/standard_5"
                 android:gravity="center"
                 android:drawableEnd="@drawable/ic_star_yellow_24dp"
-                mutableText="@{viewModel.getAverageRating()}"
+                averageRatingText="@{viewModel.getAverageRating()}"
                 android:textColor="@color/textColor"
                 android:layout_toEndOf="@+id/iv_row_pin_list_item_image"/>
         <ImageButton
                 android:id="@+id/ib_row_pin_list_item_statistics"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/standard_5"
-                android:background="@null"
                 android:src="@drawable/statistics_logo"
+                android:background="@drawable/background_with_rounded_border"
                 android:layout_below="@id/tv_row_pin_list_item_address"
                 android:layout_marginLeft="@dimen/standard_12"
                 android:layout_marginTop="@dimen/standard_12"

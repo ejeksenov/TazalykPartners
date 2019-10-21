@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="viewModel"
+                type="kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinDetailedInfoViewModel"
+        />
+    </data>
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                           xmlns:tools="http://schemas.android.com/tools"
+                                           android:layout_width="match_parent"
+                                           android:layout_height="match_parent"
+                                           android:fillViewport="true"
+                                           android:scrollbars="none"
+                                           android:overScrollMode="never"
+                                           tools:context=".ui.pinDetailedInfo.PinDetailedInfoFragment">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+            <RelativeLayout
+                    android:id="@+id/layout_pin_detailed_info_peek_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_16"
+                    android:layout_marginRight="@dimen/standard_16"
+                    android:background="@drawable/background_bottom_layout_border_white"
+                    android:paddingTop="@dimen/standard_10"
+                    android:paddingBottom="@dimen/standard_10">
+
+                <ImageView
+                        android:id="@+id/iv_pin_detailed_info_imageLink"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        imageUrl="@{viewModel.getPinViewModel().getLogo()}"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/pin_logo_placeholder"/>
+
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_name_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/standard_5"
+                        android:layout_marginRight="@dimen/standard_5"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_imageLink"
+                        mutableText="@{viewModel.getPinViewModel().getName()}"
+                        android:textColor="@color/textColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_bonus_accrual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_pin_detailed_info_name_point"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/standard_8"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_imageLink"
+                        android:background="@drawable/background_round_corner_total_trash"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/standard_10"
+                        android:paddingTop="@dimen/standard_3"
+                        android:paddingRight="@dimen/standard_10"
+                        android:paddingBottom="@dimen/standard_3"
+                        android:text="@string/bonus_accrual"
+                        android:textColor="@color/mainBackgroundColor"
+                        android:textSize="12sp"
+                        android:textStyle="normal|bold"/>
+
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_average_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standard_8"
+                        android:layout_marginLeft="@dimen/standard_5"
+                        android:layout_marginRight="@dimen/standard_5"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_imageLink"
+                        android:gravity="center_vertical"
+                        averageRatingText="@{viewModel.getPinViewModel().getAverageRating()}"
+                        android:textColor="@color/textColor"
+                        android:layout_below="@+id/tv_pin_detailed_info_bonus_accrual"
+                />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/layout_pin_detailed_info_point_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_16"
+                    android:layout_marginRight="@dimen/standard_16"
+                    android:background="@drawable/background_bottom_layout_border_white"
+                    android:paddingTop="@dimen/standard_10"
+                    android:paddingBottom="@dimen/standard_10">
+
+                <ImageView
+                        android:id="@+id/iv_pin_detailed_info_address_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/point_full_info_location_icon"/>
+
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_point_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_16"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_address_icon"
+                        mutableText="@{viewModel.getPinViewModel().getAddress()}"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/layout_pin_detailed_info_phone_call"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_16"
+                    android:layout_marginRight="@dimen/standard_16"
+                    android:background="@drawable/background_bottom_layout_border_white"
+                    android:paddingTop="@dimen/standard_10"
+                    android:paddingBottom="@dimen/standard_10">
+
+                <ImageView
+                        android:id="@+id/iv_pin_detailed_info_phone_call_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/point_full_info_call_icon"/>
+
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_phone_call"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_16"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_phone_call_icon"
+                        mutableText="@{viewModel.getPinViewModel().getPhone()}"
+                        android:textColor="@color/mainBackgroundColor"
+                        android:textSize="14sp"/>
+
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_phone_call_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_pin_detailed_info_phone_call"
+                        android:layout_marginStart="@dimen/standard_16"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_phone_call_icon"
+                        mutableText="@{viewModel.getPinViewModel().getPhoneName()}"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_16"
+                    android:layout_marginRight="@dimen/standard_16"
+                    android:background="@drawable/background_bottom_layout_border_white"
+                    android:paddingTop="@dimen/standard_10"
+                    android:paddingBottom="@dimen/standard_10">
+
+                <ImageView
+                        android:id="@+id/iv_pin_detailed_info_working_time_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/point_full_info_time_icon"/>
+
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_working_time_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_16"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_working_time_icon"
+                        workingScheduleText="@{viewModel.getTextHashMap()}"
+                        android:drawablePadding="@dimen/standard_4"
+                        android:gravity="center"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_pin_detailed_info_working_time_schedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        adapter="@{viewModel.getPinWorkTimeAdapter()}"
+                        android:layout_below="@+id/tv_pin_detailed_info_working_time_status"
+                        android:layout_marginTop="@dimen/standard_4"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_working_time_icon"
+                />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_16"
+                    android:layout_marginRight="@dimen/standard_16"
+                    android:background="@drawable/background_bottom_layout_border_white"
+                    android:paddingTop="@dimen/standard_10"
+                    android:paddingBottom="@dimen/standard_10">
+
+                <ImageView
+                        android:id="@+id/iv_pin_detailed_info_take_type_ic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/point_full_info_take_icon"/>
+
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_take_type_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_16"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_take_type_ic"
+                        android:text="@string/pin_taking"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_pin_detailed_info_take_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        adapter="@{viewModel.getPinTakeTypeAdapter()}"
+                        android:layout_below="@+id/tv_pin_detailed_info_take_type_title"
+                        android:layout_marginStart="@dimen/standard_16"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_take_type_ic"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/layout_pin_detailed_info_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_16"
+                    android:layout_marginRight="@dimen/standard_16"
+                    android:background="@drawable/background_bottom_layout_border_white"
+                    android:paddingTop="@dimen/standard_10"
+                    android:paddingBottom="@dimen/standard_10">
+                <ImageView
+                        android:id="@+id/iv_pin_detailed_info_note_ic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/noticement_logo"/>
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_note_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_16"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_note_ic"
+                        android:text="@string/pin_note"
+                        android:textColor="@color/textColor"
+                        android:textSize="14sp"/>
+                <TextView
+                        android:id="@+id/tv_pin_detailed_info_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_pin_detailed_info_note_title"
+                        android:layout_marginTop="@dimen/standard_4"
+                        android:layout_marginStart="@dimen/standard_16"
+                        mutableText="@{viewModel.getPinViewModel().getDescription()}"
+                        android:layout_toEndOf="@+id/iv_pin_detailed_info_note_ic"
+                        android:textSize="12sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/vp_pin_detailed_info_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        pagerAdapter="@{viewModel.getPinImageSliderAdapter()}"
+                        android:layout_alignParentTop="true"/>
+
+                <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_pin_detailed_info_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

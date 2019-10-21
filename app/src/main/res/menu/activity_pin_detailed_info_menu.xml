@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_edit_pin_data"
+          android:title=""
+          android:icon="@drawable/ic_edit_white_24dp"
+          android:orderInCategory="100"
+          app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_pin_statistics"
+        android:title=""
+        android:icon="@drawable/statistics_logo"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"/>
+</menu>

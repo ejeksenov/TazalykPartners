@@ -23,5 +23,55 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="ask_sign_out">Вы хотите выйти из аккаунта?</string>
+    <string name="yet_no_comment">Пока нет отзывов</string>
+    <string name="detailed_info">Подробно</string>
+    <string name="bonus_accrual">Начисление бонусов</string>
+    <string name="schedule">График работы:</string>
+    <string name="pin_taking">Принимают:</string>
+    <string name="pin_note">Примечание:</string>
+
+
+    <string-array name="waste_id">
+        <item>recycle,макулатура,all,paper,paper_detailed_info</item>
+        <item>recycle,картон,all,cardboard,cardboard_detailed_info</item>
+        <item>recycle,стекло,all,glass,glass_detailed_info</item>
+        <item>recycle,пластик,PET.HDPE.PVC.LDPE.PP.PS.OTHER.,plastic,plastic_detailed_info</item>
+        <item>recycle,алюминий,all,aluminium,aluminium_detailed_info</item>
+        <item>recycle,тетра Пак,all,tetrapak,tetrapak_detailed_info</item>
+        <item>recycle,текстиль,all,textile,textile_detailed_info</item>
+        <item>recycle,электроника,all,electronic,electronics_detailed_info</item>
+        <item>recycle,железо,all,metal,metall_detailed_info</item>
+        <item>recycle,шины,all,tires,tires_detailed_info</item>
+        <item>recycle,другое,all,another,another_detailed_info</item>
+
+        <item>utilization,макулатура,all,paper,utilization_paper_detailed_info</item>
+        <item>utilization,электроника,all,electronic,utilization_electronics_detailed_info</item>
+        <item>utilization,аккумуляторы,all,accumulator,accumulator_detailed_info</item>
+        <item>utilization,батарейки,all,battery,battery_detailed_info</item>
+        <item>utilization,лампочки,all,bulb,bulb_detailed_info</item>
+        <item>utilization,ртутьсодержащие отходы,all,mercury_containing_waste,mercury_containing_waste_detailed_info</item>
+        <item>utilization,авто,all,auto,auto_detailed_info</item>
+        <item>utilization,медицинское,all,med,medical_detailed_info</item>
+        <item>utilization,пищевые отходы,all,food_waste,food_waste_detailed_info</item>
+
+        <item>blago,одежда,all,clothes,clothes_detailed_info</item>
+        <item>blago,продукты,all,products,products_detailed_info</item>
+        <item>blago,игрушки,all,toys,toys_detailed_info</item>
+        <item>blago,книги,all,books,books_detailed_info</item>
+        <item>blago,электроника,all,electronic,blago_electronics_detailed_info</item>
+        <item>blago,мебель,all,furniture,furniture_detailed_info</item>
+        <item>blago,другое,all,another,blago_another_detailed_info</item>
+    </string-array>
+
+
+    <string-array name="days_of_week">
+        <item>ПН</item>
+        <item>ВТ</item>
+        <item>СР</item>
+        <item>ЧТ</item>
+        <item>ПТ</item>
+        <item>СБ</item>
+        <item>ВС</item>
+    </string-array>
 
 </resources>

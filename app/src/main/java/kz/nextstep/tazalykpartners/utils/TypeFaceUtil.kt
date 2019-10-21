@@ -2,6 +2,7 @@ package kz.nextstep.tazalykpartners.utils
 
 import android.content.Context
 import android.graphics.Typeface
+import android.util.Log
 
 object TypefaceUtil {
     fun overrideFont(context: Context, defaultFontNameToOverride: String, customFontFileNameInAssets: String) {
@@ -12,7 +13,9 @@ object TypefaceUtil {
             defaultFontTypefaceField.isAccessible = true
             defaultFontTypefaceField.set(null, customFontTypeface)
         } catch (e: Exception) {
-            //Log.e("Error set font type","Can not set custom font " + customFontFileNameInAssets + " instead of " + defaultFontNameToOverride);
+            Log.e("Error set font type",
+                "Can not set custom font $customFontFileNameInAssets instead of $defaultFontNameToOverride"
+            )
         }
 
     }

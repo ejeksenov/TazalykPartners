@@ -5,6 +5,8 @@ object AppConstants{
     const val userTree = "Users_new"
     const val requestsTree = "Requests"
     const val userPartnerTree = "UserPartner"
+    const val markingsTree = "Markings"
+
     const val emptyParam = ""
     const val SUCCESS_PIN_DIRECTOR = "success_pin_director"
 

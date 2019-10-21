@@ -27,7 +27,7 @@ class MainApplication: Application() {
 
         inject()
 
-        TypefaceUtil.overrideFont(this.applicationContext, "SERIF", "fonts/Montserrat-Regular.ttf")
+        TypefaceUtil.overrideFont(applicationContext, "SERIF", "fonts/Montserrat-Regular.ttf")
 
         FirebaseHelper.setPersistanceEnabled()
 

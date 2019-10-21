@@ -1,17 +1,18 @@
 package kz.nextstep.tazalykpartners.ui.pinlist
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kz.nextstep.domain.model.Pin
-import kz.nextstep.movify.utils.extension.getParentActivity
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.RowPinListItemBinding
-import kz.nextstep.tazalykpartners.ui.addEditPin.AddEditPinActivity
 
 class PinListAdapter: RecyclerView.Adapter<PinListAdapter.PinViewHolder>() {
+
+    companion object {
+        var onStatisticsBtnClick: ((String) -> Unit)? = null
+    }
 
     private lateinit var pinListHashMap: HashMap<String,Pin>
     private var pinList: MutableList<Pin> = ArrayList()
@@ -29,8 +30,7 @@ class PinListAdapter: RecyclerView.Adapter<PinListAdapter.PinViewHolder>() {
     override fun onBindViewHolder(holder: PinViewHolder, position: Int) {
         holder.bind(pinIdList[position], pinList[position])
         holder.binding.ibRowPinListItemStatistics.setOnClickListener {
-            val activity = holder.binding.root.getParentActivity()
-            //TODO go to statistics and put extra pinId
+            onStatisticsBtnClick?.invoke(pinIdList[position])
         }
     }
 
@@ -42,11 +42,13 @@ class PinListAdapter: RecyclerView.Adapter<PinListAdapter.PinViewHolder>() {
 
         for (key in pinListHashMap.keys) {
             pinIdList.add(key)
-            pinList.add(pinListHashMap[key]!!)
+            pinListHashMap[key]?.let { pinList.add(it) }
         }
 
         notifyDataSetChanged()
     }
+
+
 
     var onItemClick: ((String) -> Unit)? = null
 

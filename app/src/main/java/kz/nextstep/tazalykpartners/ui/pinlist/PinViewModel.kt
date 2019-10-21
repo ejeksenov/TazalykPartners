@@ -36,7 +36,7 @@ class PinViewModel : BaseViewModel() {
     fun bind(pinEntity: Pin, pinId: String) {
         name.value = pinEntity.name
         address.value = pinEntity.address
-        description.value = pinEntity.description
+        description.value =  if (pinEntity.description != null && pinEntity.description != "") pinEntity.description else "Пока примечание отсутствует"
         phone.value = pinEntity.phone
         phoneName.value = pinEntity.phoneName
         workTime.value = pinEntity.workTime
@@ -86,4 +86,16 @@ class PinViewModel : BaseViewModel() {
     fun getAddress() = address
     fun getLogo() = logo
     fun getAverageRating() = averageRating
+    fun getDescription() = description
+    fun getPhone() = phone
+    fun getPhoneName() = phoneName
+    fun getWorkTime() = workTime
+    fun getQrCode() = qrCode
+    fun getImageLink() = imageLink
+    fun getCity() = city
+    fun getCountry() = country
+    fun getWasteId() = wasteId
+    fun getPartner() = partner
+    fun getLatlng() = latlng
+    fun getVerificationCode() = verificationCode
 }

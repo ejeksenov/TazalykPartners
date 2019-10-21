@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+                name="viewModel"
+                type="kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinTakeTypeViewModel"/>
+    </data>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/standard_4"
+                    android:paddingBottom="@dimen/standard_4">
+
+        <ImageView
+                android:id="@+id/iv_row_take_type_item_logo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                imageResourceByName="@{viewModel.getTakeTypeLogo()}"
+                android:layout_centerVertical="true"
+                android:paddingEnd="@dimen/standard_3"
+                android:paddingStart="@dimen/standard_3"/>
+
+        <TextView
+                android:id="@+id/tv_row_take_type_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_toEndOf="@+id/iv_row_take_type_item_logo"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                mutableText="@{viewModel.getTakeTypeName()}"
+                android:textColor="@color/textColor"
+                android:textSize="12sp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_row_take_type_item_marking"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                adapter="@{viewModel.getPinTakeTypeMarkingAdapter()}"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/standard_5"
+                android:overScrollMode="never"
+                android:layout_toEndOf="@+id/tv_row_take_type_item_name"
+        />
+    </RelativeLayout>
+</layout>

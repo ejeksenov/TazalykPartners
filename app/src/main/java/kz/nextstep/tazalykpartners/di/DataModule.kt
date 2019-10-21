@@ -5,19 +5,11 @@ import android.view.inspector.PropertyMapper
 import dagger.Module
 import dagger.Provides
 import kz.nextstep.data.FirebaseHelper
-import kz.nextstep.data.mapper.PinMapper
-import kz.nextstep.data.mapper.RequestsMapper
-import kz.nextstep.data.mapper.UserMapper
-import kz.nextstep.data.mapper.UserPartnerMapper
-import kz.nextstep.data.repository.PinRepositoryImpl
-import kz.nextstep.data.repository.RequestsRepositoryImpl
-import kz.nextstep.data.repository.UserPartnerRepositoryImpl
-import kz.nextstep.data.repository.UserRepositoryImpl
+import kz.nextstep.data.mapper.*
+import kz.nextstep.data.repository.*
 import kz.nextstep.domain.PinRepository
-import kz.nextstep.domain.model.Pin
-import kz.nextstep.domain.model.Requests
-import kz.nextstep.domain.model.User
-import kz.nextstep.domain.model.UserPartner
+import kz.nextstep.domain.model.*
+import kz.nextstep.domain.repository.MarkingRepository
 import kz.nextstep.domain.repository.RequestRepository
 import kz.nextstep.domain.repository.UserPartnerRepository
 import kz.nextstep.domain.repository.UserRepository
@@ -33,6 +25,11 @@ class DataModule(private val mainApplication: Application) {
 
     @Provides
     fun provideApplication() = mainApplication
+
+    @Provides
+    fun provideMarkingMapper(): MarkingMapper {
+        return MarkingMapper
+    }
 
     @Provides
     fun providePinMapper(): PinMapper {
@@ -154,6 +151,24 @@ class DataModule(private val mainApplication: Application) {
         else {
             return object : RequestRepository {
                 override fun getRequestsByPinId(pinId: String): Observable<HashMap<String, Requests>> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+            }
+        }
+    }
+
+    @Singleton
+    @Provides
+    fun provideMarkingMapperImpl(markingMapper: MarkingMapper, firebaseHelper: FirebaseHelper, mainApplication: Application): MarkingRepository {
+        if (firebaseHelper.playServiceStatus(mainApplication))
+            return MarkingRepositoryImpl(markingMapper)
+        else {
+            return object : MarkingRepository {
+                override fun getMarkingListByType(
+                    wasteType: String,
+                    wasteTypeMarking: String
+                ): Observable<HashMap<String, Marking>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 

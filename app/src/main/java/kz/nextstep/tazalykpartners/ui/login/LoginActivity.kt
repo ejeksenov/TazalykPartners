@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
@@ -14,10 +15,12 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_login.*
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
 import kz.nextstep.tazalykpartners.utils.CustomProgressBar
+import kz.nextstep.tazalykpartners.utils.TypefaceUtil
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,21 +38,21 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        customProgressBar = CustomProgressBar(this)
+
         if (viewModel.getCurrentUser()) {
             viewModel.getUserRole()
         } else{
             setContentView(R.layout.activity_login)
-
-
-            customProgressBar = CustomProgressBar(this)
-
             edtLoginEmail = findViewById(R.id.edt_login_email)
             edtLoginPassword = findViewById(R.id.edt_login_password)
             btnLoginSignIn = findViewById(R.id.btn_login_sign_in)
             btnLoginForgotPassword = findViewById(R.id.btn_login_forgot_password)
             layoutLoginPassword = findViewById(R.id.layout_login_password)
             layoutLoginEmail = findViewById(R.id.layout_login_email)
+
 
             btnLoginSignIn?.setOnClickListener {
                 onStartSignIn()

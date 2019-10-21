@@ -18,14 +18,17 @@ import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.squareup.picasso.Picasso
+import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.ui.SampleScreen
 import kz.nextstep.tazalykpartners.ui.editProfile.EditProfileActivity
 import kz.nextstep.tazalykpartners.ui.filterByDate.FilterByDateActivity
 import kz.nextstep.tazalykpartners.ui.filterByType.FilterByTypeActivity
 import kz.nextstep.tazalykpartners.ui.login.LoginActivity
+import kz.nextstep.tazalykpartners.ui.pinlist.PinListAdapter
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListFragment
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsFragment
 import kz.nextstep.tazalykpartners.utils.CircleTransform
@@ -75,8 +78,23 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         loadNavHeader()
         selectNavMenu()
         selectToolbarTitle()
-        router.navigateTo(SampleScreen(PinListFragment.newInstance()))
+        router.replaceScreen(SampleScreen(PinListFragment.newInstance()))
 
+        pinItemStatitisticsClicked()
+
+    }
+
+    private fun pinItemStatitisticsClicked() {
+        PinListAdapter.onStatisticsBtnClick = {
+            cntPressed++
+            navItemIndex = 3
+            val fragment = StatisticsFragment.newInstance()
+            val arg = bundleOf(AppConstants.PIN_ID to it)
+            fragment.arguments = arg
+            router.navigateTo(SampleScreen(fragment))
+            navView.menu.getItem(0).isChecked = false
+            selectToolbarTitle()
+        }
     }
 
     private fun loadNavHeader() {
@@ -100,11 +118,8 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
                 navItemIndex = if (navItemIndex == 0) 1 else 0
                 selectNavMenu()
                 selectToolbarTitle()
-                super.onBackPressed()
             }
-            else
-                finish()
-
+            super.onBackPressed()
         }
     }
 
@@ -125,7 +140,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
                 } else {
                     Intent(this, FilterByDateActivity::class.java)
                 }
-                startActivityForResult(intent,REQUEST_CODE)
+                startActivityForResult(intent, REQUEST_CODE)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -139,14 +154,22 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
                 if (navItemIndex != 0) {
                     cntPressed++
                     navItemIndex = 0
-                    router.navigateTo(SampleScreen(PinListFragment.newInstance()))
+                    if (cntPressed >= 2) {
+                        cntPressed = 0
+                        router.exit()
+                    } else
+                        router.navigateTo(SampleScreen(PinListFragment.newInstance()))
                 }
             }
             R.id.nav_statistics -> {
                 if (navItemIndex != 1) {
-                    cntPressed++
+                    if (navItemIndex == 3)
+                        router.replaceScreen(SampleScreen(StatisticsFragment.newInstance()))
+                    else {
+                        cntPressed++
+                        router.navigateTo(SampleScreen(StatisticsFragment.newInstance()))
+                    }
                     navItemIndex = 1
-                    router.navigateTo(SampleScreen(StatisticsFragment.newInstance()))
                 }
             }
             R.id.nav_edit_profile -> {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layout_row_pin_working_time_schedule_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="44dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/standard_8">
+    <TextView
+        android:id="@+id/tv_row_pin_working_time_schedule_item_day_of_week"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/tv_row_pin_working_time_schedule_item"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="@dimen/standard_12"/>
+    <TextView
+        android:id="@+id/tv_row_pin_working_time_schedule_item_lunch_time"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/standard_8"
+        android:drawableTop="@drawable/ic_lens_gray_4dp"
+        android:drawablePadding="@dimen/standard_8"/>
+</LinearLayout>
