@@ -7,6 +7,7 @@ import kz.nextstep.tazalykpartners.di.DaggerAppComponent
 import kz.nextstep.tazalykpartners.di.DataModule
 import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
+import kz.nextstep.tazalykpartners.ui.pinComments.PinCommentsViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinDetailedInfoViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinTakeTypeViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.RequestViewModel
@@ -34,6 +35,7 @@ open class BaseViewModel : ViewModel() {
             is PinDetailedInfoViewModel -> injector.inject(this)
             is PinTakeTypeViewModel -> injector.inject(this)
             is RequestViewModel -> injector.inject(this)
+            is PinCommentsViewModel -> injector.inject(this)
         }
     }
 

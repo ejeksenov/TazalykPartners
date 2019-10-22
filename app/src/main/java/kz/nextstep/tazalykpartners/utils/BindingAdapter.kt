@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -102,6 +103,16 @@ fun setPagerAdapter(view: ViewPager, adapter: PagerAdapter) {
     view.adapter = adapter
 }
 
+/*@BindingAdapter("toolbarTitle")
+fun setToolbarTitle(view: Toolbar, text: MutableLiveData<String>?) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer {
+            view.title = it
+        })
+    }
+}*/
+
 @BindingAdapter("imageUrl")
 fun setImageUrl(view: ImageView, text: MutableLiveData<String>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
@@ -121,7 +132,7 @@ fun setCircleImageUrl(view: ImageView, text: MutableLiveData<String>?) {
     if (parentActivity != null && text != null) {
         text.observe(parentActivity, Observer { value ->
             if (value != "")
-                Picasso.get().load(value).transform(CircleTransform()).into(view)
+                Picasso.get().load(value).placeholder(R.drawable.user_placeholder_image).transform(CircleTransform()).into(view)
         })
     }
 }

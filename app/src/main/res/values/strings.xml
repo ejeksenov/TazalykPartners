@@ -29,6 +29,7 @@
     <string name="schedule">График работы:</string>
     <string name="pin_taking">Принимают:</string>
     <string name="pin_note">Примечание:</string>
+    <string name="comments">Отзывы</string>
 
 
     <string-array name="waste_id">

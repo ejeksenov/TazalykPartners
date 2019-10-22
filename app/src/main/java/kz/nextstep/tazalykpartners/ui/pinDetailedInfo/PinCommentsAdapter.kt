@@ -23,6 +23,7 @@ class PinCommentsAdapter: RecyclerView.Adapter<PinCommentsAdapter.PinCommentsVie
 
     fun updatePinCommentsList(pinCommentsList: MutableList<Requests>) {
         this.pinCommentsList = pinCommentsList
+        this.pinCommentsList.reverse()
         notifyDataSetChanged()
     }
 

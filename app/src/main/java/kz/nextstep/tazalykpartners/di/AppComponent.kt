@@ -4,6 +4,7 @@ import dagger.Component
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
+import kz.nextstep.tazalykpartners.ui.pinComments.PinCommentsViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinDetailedInfoViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinTakeTypeViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.RequestViewModel
@@ -23,4 +24,5 @@ interface AppComponent {
     fun inject(pinDetailedInfoViewModel: PinDetailedInfoViewModel)
     fun inject(pinTakeTypeViewModel: PinTakeTypeViewModel)
     fun inject(requestViewModel: RequestViewModel)
+    fun inject(pinCommentsViewModel: PinCommentsViewModel)
 }
