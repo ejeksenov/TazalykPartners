@@ -2,7 +2,10 @@ package kz.nextstep.tazalykpartners.utils
 
 import android.graphics.Typeface
 import android.text.Html
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -41,6 +44,32 @@ fun setAverageRatingText(view: TextView, text: MutableLiveData<String>?) {
     }
 }
 
+@BindingAdapter("ratingProgress")
+fun setRating(view: RatingBar, text: MutableLiveData<String>?){
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer {
+            //view.progress = it.toInt()
+            view.rating = it.toFloat()
+        })
+    }
+
+}
+
+@BindingAdapter("commentsButtonText")
+fun setCommentsButtonText(view: Button, textHashmapSize: MutableLiveData<Int>?) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && textHashmapSize != null) {
+        textHashmapSize.observe(parentActivity, Observer {
+            if (it > 0) {
+                view.visibility = View.VISIBLE
+                view.text = "Посмотреть все комментарии($it)"
+            } else
+                view.visibility = View.GONE
+        })
+    }
+}
+
 @BindingAdapter("mutableHtmlText")
 fun setMutableHtmlText(view: TextView, text: MutableLiveData<String>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
@@ -56,8 +85,8 @@ fun setWorkingScheduleText(view: TextView, textHashMap: MutableLiveData<HashMap<
         textHashMap.observe(parentActivity, Observer {
             for (key in it.keys) {
                 view.text = key
-                if (it[key]!!) view.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.ic_lens_green_10dp, 0)
-                else view.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.ic_lens_red_10dp, 0)
+                if (it[key]!!) view.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_lens_green_10dp, 0)
+                else view.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_lens_red_10dp, 0)
             }
         })
     }

@@ -277,7 +277,18 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_pin_detailed_info_comments"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/standard_16"
+                    android:paddingEnd="@dimen/standard_16"
+                    adapter="@{viewModel.getPinCommentsAdapter()}"
+            />
+            <Button
+                    android:id="@+id/btn_pin_detailed_info_see_all_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    commentsButtonText="@{viewModel.getCommentsHashMapSize()}"
+                    android:background="@color/white"
+            />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

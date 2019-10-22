@@ -17,7 +17,7 @@ class PinImageSliderAdapter: PagerAdapter(){
     }
 
     override fun getCount(): Int {
-        return if (::imageUrlList.isInitialized) imageUrlList.size - 1 else 0
+        return if (::imageUrlList.isInitialized) imageUrlList.size else 0
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {

@@ -9,6 +9,7 @@ import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinDetailedInfoViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinTakeTypeViewModel
+import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.RequestViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
 
@@ -32,6 +33,7 @@ open class BaseViewModel : ViewModel() {
             is PinViewModel -> injector.inject(this)
             is PinDetailedInfoViewModel -> injector.inject(this)
             is PinTakeTypeViewModel -> injector.inject(this)
+            is RequestViewModel -> injector.inject(this)
         }
     }
 

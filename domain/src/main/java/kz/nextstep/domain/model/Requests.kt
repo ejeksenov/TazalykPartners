@@ -11,5 +11,6 @@ data class Requests(
     val city: String? = "",
     val rating_grade: String? = "",
     val pin_id: String? = "",
-    val user_id: String? = ""
+    val user_id: String? = "",
+    val comment_date: String? = ""
 )

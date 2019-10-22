@@ -4,7 +4,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.Pin
+import kz.nextstep.domain.model.Requests
 import kz.nextstep.domain.usecase.pin.GetPinUseCase
+import kz.nextstep.domain.usecase.request.GetRequestsByPinIdUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
@@ -12,7 +14,6 @@ import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
 import kz.nextstep.tazalykpartners.utils.TakeType
 import kz.nextstep.tazalykpartners.utils.WorkTime
 import rx.Subscriber
-import java.time.DayOfWeek
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -25,9 +26,13 @@ class PinDetailedInfoViewModel : BaseViewModel() {
     @Inject
     lateinit var getPinUseCase: GetPinUseCase
 
+    @Inject
+    lateinit var getRequestsByPinIdUseCase: GetRequestsByPinIdUseCase
+
     val pinImageSliderAdapter = PinImageSliderAdapter()
     val pinTakeTypeAdapter = PinTakeTypeAdapter()
     val pinWorkTimeAdapter = PinWorkTimeAdapter()
+    val pinCommentsAdapter = PinCommentsAdapter()
 
     val pinViewModel = PinViewModel()
 
@@ -36,12 +41,14 @@ class PinDetailedInfoViewModel : BaseViewModel() {
     private var isPointOpen = false
 
     private val textHashMap = MutableLiveData<HashMap<String, Boolean>>()
+    private var commentsHashMapSize = MutableLiveData<Int>()
 
     fun getPinById(pinId: String, wasteIdArray: Array<String>) {
         getPinUseCase.execute(object : Subscriber<HashMap<String, Pin>>() {
             override fun onNext(t: HashMap<String, Pin>?) {
                 for (key in t?.keys!!) {
                     val pin = t[key]!!
+                    onGetUserComments(pinId)
                     pinViewModel.bind(pin, pinId)
                     onGetImageUrlList(pin.imageLink)
                     onGetWasteTypeList(pin.wasteId, wasteIdArray)
@@ -66,7 +73,8 @@ class PinDetailedInfoViewModel : BaseViewModel() {
             if (currentDayOfWeek < workTimeList.size) {
                 val workTimeData = workTimeList[currentDayOfWeek]
                 val todayText = "Сегодня "
-                val workTimeScheduleText = if (workTimeData.workingTime == "--") todayText + "выходной" else todayText + workTimeData.workingTime
+                val workTimeScheduleText =
+                    if (workTimeData.workingTime == "--") todayText + "выходной" else todayText + workTimeData.workingTime
                 val workTimeScheduleHashMap: HashMap<String, Boolean> = HashMap()
                 workTimeScheduleHashMap[workTimeScheduleText] = isPointOpen
                 textHashMap.value = workTimeScheduleHashMap
@@ -76,6 +84,40 @@ class PinDetailedInfoViewModel : BaseViewModel() {
     }
 
     fun getTextHashMap() = textHashMap
+    fun getCommentsHashMapSize() = commentsHashMapSize
+
+    private fun onGetUserComments(pinId: String) {
+        getRequestsByPinIdUseCase.execute(object : Subscriber<HashMap<String, Requests>>() {
+            override fun onNext(t: HashMap<String, Requests>?) {
+                val requestsHashMap: HashMap<String, Requests> = HashMap()
+                for (key in t?.keys!!) {
+                    val request = t[key]
+                    val rating_grade = request?.rating_grade
+                    if (rating_grade != null && rating_grade != "") {
+                        //comments by users
+                        requestsHashMap[key] = request
+                    }
+                }
+                if (requestsHashMap.size > 0) {
+                    val pinCommentsList: MutableList<Requests> = ArrayList()
+                    for ((count, key) in requestsHashMap.keys.withIndex()) {
+                        if (count < 3)
+                            pinCommentsList.add(requestsHashMap[key]!!)
+                    }
+                    commentsHashMapSize.value = requestsHashMap.size
+                    pinCommentsAdapter.updatePinCommentsList(pinCommentsList)
+                }
+
+            }
+
+            override fun onCompleted() {}
+
+            override fun onError(e: Throwable?) {
+                Toast.makeText(MainApplication.INSTANCE?.applicationContext, e?.message, Toast.LENGTH_SHORT).show()
+            }
+
+        }, pinId, AppConstants.emptyParam)
+    }
 
     private fun onGetDayOfWeek(): Int {
         val calendar = Calendar.getInstance()

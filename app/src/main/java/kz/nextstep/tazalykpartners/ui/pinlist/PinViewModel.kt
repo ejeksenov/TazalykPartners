@@ -9,6 +9,7 @@ import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
 import rx.Subscriber
+import java.math.RoundingMode
 import javax.inject.Inject
 
 class PinViewModel : BaseViewModel() {
@@ -53,10 +54,9 @@ class PinViewModel : BaseViewModel() {
     }
 
     private fun onGetAverageRating(pinId: String) {
-        var pinAverage: Double
         getRequestsByPinIdUseCase.execute(object : Subscriber<HashMap<String, Requests>>() {
             override fun onNext(t: HashMap<String, Requests>?) {
-                pinAverage = 0.0
+                var pinAverage = 0.0
                 var cnt = 0
                 for (key in t?.keys!!) {
                     val request = t[key]
@@ -64,13 +64,12 @@ class PinViewModel : BaseViewModel() {
                     if (rating_grade != null && rating_grade != "") {
                         cnt++
                         pinAverage += rating_grade.toDouble()
+
                     }
                 }
-
                 if (pinAverage != 0.0 && cnt != 0)
                     pinAverage /= cnt
-
-                averageRating.value = pinAverage.toString()
+                averageRating.value = pinAverage.toBigDecimal().setScale(1, RoundingMode.UP).toString()
             }
 
             override fun onCompleted() {}
@@ -98,4 +97,5 @@ class PinViewModel : BaseViewModel() {
     fun getPartner() = partner
     fun getLatlng() = latlng
     fun getVerificationCode() = verificationCode
+
 }

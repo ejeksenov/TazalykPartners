@@ -49,7 +49,8 @@
         <item>utilization,аккумуляторы,all,accumulator,accumulator_detailed_info</item>
         <item>utilization,батарейки,all,battery,battery_detailed_info</item>
         <item>utilization,лампочки,all,bulb,bulb_detailed_info</item>
-        <item>utilization,ртутьсодержащие отходы,all,mercury_containing_waste,mercury_containing_waste_detailed_info</item>
+        <item>utilization,ртутьсодержащие отходы,all,mercury_containing_waste,mercury_containing_waste_detailed_info
+        </item>
         <item>utilization,авто,all,auto,auto_detailed_info</item>
         <item>utilization,медицинское,all,med,medical_detailed_info</item>
         <item>utilization,пищевые отходы,all,food_waste,food_waste_detailed_info</item>

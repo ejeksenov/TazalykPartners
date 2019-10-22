@@ -15,6 +15,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.pinComments.PinCommentsActivity">
+        </activity>
         <activity android:name=".ui.pinDetailedInfo.PinDetailedInfoActivity">
         </activity>
         <activity

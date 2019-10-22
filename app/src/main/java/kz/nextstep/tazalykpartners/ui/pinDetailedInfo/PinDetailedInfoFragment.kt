@@ -1,5 +1,6 @@
 package kz.nextstep.tazalykpartners.ui.pinDetailedInfo
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,12 +10,14 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.nextstep.domain.utils.AppConstants
 
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.PinDetailedInfoFragmentBinding
+import kz.nextstep.tazalykpartners.ui.pinComments.PinCommentsActivity
 import kz.nextstep.tazalykpartners.utils.DividerItemDecorator
 
 class PinDetailedInfoFragment : Fragment() {
@@ -43,14 +46,27 @@ class PinDetailedInfoFragment : Fragment() {
         if (bundle != null) {
             initWorkingTimeView()
             initWasteTypeView()
+            initPinCommentsView()
             val pinId = bundle.getString(AppConstants.PIN_ID)
-            if (pinId != null && pinId != "")
+            if (pinId != null && pinId != "") {
                 viewModel.getPinById(pinId, wasteIdArray)
+                binding.btnPinDetailedInfoSeeAllComments.setOnClickListener {
+                    val intent = Intent(activity, PinCommentsActivity::class.java)
+                    intent.putExtra(AppConstants.PIN_ID, pinId)
+                    startActivity(intent)
+                }
+            }
             onSetViewPager()
         }
 
         binding.viewModel = viewModel
         return binding.root
+    }
+
+    private fun initPinCommentsView() {
+        binding.rvPinDetailedInfoComments.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        binding.rvPinDetailedInfoComments.setHasFixedSize(true)
+        binding.rvPinDetailedInfoComments.layoutManager = LinearLayoutManager(context)
     }
 
     private fun initWorkingTimeView() {

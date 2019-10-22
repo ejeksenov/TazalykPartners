@@ -28,7 +28,7 @@ class RequestsRepositoryImpl(val requestsMapper: RequestsMapper): RequestReposit
                         if (ds != null) {
                             val requestsEntity = ds.getValue(RequestsEntity::class.java)
                             val requests = requestsMapper.map(requestsEntity!!)
-                            if (pinId == requests.pin_id!!) {
+                            if (pinId.contains(requests.pin_id!!)) {
                                 requestHashMap[ds.key!!] = requests
                             }
                         }
@@ -39,7 +39,6 @@ class RequestsRepositoryImpl(val requestsMapper: RequestsMapper): RequestReposit
             }
 
             databaseReference.addValueEventListener(valueEventListener)
-
 
             it.add(Subscriptions.create {
                 databaseReference.removeEventListener(valueEventListener)

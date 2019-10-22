@@ -36,7 +36,7 @@ class PinWorkTimeAdapter : RecyclerView.Adapter<PinWorkTimeAdapter.PinWorkTimeVi
         val workTime = workTimeList[position]
         val dayOfWeekArr = mContext.resources.getStringArray(R.array.days_of_week)
 
-        if (position < dayOfWeekArr.size - 1)
+        if (position < dayOfWeekArr.size)
             holder.tv_row_pin_working_time_schedule_item_day_of_week.text = dayOfWeekArr[position]
 
         var workingTime = workTime.workingTime
