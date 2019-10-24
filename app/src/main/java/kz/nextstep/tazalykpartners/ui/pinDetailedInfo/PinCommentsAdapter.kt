@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.nextstep.domain.model.Requests
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.RowPinCommentsItemBinding
+import java.util.*
 
 class PinCommentsAdapter: RecyclerView.Adapter<PinCommentsAdapter.PinCommentsViewHolder>() {
 
@@ -21,10 +22,18 @@ class PinCommentsAdapter: RecyclerView.Adapter<PinCommentsAdapter.PinCommentsVie
         return if (::pinCommentsList.isInitialized) pinCommentsList.size else 0
     }
 
-    fun updatePinCommentsList(pinCommentsList: MutableList<Requests>) {
-        this.pinCommentsList = pinCommentsList
-        this.pinCommentsList.reverse()
+    fun updatePinCommentsList(pinCommentsList: MutableList<Requests>, size: Int) {
+        onSortByDate(pinCommentsList)
+        if (size <= pinCommentsList.size) {
+            val sortedList: List<Requests> = pinCommentsList.take(size)
+            this.pinCommentsList = sortedList.toMutableList()
+        } else
+            this.pinCommentsList = pinCommentsList
         notifyDataSetChanged()
+    }
+
+    private fun onSortByDate(pinCommentsList: MutableList<Requests>){
+        pinCommentsList.sortByDescending { it.comment_date?.format("MMM dd, yyyy", Locale("ru")) }
     }
 
     override fun onBindViewHolder(holder: PinCommentsViewHolder, position: Int) {

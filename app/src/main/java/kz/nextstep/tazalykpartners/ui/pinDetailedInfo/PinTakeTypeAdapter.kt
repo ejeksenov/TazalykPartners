@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.RowTakeTypeItemLayoutBinding
-import kz.nextstep.tazalykpartners.utils.TakeType
+import kz.nextstep.tazalykpartners.utils.data.TakeType
 
 class PinTakeTypeAdapter : RecyclerView.Adapter<PinTakeTypeAdapter.PinTakeTypeViewHolder>() {
 

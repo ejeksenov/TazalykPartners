@@ -9,10 +9,7 @@ import kz.nextstep.data.mapper.*
 import kz.nextstep.data.repository.*
 import kz.nextstep.domain.PinRepository
 import kz.nextstep.domain.model.*
-import kz.nextstep.domain.repository.MarkingRepository
-import kz.nextstep.domain.repository.RequestRepository
-import kz.nextstep.domain.repository.UserPartnerRepository
-import kz.nextstep.domain.repository.UserRepository
+import kz.nextstep.domain.repository.*
 import kz.nextstep.tazalykpartners.MainApplication
 import rx.Observable
 import java.lang.RuntimeException
@@ -25,6 +22,11 @@ class DataModule(private val mainApplication: Application) {
 
     @Provides
     fun provideApplication() = mainApplication
+
+    @Provides
+    fun provideHistoryPinMapper(): HistoryPinMapper {
+        return HistoryPinMapper
+    }
 
     @Provides
     fun provideMarkingMapper(): MarkingMapper {
@@ -169,6 +171,21 @@ class DataModule(private val mainApplication: Application) {
                     wasteType: String,
                     wasteTypeMarking: String
                 ): Observable<HashMap<String, Marking>> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+            }
+        }
+    }
+
+    @Singleton
+    @Provides
+    fun provideHistoryPinImpl(historyPinMapper: HistoryPinMapper, firebaseHelper: FirebaseHelper, mainApplication: Application): HistoryPinRepository {
+        if (firebaseHelper.playServiceStatus(mainApplication))
+            return HistoryPinImpl(historyPinMapper)
+        else {
+            return object : HistoryPinRepository {
+                override fun getHistoryPinList(pinId: String): Observable<HashMap<String, HistoryPin>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 

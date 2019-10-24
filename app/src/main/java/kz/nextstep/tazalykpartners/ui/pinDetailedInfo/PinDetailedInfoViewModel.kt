@@ -11,8 +11,8 @@ import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
-import kz.nextstep.tazalykpartners.utils.TakeType
-import kz.nextstep.tazalykpartners.utils.WorkTime
+import kz.nextstep.tazalykpartners.utils.data.TakeType
+import kz.nextstep.tazalykpartners.utils.data.WorkTime
 import rx.Subscriber
 import java.util.*
 import javax.inject.Inject
@@ -92,20 +92,18 @@ class PinDetailedInfoViewModel : BaseViewModel() {
                 val requestsHashMap: HashMap<String, Requests> = HashMap()
                 for (key in t?.keys!!) {
                     val request = t[key]
-                    val rating_grade = request?.rating_grade
-                    if (rating_grade != null && rating_grade != "") {
-                        //comments by users
+                    val ratingGrade = request?.rating_grade
+                    if (ratingGrade != null && ratingGrade != "") {
                         requestsHashMap[key] = request
                     }
                 }
                 if (requestsHashMap.size > 0) {
                     val pinCommentsList: MutableList<Requests> = ArrayList()
-                    for ((count, key) in requestsHashMap.keys.withIndex()) {
-                        if (count < 3)
-                            pinCommentsList.add(requestsHashMap[key]!!)
+                    for (key in requestsHashMap.keys) {
+                        pinCommentsList.add(requestsHashMap[key]!!)
                     }
                     commentsHashMapSize.value = requestsHashMap.size
-                    pinCommentsAdapter.updatePinCommentsList(pinCommentsList)
+                    pinCommentsAdapter.updatePinCommentsList(pinCommentsList, 3)
                 }
 
             }
@@ -244,7 +242,14 @@ class PinDetailedInfoViewModel : BaseViewModel() {
                         if (wasTypeItemArr.size >= 3 && item.contains(wasTypeItemArr[1])) {
                             val itemArr = item.split(",")
                             if (itemArr.size >= 5) {
-                                wasteTypeList.add(TakeType(itemArr[0], itemArr[1], wasTypeItemArr[2], itemArr[3]))
+                                wasteTypeList.add(
+                                    TakeType(
+                                        itemArr[0],
+                                        itemArr[1],
+                                        wasTypeItemArr[2],
+                                        itemArr[3]
+                                    )
+                                )
                                 break
                             }
                         }
@@ -261,5 +266,11 @@ class PinDetailedInfoViewModel : BaseViewModel() {
             pinImageSliderAdapter.updatePinImage(imageList)
             pinImageAdapterLiveData.value = true
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getPinUseCase.unsubscribe()
+        getRequestsByPinIdUseCase.unsubscribe()
     }
 }

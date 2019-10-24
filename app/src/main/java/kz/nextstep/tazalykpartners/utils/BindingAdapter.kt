@@ -3,10 +3,7 @@ package kz.nextstep.tazalykpartners.utils
 import android.graphics.Typeface
 import android.text.Html
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.BindingAdapter
@@ -57,16 +54,22 @@ fun setRating(view: RatingBar, text: MutableLiveData<String>?){
 
 }
 
-@BindingAdapter("commentsButtonText")
-fun setCommentsButtonText(view: Button, textHashmapSize: MutableLiveData<Int>?) {
+@BindingAdapter("buttonText")
+fun setButtonText(view: Button, textHashmapSize: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && textHashmapSize != null) {
         textHashmapSize.observe(parentActivity, Observer {
-            if (it > 0) {
-                view.visibility = View.VISIBLE
-                view.text = "Посмотреть все комментарии($it)"
-            } else
-                view.visibility = View.GONE
+            when(view.id) {
+                R.id.btn_pin_detailed_info_see_all_comments -> {
+                    if (it > 3) {
+                        view.visibility = View.VISIBLE
+                        view.text = "Посмотреть все комментарии($it)"
+                    } else
+                        view.visibility = View.GONE
+                }
+                else -> view.text = it.toString()
+            }
+
         })
     }
 }
@@ -132,7 +135,9 @@ fun setCircleImageUrl(view: ImageView, text: MutableLiveData<String>?) {
     if (parentActivity != null && text != null) {
         text.observe(parentActivity, Observer { value ->
             if (value != "")
-                Picasso.get().load(value).placeholder(R.drawable.user_placeholder_image).transform(CircleTransform()).into(view)
+                Picasso.get().load(value).fit().placeholder(R.drawable.user_placeholder_image).transform(CircleTransform()).into(view)
+            else
+                view.setImageResource(R.drawable.user_placeholder_image)
         })
     }
 }
@@ -144,8 +149,21 @@ fun setImageResourceByName(view: ImageView, text: MutableLiveData<String>?) {
         text.observe(parentActivity, Observer { value ->
             if (value != "") {
                 val resId = parentActivity.resources.getIdentifier(value, "drawable", parentActivity.packageName)
+                when(view.id) {
+                    R.id.iv_statistics_history_item_logo -> view.setColorFilter(parentActivity.resources.getColor(R.color.white))
+                }
                 view.setImageResource(resId)
             }
+        })
+    }
+}
+
+@BindingAdapter("progress")
+fun setProgress(progressBar: ProgressBar, text: MutableLiveData<Int>?) {
+    val parentActivity: AppCompatActivity? = progressBar.getParentActivity()
+    if (parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer {
+            progressBar.progress = it
         })
     }
 }

@@ -8,7 +8,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.squareup.picasso.Picasso
 import kz.nextstep.tazalykpartners.R
 
-class PinImageSliderAdapter: PagerAdapter(){
+class PinImageSliderAdapter : PagerAdapter() {
 
     lateinit var imageUrlList: MutableList<String>
 
@@ -17,7 +17,9 @@ class PinImageSliderAdapter: PagerAdapter(){
     }
 
     override fun getCount(): Int {
-        return if (::imageUrlList.isInitialized) imageUrlList.size else 0
+        return if (::imageUrlList.isInitialized) {
+            if (imageUrlList.size == 1) imageUrlList.size else imageUrlList.size - 1
+        } else 0
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
@@ -34,7 +36,9 @@ class PinImageSliderAdapter: PagerAdapter(){
         val imageUrl = imageUrlList[position]
         val image: ImageView = imageLayout.findViewById(R.id.image)
         if (imageUrl != "")
-            Picasso.get().load(imageUrl).fit().centerCrop().placeholder(R.drawable.point_detailed_placeholder).into(image)
+            Picasso.get().load(imageUrl).fit().centerCrop().placeholder(R.drawable.point_detailed_placeholder).into(
+                image
+            )
         container.addView(imageLayout, 0)
         return imageLayout
     }

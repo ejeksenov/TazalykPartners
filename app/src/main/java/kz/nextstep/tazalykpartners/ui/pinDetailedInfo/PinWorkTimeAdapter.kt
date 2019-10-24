@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.nextstep.tazalykpartners.R
-import kz.nextstep.tazalykpartners.utils.WorkTime
+import kz.nextstep.tazalykpartners.utils.data.WorkTime
 
 class PinWorkTimeAdapter : RecyclerView.Adapter<PinWorkTimeAdapter.PinWorkTimeViewHolder>() {
 

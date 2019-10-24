@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable name="viewModel"
+                  type="kz.nextstep.tazalykpartners.ui.statistics.StatisticsTypeViewModel"/>
+    </data>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:paddingLeft="@dimen/standard_16"
+                android:paddingTop="@dimen/standard_8"
+                android:paddingRight="@dimen/standard_16"
+                android:paddingBottom="@dimen/standard_8"
+                android:background="@color/white">
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cv_statistics_history_item_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/mainBackgroundColor"
+    >
+        <ImageView
+                android:id="@+id/iv_statistics_history_item_logo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerInside"
+                imageResourceByName="@{viewModel.getLogoWasteId()}"
+                android:layout_gravity="center"
+                android:padding="@dimen/standard_8"/>
+    </androidx.cardview.widget.CardView>
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/cv_statistics_history_item_logo"
+            android:layout_toStartOf="@+id/chevron_right"
+            android:layout_marginStart="@dimen/standard_16"
+            android:layout_marginBottom="@dimen/standard_8"
+    >
+        <TextView
+                android:id="@+id/tv_statistics_history_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:textSize="14sp"
+                mutableText="@{viewModel.getSelectedWasteId()}"
+        />
+
+        <ProgressBar
+                android:id="@+id/pb_statistics_history_item_progress"
+                android:layout_width="190dp"
+                android:layout_height="15dp"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:indeterminate="false"
+                android:max="100"
+                android:progressTint="@android:color/darker_gray"
+                android:layout_below="@+id/tv_statistics_history_item_name"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="@dimen/standard_3"
+        />
+        <TextView
+                android:id="@+id/tv_statistics_history_item_total"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:textColor="@color/grayColor"
+                android:textSize="10sp"
+                mutableText="@{viewModel.getPassedTotal()}"
+                android:gravity="center_vertical"
+                android:layout_below="@+id/tv_statistics_history_item_name"
+                android:layout_toEndOf="@+id/pb_statistics_history_item_progress"
+                android:layout_marginTop="4dp"/>
+    </RelativeLayout>
+    <ImageView
+            android:id="@+id/chevron_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_chevron_right_gray"
+            android:layout_marginStart="5dp" />
+
+</RelativeLayout>
+</layout>

@@ -1,4 +1,4 @@
-package kz.nextstep.tazalykpartners.utils
+package kz.nextstep.tazalykpartners.utils.data
 
 data class WorkTime(
     val dayOfTheWeek: Int? = 0,

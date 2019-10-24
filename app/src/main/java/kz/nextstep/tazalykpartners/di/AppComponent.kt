@@ -10,6 +10,7 @@ import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinTakeTypeViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.RequestViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
+import kz.nextstep.tazalykpartners.ui.statistics.StatisticsViewModel
 import javax.inject.Singleton
 
 @Singleton
@@ -25,4 +26,5 @@ interface AppComponent {
     fun inject(pinTakeTypeViewModel: PinTakeTypeViewModel)
     fun inject(requestViewModel: RequestViewModel)
     fun inject(pinCommentsViewModel: PinCommentsViewModel)
+    fun inject(statisticsViewModel: StatisticsViewModel)
 }

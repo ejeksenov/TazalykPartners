@@ -13,6 +13,7 @@ import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinTakeTypeViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.RequestViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
+import kz.nextstep.tazalykpartners.ui.statistics.StatisticsViewModel
 
 open class BaseViewModel : ViewModel() {
     private val injector: AppComponent = DaggerAppComponent.builder().dataModule(MainApplication.INSTANCE?.let {
@@ -36,6 +37,7 @@ open class BaseViewModel : ViewModel() {
             is PinTakeTypeViewModel -> injector.inject(this)
             is RequestViewModel -> injector.inject(this)
             is PinCommentsViewModel -> injector.inject(this)
+            is StatisticsViewModel -> injector.inject(this)
         }
     }
 

@@ -27,7 +27,7 @@ class PinCommentsViewModel : BaseViewModel() {
                             pinCommentsList.add(t[key]!!)
                     }
                     if (!pinCommentsList.isNullOrEmpty())
-                        pinCommentsAdapter.updatePinCommentsList(pinCommentsList)
+                        pinCommentsAdapter.updatePinCommentsList(pinCommentsList, pinCommentsList.size)
                 }
             }
 
@@ -38,5 +38,10 @@ class PinCommentsViewModel : BaseViewModel() {
             }
 
         }, pinId, AppConstants.emptyParam)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getRequestsByPinIdUseCase.unsubscribe()
     }
 }

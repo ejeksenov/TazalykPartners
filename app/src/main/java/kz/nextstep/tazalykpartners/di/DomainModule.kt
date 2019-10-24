@@ -3,10 +3,8 @@ package kz.nextstep.tazalykpartners.di
 import dagger.Module
 import dagger.Provides
 import kz.nextstep.domain.PinRepository
-import kz.nextstep.domain.repository.MarkingRepository
-import kz.nextstep.domain.repository.RequestRepository
-import kz.nextstep.domain.repository.UserPartnerRepository
-import kz.nextstep.domain.repository.UserRepository
+import kz.nextstep.domain.repository.*
+import kz.nextstep.domain.usecase.historyPin.GetHistoryPinListUseCase
 import kz.nextstep.domain.usecase.marking.GetMarkingListByTypeUseCase
 import kz.nextstep.domain.usecase.partner.*
 import kz.nextstep.domain.usecase.pin.AddPinUseCase
@@ -136,5 +134,13 @@ class DomainModule {
         @Named(RxModule.MAIN) mainScheduler: Scheduler,
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = GetMarkingListByTypeUseCase(markingRepository, mainScheduler, ioScheduler)
+
+    //Providing history pin use case
+    @Provides
+    fun provideGetHistoryPinListUseCase(
+        historyPinRepository: HistoryPinRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = GetHistoryPinListUseCase(historyPinRepository, mainScheduler, ioScheduler)
 
 }

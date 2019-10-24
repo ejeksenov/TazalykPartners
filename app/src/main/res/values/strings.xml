@@ -31,6 +31,16 @@
     <string name="pin_note">Примечание:</string>
     <string name="comments">Отзывы</string>
 
+    <string name="recycle">переработка</string>
+    <string name="utilization">утилизация</string>
+    <string name="blago">благо</string>
+
+    <string name="for_week">За неделю</string>
+    <string name="for_month">За месяц</string>
+    <string name="for__three_month">За три месяца</string>
+    <string name="for_half_year">За полгода</string>
+    <string name="for_year">За 1 год</string>
+
 
     <string-array name="waste_id">
         <item>recycle,макулатура,all,paper,paper_detailed_info</item>

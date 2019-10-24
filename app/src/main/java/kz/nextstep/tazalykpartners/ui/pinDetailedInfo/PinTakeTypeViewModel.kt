@@ -2,13 +2,11 @@ package kz.nextstep.tazalykpartners.ui.pinDetailedInfo
 
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import kz.nextstep.domain.model.Marking
 import kz.nextstep.domain.usecase.marking.GetMarkingListByTypeUseCase
-import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
-import kz.nextstep.tazalykpartners.utils.TakeType
+import kz.nextstep.tazalykpartners.utils.data.TakeType
 import rx.Subscriber
 import javax.inject.Inject
 
