@@ -50,13 +50,29 @@ class StatisticsHistoryAdapter : RecyclerView.Adapter<StatisticsHistoryAdapter.S
         }
     }
 
+    var onItemClick: ((MutableList<WasteItem>) -> Unit)? = null
 
-    class StatisticsHistoryViewHolder(val binding: RowStatisticsHistoryItemLayoutBinding) :
+
+    inner class StatisticsHistoryViewHolder(val binding: RowStatisticsHistoryItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val statisticsTypeViewModel = StatisticsTypeViewModel()
         fun bind(wasteItem: WasteItem, context: Context) {
+            val newFilteredWasteItemList = onGetFilterList(wasteItem)
             statisticsTypeViewModel.bind(wasteItem, context)
             binding.viewModel = statisticsTypeViewModel
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(newFilteredWasteItemList)
+            }
         }
     }
+
+    private fun onGetFilterList(wasteItem: WasteItem): MutableList<WasteItem> {
+        val filteredList: MutableList<WasteItem> = ArrayList()
+        for (item in wasteItemList) {
+            if (item.selected_waste_id == wasteItem.selected_waste_id)
+                filteredList.add(item)
+        }
+        return filteredList
+    }
+
 }

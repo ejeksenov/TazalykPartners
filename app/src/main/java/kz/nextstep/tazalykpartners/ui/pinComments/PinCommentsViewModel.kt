@@ -6,7 +6,6 @@ import kz.nextstep.domain.usecase.request.GetRequestsByPinIdUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
-import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinCommentsAdapter
 import rx.Subscriber
 import javax.inject.Inject
 

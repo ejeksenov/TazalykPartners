@@ -33,4 +33,6 @@ object AppConstants {
     const val SELECTED_DATES = "selected_dates"
     const val FILTER_DATE_DAYS = "filter_date_days"
     const val SELECTED_FILTER_TYPE = "selected_filter_type"
+
+    const val PASSED_USER_LIST = "passed_user_list"
 }

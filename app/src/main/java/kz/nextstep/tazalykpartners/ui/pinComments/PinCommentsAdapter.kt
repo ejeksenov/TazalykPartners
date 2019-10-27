@@ -1,4 +1,4 @@
-package kz.nextstep.tazalykpartners.ui.pinDetailedInfo
+package kz.nextstep.tazalykpartners.ui.pinComments
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.nextstep.domain.model.Requests
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.RowPinCommentsItemBinding
+import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.RequestViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class PinCommentsAdapter: RecyclerView.Adapter<PinCommentsAdapter.PinCommentsViewHolder>() {
@@ -33,7 +35,7 @@ class PinCommentsAdapter: RecyclerView.Adapter<PinCommentsAdapter.PinCommentsVie
     }
 
     private fun onSortByDate(pinCommentsList: MutableList<Requests>){
-        pinCommentsList.sortByDescending { it.comment_date?.format("MMM dd, yyyy", Locale("ru")) }
+        pinCommentsList.sortByDescending { SimpleDateFormat("MMM dd, yyyy", Locale("ru")).parse(it.comment_date!!) }
     }
 
     override fun onBindViewHolder(holder: PinCommentsViewHolder, position: Int) {

@@ -10,6 +10,7 @@ import kz.nextstep.domain.usecase.request.GetRequestsByPinIdUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
+import kz.nextstep.tazalykpartners.ui.pinComments.PinCommentsAdapter
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
 import kz.nextstep.tazalykpartners.utils.data.TakeType
 import kz.nextstep.tazalykpartners.utils.data.WorkTime

@@ -13,6 +13,7 @@ import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.PinTakeTypeViewModel
 import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.RequestViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
+import kz.nextstep.tazalykpartners.ui.passedUserList.StatisticsPassedUserListViewModel
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsViewModel
 
 open class BaseViewModel : ViewModel() {
@@ -38,6 +39,7 @@ open class BaseViewModel : ViewModel() {
             is RequestViewModel -> injector.inject(this)
             is PinCommentsViewModel -> injector.inject(this)
             is StatisticsViewModel -> injector.inject(this)
+            is StatisticsPassedUserListViewModel -> injector.inject(this)
         }
     }
 

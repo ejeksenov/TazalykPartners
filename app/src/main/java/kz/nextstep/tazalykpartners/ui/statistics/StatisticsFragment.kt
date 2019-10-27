@@ -4,12 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,10 +17,11 @@ import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.domain.utils.AppConstants.waste_type_blago
 import kz.nextstep.domain.utils.AppConstants.waste_type_recycle
 import kz.nextstep.domain.utils.AppConstants.waste_type_utilization
-import kz.nextstep.tazalykpartners.MainApplication
 
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.StatisticsFragmentBinding
+import kz.nextstep.tazalykpartners.ui.passedUserList.StatisticsPassedUserListActivity
+
 
 class StatisticsFragment : Fragment() {
 
@@ -30,7 +30,7 @@ class StatisticsFragment : Fragment() {
     }
 
     private lateinit var viewModel: StatisticsViewModel
-    private lateinit var binding:StatisticsFragmentBinding
+    private lateinit var binding: StatisticsFragmentBinding
 
     private var selectedDates = ""
     private var filterDateDays = 30
@@ -48,6 +48,7 @@ class StatisticsFragment : Fragment() {
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.statistics_fragment, container, false)
         viewModel = ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
 
+
         binding.rvStatisticsHistoryList.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
         binding.rvStatisticsHistoryList.layoutManager = LinearLayoutManager(context)
 
@@ -55,9 +56,20 @@ class StatisticsFragment : Fragment() {
         if (bundle != null) {
             pinId = bundle.getString(AppConstants.PIN_ID)
             if (pinId != null && pinId != "") {
-                viewModel.getHistoryPinList(pinId!!, 180, "24.07.2019-24.10.2019", selectedWasteType)
+
+                viewModel.getHistoryPinList(pinId!!, 120, "24.06.2019-24.10.2019", selectedWasteType)
+
                 binding.tvStatisticsPassedWasteType.setOnClickListener {
                     onManageTypeOfWasteFilter()
+                }
+
+                viewModel.statisticsHistoryAdapter.onItemClick = {
+                    val intent = Intent(activity, StatisticsPassedUserListActivity::class.java)
+                    intent.putParcelableArrayListExtra(
+                        AppConstants.PASSED_USER_LIST,
+                        ArrayList<Parcelable>(it)
+                    )
+                    startActivity(intent)
                 }
             }
         }

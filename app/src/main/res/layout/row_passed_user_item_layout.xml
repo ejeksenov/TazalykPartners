@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable name="viewModel" type="kz.nextstep.tazalykpartners.ui.passedUserList.PassedUserItemViewModel"/>
+    </data>
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:padding="@dimen/standard_12">
+        <ImageView
+                android:id="@+id/pin_company_logo_iv"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                circleImageUrl="@{viewModel.getUserImageUrl()}"
+                android:layout_centerVertical="true"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/pin_company_logo_iv"
+                android:layout_toStartOf="@+id/passed_waste_total_tv"
+                android:paddingLeft="@dimen/standard_12"
+                android:paddingRight="@dimen/standard_12"
+                android:orientation="vertical"
+                android:layout_centerVertical="true">
+            <TextView
+                    android:id="@+id/pin_company_address_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    mutableText="@{viewModel.getUserName()}"
+                    android:textColor="@color/textColor"
+            />
+            <TextView
+                    android:id="@+id/passed_waste_date_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    mutableText="@{viewModel.getPassedDate()}"
+                    android:paddingTop="@dimen/standard_3"/>
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/passed_waste_total_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                mutableText="@{viewModel.getPassedTotal()}"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</layout>

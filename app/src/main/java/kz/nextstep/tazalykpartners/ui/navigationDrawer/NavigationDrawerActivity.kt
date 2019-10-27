@@ -38,6 +38,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
 
     lateinit var router: Router
     lateinit var navigationDrawerViewModel: NavigationDrawerViewModel
+    lateinit var toggle: ActionBarDrawerToggle
 
     lateinit var toolbar: Toolbar
     lateinit var iv_main_nav_profile: ImageView
@@ -64,7 +65,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         navHeader = navView.getHeaderView(0)
         iv_main_nav_profile = navHeader.findViewById(R.id.iv_main_nav_profile)
         tv_main_nav_name = navHeader.findViewById(R.id.tv_main_nav_name)
-        val toggle = ActionBarDrawerToggle(
+        toggle = ActionBarDrawerToggle(
             this, layout_main_drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         layout_main_drawer.addDrawerListener(toggle)
@@ -113,6 +114,9 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         if (layout_main_drawer.isDrawerOpen(GravityCompat.START)) {
             layout_main_drawer.closeDrawer(GravityCompat.START)
         } else {
+            toggle.isDrawerIndicatorEnabled = true
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            toggle.syncState()
             if (cntPressed > 0) {
                 cntPressed--
                 navItemIndex = if (navItemIndex == 0) 1 else 0

@@ -1,6 +1,5 @@
 package kz.nextstep.tazalykpartners.ui.statistics
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.HistoryPin
@@ -35,7 +34,6 @@ class StatisticsViewModel : BaseViewModel() {
                     for (key in t.keys) {
                         historyPinList.add(t[key]!!)
                     }
-                    //Log.e("PinIds", pinId)
                     getWasteItemList(filterDateDays, selectedDates, historyPinList, selectedWasteType)
                 }
             }
