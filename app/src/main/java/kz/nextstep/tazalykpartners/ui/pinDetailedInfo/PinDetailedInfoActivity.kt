@@ -1,5 +1,6 @@
 package kz.nextstep.tazalykpartners.ui.pinDetailedInfo
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -115,6 +116,8 @@ class PinDetailedInfoActivity : AppCompatActivity() {
             }
             R.id.action_filter -> {
                 val intent = Intent(this, FilterByDateActivity::class.java)
+                intent.putExtra(AppConstants.SELECTED_DATES, StatisticsFragment.selectedDates)
+                intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, StatisticsFragment.selectedFilterType)
                 startActivityForResult(intent, AppConstants.REQUEST_CODE)
                 true
             }
@@ -131,5 +134,13 @@ class PinDetailedInfoActivity : AppCompatActivity() {
     override fun onPause() {
         MainApplication.INSTANCE?.getNavigatorHolder()?.removeNavigator()
         super.onPause()
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+
     }
 }

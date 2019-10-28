@@ -9,14 +9,14 @@ object ChangeDateFormat {
         var simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale("ru"))
         val date: Date = simpleDateFormat.parse(releasedDate)
 
-        simpleDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale("ru"))
+        simpleDateFormat = SimpleDateFormat(AppConstants.DATE_FORMAT, Locale("ru"))
         return simpleDateFormat.format(date)
     }
 
 
     fun onGetFilterDate(valueofDays: Int): String {
         val str: String
-        val simpleDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale("ru"))
+        val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale("ru"))
         val cal = GregorianCalendar.getInstance()
         cal.time = Date()
         cal.add(Calendar.DAY_OF_YEAR, -valueofDays)
@@ -28,7 +28,7 @@ object ChangeDateFormat {
     }
 
     fun onCompareData(start_date: String, end_date: String, passed_date: String): Boolean {
-        val simpleDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale("ru"))
+        val simpleDateFormat = SimpleDateFormat(AppConstants.DATE_FORMAT, Locale("ru"))
         val startDate: Date
         val endDate: Date
         val passedDate: Date

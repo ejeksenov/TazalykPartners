@@ -88,7 +88,7 @@ class StatisticsViewModel : BaseViewModel() {
             }
             if (total > 0.0 && filterDateDays > 0) {
                 val averageTotal = (total / filterDateDays).toBigDecimal().setScale(3, RoundingMode.UP)
-                totalPassedTextMutableLiveData.value = "$total кг"
+                totalPassedTextMutableLiveData.value = "${total.toBigDecimal().setScale(3, RoundingMode.UP)} кг"
                 averagePassedTextMutableLiveData.value = "$averageTotal кг в среднем"
             }
             getWasteItemListByType(selectedWasteType, wasteItemList)

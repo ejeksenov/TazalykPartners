@@ -45,12 +45,10 @@ class PinCommentsActivity : AppCompatActivity() {
             }
         }
 
-
-        binding.viewModel = viewModel
-
-
         toolbar.setNavigationOnClickListener {
             super.onBackPressed()
         }
+
+        binding.viewModel = viewModel
     }
 }

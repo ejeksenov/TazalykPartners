@@ -24,14 +24,14 @@ class NavigationDrawerViewModel: BaseViewModel() {
     lateinit var signOutUseCase: SignOutUseCase
 
     val userPartnerLiveData = MutableLiveData<UserPartner>()
+    val userPartnerPinIdsLiveData = MutableLiveData<String>()
 
-
-    fun getCurrentUserPartner() {
+    fun getCurrentUserPartner(){
         val mUserId = getUserPartnerIdUseCase.execute()
-
         getUserPartnerByIdUseCase.execute(object : Subscriber<UserPartner>() {
             override fun onNext(t: UserPartner?) {
                 userPartnerLiveData.value = t
+                userPartnerPinIdsLiveData.value = t?.pinIds!!
             }
 
             override fun onCompleted() {}

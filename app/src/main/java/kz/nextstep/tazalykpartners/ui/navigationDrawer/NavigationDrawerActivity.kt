@@ -1,7 +1,9 @@
 package kz.nextstep.tazalykpartners.ui.navigationDrawer
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -143,6 +145,8 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
                     Intent(this, FilterByTypeActivity::class.java)
                 } else {
                     Intent(this, FilterByDateActivity::class.java)
+                        .putExtra(AppConstants.SELECTED_DATES, StatisticsFragment.selectedDates)
+                        .putExtra(AppConstants.SELECTED_FILTER_TYPE, StatisticsFragment.selectedFilterType)
                 }
                 startActivityForResult(intent, REQUEST_CODE)
                 true
@@ -167,11 +171,16 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
             }
             R.id.nav_statistics -> {
                 if (navItemIndex != 1) {
+                    val fragment = StatisticsFragment.newInstance()
+                    navigationDrawerViewModel.userPartnerPinIdsLiveData.observe(this, Observer {
+                        var arg = bundleOf(AppConstants.PIN_ID to it)
+                        fragment.arguments = arg
+                    })
                     if (navItemIndex == 3)
-                        router.replaceScreen(SampleScreen(StatisticsFragment.newInstance()))
+                        router.replaceScreen(SampleScreen(fragment))
                     else {
                         cntPressed++
-                        router.navigateTo(SampleScreen(StatisticsFragment.newInstance()))
+                        router.navigateTo(SampleScreen(fragment))
                     }
                     navItemIndex = 1
                 }
@@ -238,5 +247,13 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
     override fun onPause() {
         MainApplication.INSTANCE?.getNavigatorHolder()?.removeNavigator()
         super.onPause()
+    }
+
+
+    @SuppressLint("MissingSuperCall")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }

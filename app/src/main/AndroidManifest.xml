@@ -15,6 +15,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.filterByDate.CalendarActivity">
+        </activity>
         <activity android:name=".ui.passedUserList.StatisticsPassedUserListActivity">
         </activity>
         <activity android:name=".ui.pinComments.PinCommentsActivity">

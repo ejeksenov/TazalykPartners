@@ -35,4 +35,6 @@ object AppConstants {
     const val SELECTED_FILTER_TYPE = "selected_filter_type"
 
     const val PASSED_USER_LIST = "passed_user_list"
+
+    const val DATE_FORMAT = "MMM dd, yyyy"
 }

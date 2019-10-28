@@ -67,10 +67,9 @@ dependencies {
     compileOnly "javax.annotation:jsr250-api:$javax_annotation_version"
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-
     implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
-
     implementation 'com.squareup.picasso:picasso:2.71828'
-
     implementation 'me.relex:circleindicator:1.2.2@aar'
+    implementation 'com.squareup:android-times-square:1.6.5@aar'
+
 }

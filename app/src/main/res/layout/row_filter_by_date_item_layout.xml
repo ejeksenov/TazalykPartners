@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <TextView
+            android:id="@+id/tv_row_filter_by_date_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_circle_white"
+            android:paddingTop="@dimen/standard_16"
+            android:paddingBottom="@dimen/standard_16"
+            android:textColor="@color/textColor"
+            android:textSize="18sp"
+            android:background="@drawable/background_bottom_layout_border_white" />
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.filterByDate.CalendarActivity">
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/layout_calendar_appbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:title="@string/filter"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+            android:id="@+id/layout_calendar_date_text"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/standard_16"
+            android:layout_marginLeft="@dimen/standard_22"
+            android:layout_marginRight="@dimen/standard_22"
+            android:orientation="horizontal"
+            android:weightSum="3.0"
+            android:layout_below="@+id/layout_calendar_appbar">
+
+        <TextView
+                android:id="@+id/tv_calendar_before_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:background="#EBEBEB"
+                android:gravity="center"
+                android:textColor="@color/textColor"
+                android:layout_gravity="center"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:text="--"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/textColor"
+                android:background="@color/transparent"/>
+
+        <TextView
+                android:id="@+id/tv_calendar_after_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EBEBEB"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:textColor="@color/textColor"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+    <com.squareup.timessquare.CalendarPickerView
+            android:id="@+id/cv_calendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/standard_16"
+            android:layout_marginBottom="80dp"
+            android:layout_below="@+id/layout_calendar_date_text"
+    />
+    <Button
+            android:id="@+id/btn_calendar_apply"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/standard_22"
+            android:layout_marginEnd="@dimen/standard_22"
+            android:layout_marginTop="@dimen/standard_16"
+            android:layout_marginBottom="@dimen/standard_16"
+            android:text="@string/apply"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/rounded_corner_active_button"/>
+</RelativeLayout>

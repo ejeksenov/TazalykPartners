@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.domain.utils.AppConstants.waste_type_blago
 import kz.nextstep.domain.utils.AppConstants.waste_type_recycle
 import kz.nextstep.domain.utils.AppConstants.waste_type_utilization
+import kz.nextstep.domain.utils.ChangeDateFormat
 
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.StatisticsFragmentBinding
@@ -27,14 +29,15 @@ class StatisticsFragment : Fragment() {
 
     companion object {
         fun newInstance() = StatisticsFragment()
+        var selectedDates = ""
+        var filterDateDays = 30
+        var selectedFilterType = "За месяц"
     }
 
     private lateinit var viewModel: StatisticsViewModel
     private lateinit var binding: StatisticsFragmentBinding
 
-    private var selectedDates = ""
-    private var filterDateDays = 30
-    private var selectedFilterType = "за месяц"
+
     private var selectedWasteType = waste_type_recycle
     private var cnt = 1
 
@@ -56,8 +59,10 @@ class StatisticsFragment : Fragment() {
         if (bundle != null) {
             pinId = bundle.getString(AppConstants.PIN_ID)
             if (pinId != null && pinId != "") {
+                binding.tvStatisticsFilterPeriod.text = selectedFilterType
+                selectedDates = ChangeDateFormat.onGetFilterDate(filterDateDays)
 
-                viewModel.getHistoryPinList(pinId!!, 120, "24.06.2019-24.10.2019", selectedWasteType)
+                viewModel.getHistoryPinList(pinId!!, filterDateDays, selectedDates, selectedWasteType)
 
                 binding.tvStatisticsPassedWasteType.setOnClickListener {
                     onManageTypeOfWasteFilter()
@@ -96,17 +101,16 @@ class StatisticsFragment : Fragment() {
                 selectedWasteType = waste_type_blago
             }
         }
-        //viewModel.getHistoryPinList(pinId!!, filterDateDays, selectedDates, selectedWasteType)
-        viewModel.getHistoryPinList(pinId!!, 180, "24.07.2019-24.10.2019", selectedWasteType)
+        viewModel.getHistoryPinList(pinId!!, filterDateDays, selectedDates, selectedWasteType)
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+        //super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppConstants.REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             selectedDates = data.getStringExtra(AppConstants.SELECTED_DATES)!!
-            filterDateDays = data.getIntExtra(AppConstants.FILTER_DATE_DAYS, 30)
             selectedFilterType = data.getStringExtra(AppConstants.SELECTED_FILTER_TYPE)!!
+            filterDateDays = data.getIntExtra(AppConstants.FILTER_DATE_DAYS, 30)
             binding.tvStatisticsFilterPeriod.text = selectedFilterType
             viewModel.getHistoryPinList(pinId!!, filterDateDays, selectedDates, selectedWasteType)
         }

@@ -40,6 +40,8 @@
     <string name="for__three_month">За три месяца</string>
     <string name="for_half_year">За полгода</string>
     <string name="for_year">За 1 год</string>
+    <string name="filter">Фильтр</string>
+    <string name="apply">Применить</string>
 
 
     <string-array name="waste_id">
@@ -73,6 +75,15 @@
         <item>blago,электроника,all,electronic,blago_electronics_detailed_info</item>
         <item>blago,мебель,all,furniture,furniture_detailed_info</item>
         <item>blago,другое,all,another,blago_another_detailed_info</item>
+    </string-array>
+
+    <string-array name="filter_date_type">
+        <item>За неделю</item>
+        <item>За месяц</item>
+        <item>За три месяца</item>
+        <item>За полгода</item>
+        <item>За 1 год</item>
+        <item>За период</item>
     </string-array>
 
 
