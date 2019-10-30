@@ -95,10 +95,6 @@ class LoginViewModel : BaseViewModel(){
         }, emailStr, AppConstants.emptyParam)
     }
 
-    fun showToastMessage(message: String) {
-        Toast.makeText(MainApplication.INSTANCE?.applicationContext, message, Toast.LENGTH_SHORT).show()
-    }
-
 
     override fun onCleared() {
         super.onCleared()

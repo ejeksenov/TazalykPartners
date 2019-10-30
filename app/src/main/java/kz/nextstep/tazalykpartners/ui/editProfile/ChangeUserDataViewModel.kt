@@ -39,7 +39,7 @@ class ChangeUserDataViewModel : BaseViewModel() {
             override fun onCompleted() {}
 
             override fun onError(e: Throwable?) {
-                Toast.makeText(MainApplication.INSTANCE?.applicationContext, e?.message, Toast.LENGTH_LONG).show()
+                showToastMessage(e?.message)
             }
 
         }, userId, AppConstants.emptyParam)
@@ -55,7 +55,8 @@ class ChangeUserDataViewModel : BaseViewModel() {
             override fun onCompleted() {}
 
             override fun onError(e: Throwable?) {
-                Toast.makeText(MainApplication.INSTANCE?.applicationContext, e?.message, Toast.LENGTH_LONG).show()
+                changeUserPartnerLiveData.value = false
+                showToastMessage(e?.message)
             }
 
         }, imageUrl, fullname)

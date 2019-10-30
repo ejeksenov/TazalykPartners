@@ -1,10 +1,13 @@
 package kz.nextstep.tazalykpartners.base
 
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.di.AppComponent
 import kz.nextstep.tazalykpartners.di.DaggerAppComponent
 import kz.nextstep.tazalykpartners.di.DataModule
+import kz.nextstep.tazalykpartners.ui.editProfile.ChangeEmailViewModel
+import kz.nextstep.tazalykpartners.ui.editProfile.ChangePasswordViewModel
 import kz.nextstep.tazalykpartners.ui.editProfile.ChangeUserDataViewModel
 import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
@@ -42,7 +45,13 @@ open class BaseViewModel : ViewModel() {
             is StatisticsViewModel -> injector.inject(this)
             is StatisticsPassedUserListViewModel -> injector.inject(this)
             is ChangeUserDataViewModel -> injector.inject(this)
+            is ChangePasswordViewModel -> injector.inject(this)
+            is ChangeEmailViewModel -> injector.inject(this)
         }
+    }
+
+    fun showToastMessage(message: String?) {
+        Toast.makeText(MainApplication.INSTANCE?.applicationContext, message, Toast.LENGTH_LONG).show()
     }
 
 }

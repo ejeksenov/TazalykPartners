@@ -1,7 +1,7 @@
 package kz.nextstep.tazalykpartners.ui.editProfile
 
-import androidx.lifecycle.ViewModel;
+import kz.nextstep.tazalykpartners.base.BaseViewModel
 
-class ChangeEmailViewModel : ViewModel() {
+class ChangeEmailViewModel : BaseViewModel() {
     // TODO: Implement the ViewModel
 }

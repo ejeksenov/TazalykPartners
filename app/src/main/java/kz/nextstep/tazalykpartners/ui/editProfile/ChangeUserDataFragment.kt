@@ -131,7 +131,12 @@ class ChangeUserDataFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 activity?.finish()
-            }
+            } else
+                Toast.makeText(
+                    MainApplication.INSTANCE?.applicationContext,
+                    resources.getString(R.string.error_change_data),
+                    Toast.LENGTH_SHORT
+                ).show()
 
         })
 

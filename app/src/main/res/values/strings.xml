@@ -51,6 +51,14 @@
     <string name="permission_denied_message">Разрешение отказано, вы не можете получить доступ к камере, фото и видео
     </string>
     <string name="give_both_permissions">Вам нужно разрешить доступ к обоим разрешениям</string>
+    <string name="error_change_data">Данные не изменены! Что-то пошло не так</string>
+    <string name="current_password">Текущий пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="confirm_new_password">Повторите пароль</string>
+    <string name="enter_new_email">Введите новый email</string>
+    <string name="passwords_not_match">Пароли не совпадают</string>
+    <string name="success_change_password">Пароль успешно изменен</string>
+    <string name="passwords_less_than_six_characters">Пароль не должен быть менее 6 символов</string>
 
 
     <string-array name="waste_id">
