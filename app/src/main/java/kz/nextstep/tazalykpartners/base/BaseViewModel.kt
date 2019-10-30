@@ -5,6 +5,7 @@ import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.di.AppComponent
 import kz.nextstep.tazalykpartners.di.DaggerAppComponent
 import kz.nextstep.tazalykpartners.di.DataModule
+import kz.nextstep.tazalykpartners.ui.editProfile.ChangeUserDataViewModel
 import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
 import kz.nextstep.tazalykpartners.ui.pinComments.PinCommentsViewModel
@@ -40,6 +41,7 @@ open class BaseViewModel : ViewModel() {
             is PinCommentsViewModel -> injector.inject(this)
             is StatisticsViewModel -> injector.inject(this)
             is StatisticsPassedUserListViewModel -> injector.inject(this)
+            is ChangeUserDataViewModel -> injector.inject(this)
         }
     }
 

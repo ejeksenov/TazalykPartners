@@ -10,4 +10,7 @@ interface UserPartnerRepository {
     fun getCurrentUserPartnerId(): String
     fun signOut(): Boolean
     fun sendResetPassword(email: String) : Observable<Boolean>
+    fun changeUserPartnerData(imageUrl: String?, fullName: String?): Observable<Boolean>
+    fun changePassword(password: String, newPassword: String): Observable<Boolean>
+    fun changeEmail(password: String, newEmail: String): Observable<Boolean>
 }

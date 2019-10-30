@@ -25,7 +25,6 @@ object AppConstants {
     const val RESULT_FILTER_DATA = "result_filter_data"
     const val ADD_EDIT_PIN_DATA = "add_edit_pin_data"
 
-
     const val waste_type_recycle = "recycle"
     const val waste_type_utilization = "utilization"
     const val waste_type_blago = "blago"

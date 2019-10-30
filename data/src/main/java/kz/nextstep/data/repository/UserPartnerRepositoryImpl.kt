@@ -1,28 +1,123 @@
 package kz.nextstep.data.repository
 
+import android.net.Uri
 import com.google.firebase.FirebaseException
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import kz.nextstep.data.entity.UserPartnerEntity
 import kz.nextstep.data.mapper.UserPartnerMapper
 import kz.nextstep.domain.model.UserPartner
 import kz.nextstep.domain.repository.UserPartnerRepository
 import kz.nextstep.domain.utils.AppConstants
 import rx.Observable
+import rx.Subscriber
 import rx.subscriptions.Subscriptions
+import java.util.*
 
 class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : UserPartnerRepository {
 
     private var databaseReference: DatabaseReference =
         FirebaseDatabase.getInstance().reference.child(AppConstants.userPartnerTree)
 
+    override fun changeUserPartnerData(imageUrl: String?, fullName: String?): Observable<Boolean> {
+        return Observable.create { subscription ->
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            if (!userId.isNullOrBlank()) {
+                if (!imageUrl.isNullOrBlank()) {
+                    val imageUri = Uri.parse(imageUrl)
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val profileImageRef = storageRef.child("avatar/$userId/1.jpg")
+                    val uploadTask = profileImageRef.putFile(imageUri)
+                    uploadTask.continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            throw Objects.requireNonNull<Exception>(task.exception)
+                        }
+                        profileImageRef.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val uri = task.result
+                            databaseReference.child(userId).child("imageUrl").setValue(uri.toString())
+                                .addOnCompleteListener {
+                                    if (task.isSuccessful && !fullName.isNullOrBlank()) {
+                                        onChangeUserPartnerName(subscription, userId, fullName)
+                                    }
+                                }.addOnFailureListener {
+                                    subscription.onError(it)
+                                }
+                        } else if (task.exception != null) {
+                            subscription.onError(task.exception)
+                        }
+                    }.addOnFailureListener {
+                        subscription.onError(it)
+                    }
+                } else if (!fullName.isNullOrBlank())
+                    onChangeUserPartnerName(subscription, userId, fullName)
+            }
+        }
+    }
+
+    private fun onChangeUserPartnerName(
+        subscription: Subscriber<in Boolean>,
+        userId: String,
+        fullName: String
+    ) {
+        databaseReference.child(userId).child("name").setValue(fullName)
+            .addOnCompleteListener { it1 ->
+                subscription.onNext(it1.isSuccessful)
+            }.addOnFailureListener { it1 ->
+                subscription.onError(it1)
+            }
+    }
+
+    override fun changePassword(password: String, newPassword: String): Observable<Boolean> {
+        return Observable.create { subscription ->
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val userEmail = currentUser?.email
+            val authCredential: AuthCredential = EmailAuthProvider.getCredential(userEmail!!, password)
+            currentUser.reauthenticate(authCredential).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    currentUser.updatePassword(newPassword).addOnCompleteListener { it1 ->
+                        subscription.onNext(it1.isSuccessful)
+                    }.addOnFailureListener { it1 ->
+                        subscription.onError(FirebaseException(it1.message!!))
+                    }
+                } else if (it.exception != null) {
+                    subscription.onError(FirebaseException(it.exception?.message!!))
+                }
+            }.addOnFailureListener {
+                subscription.onError(FirebaseException(it.message!!))
+            }
+        }
+    }
+
+    override fun changeEmail(password: String, newEmail: String): Observable<Boolean> {
+        return Observable.create { subscription ->
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val userEmail = currentUser?.email
+            val authCredential: AuthCredential = EmailAuthProvider.getCredential(userEmail!!, password)
+            currentUser.reauthenticate(authCredential).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    currentUser.updateEmail(newEmail).addOnCompleteListener { it1 ->
+                        subscription.onNext(it1.isSuccessful)
+                    }.addOnFailureListener { it1 ->
+                        subscription.onError(FirebaseException(it1.message!!))
+                    }
+                } else if (it.exception != null) {
+                    subscription.onError(FirebaseException(it.exception?.message!!))
+                }
+            }.addOnFailureListener {
+                subscription.onError(FirebaseException(it.message!!))
+            }
+        }
+    }
+
     override fun sendResetPassword(email: String): Observable<Boolean> {
         return Observable.create { subscription ->
             FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener {
-                if (it.isSuccessful)
-                    subscription.onNext(true)
-                else
-                    subscription.onNext(false)
+                subscription.onNext(it.isSuccessful)
                 subscription.onCompleted()
             }.addOnFailureListener {
                 subscription.onError(FirebaseException(it.message!!))

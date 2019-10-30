@@ -33,7 +33,10 @@ class HistoryPinImpl(val historyPinMapper: HistoryPinMapper) : HistoryPinReposit
                             }
                         }
                     }
-                    it.onNext(historyPinHashMap)
+                    if (historyPinHashMap.isEmpty())
+                        it.onNext(null)
+                    else
+                        it.onNext(historyPinHashMap)
                 }
 
             }

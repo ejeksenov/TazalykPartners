@@ -42,6 +42,15 @@
     <string name="for_year">За 1 год</string>
     <string name="filter">Фильтр</string>
     <string name="apply">Применить</string>
+    <string name="change_email">Изменить E-mail</string>
+    <string name="change_password">Изменить пароль</string>
+    <string name="change_profile_photo">Сменить фото</string>
+    <string name="enter_full_name">Введите полное имя</string>
+    <string name="save">Сохранить</string>
+    <string name="success_change_data">Данные успешно изменены</string>
+    <string name="permission_denied_message">Разрешение отказано, вы не можете получить доступ к камере, фото и видео
+    </string>
+    <string name="give_both_permissions">Вам нужно разрешить доступ к обоим разрешениям</string>
 
 
     <string-array name="waste_id">

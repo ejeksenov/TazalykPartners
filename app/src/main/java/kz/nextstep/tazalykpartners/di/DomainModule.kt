@@ -118,6 +118,27 @@ class DomainModule {
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = SendResetPasswordUseCase(userPartnerRepository, mainScheduler, ioScheduler)
 
+    @Provides
+    fun provideChangeUserPartnerDataUseCase(
+        userPartnerRepository: UserPartnerRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = ChangeUserPartnerDataUseCase(userPartnerRepository, mainScheduler, ioScheduler)
+
+    @Provides
+    fun provideChangeUserPartnerPasswordUseCase(
+        userPartnerRepository: UserPartnerRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = ChangeUserPartnerPasswordUseCase(userPartnerRepository, mainScheduler, ioScheduler)
+
+    @Provides
+    fun provideChangeUserPartnerEmailUseCase(
+        userPartnerRepository: UserPartnerRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = ChangeUserPartnerEmailUseCase(userPartnerRepository, mainScheduler, ioScheduler)
+
     // Providing requests use case
     @Provides
     fun provideGetRequestsByPinIdUseCase(

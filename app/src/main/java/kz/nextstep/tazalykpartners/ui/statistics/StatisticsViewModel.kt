@@ -30,7 +30,7 @@ class StatisticsViewModel : BaseViewModel() {
         getHistoryPinListUseCase.execute(object : Subscriber<HashMap<String, HistoryPin>>() {
             override fun onNext(t: HashMap<String, HistoryPin>?) {
                 val historyPinList: MutableList<HistoryPin> = ArrayList()
-                if (t?.isNotEmpty()!!) {
+                if (!t.isNullOrEmpty()) {
                     for (key in t.keys) {
                         historyPinList.add(t[key]!!)
                     }

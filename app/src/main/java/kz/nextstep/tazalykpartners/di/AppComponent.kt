@@ -2,6 +2,7 @@ package kz.nextstep.tazalykpartners.di
 
 import dagger.Component
 import kz.nextstep.tazalykpartners.MainApplication
+import kz.nextstep.tazalykpartners.ui.editProfile.ChangeUserDataViewModel
 import kz.nextstep.tazalykpartners.ui.login.LoginViewModel
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
 import kz.nextstep.tazalykpartners.ui.pinComments.PinCommentsViewModel
@@ -29,4 +30,5 @@ interface AppComponent {
     fun inject(pinCommentsViewModel: PinCommentsViewModel)
     fun inject(statisticsViewModel: StatisticsViewModel)
     fun inject(statisticsPassedUserListViewModel: StatisticsPassedUserListViewModel)
+    fun inject(changeUserDataViewModel: ChangeUserDataViewModel)
 }

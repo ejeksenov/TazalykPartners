@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/standard_22"
+        tools:context=".ui.editProfile.ChangeUserDataFragment">
+
+    <ImageView
+            android:id="@+id/iv_change_user_data_profile"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/user_placeholder_image"
+            android:layout_gravity="center_horizontal"/>
+    <TextView
+            android:id="@+id/tv_change_user_data_change_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_profile_photo"
+            android:textColor="@android:color/holo_blue_dark"
+            android:layout_marginTop="@dimen/standard_8"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"/>
+
+    <EditText
+            android:id="@+id/edt_change_user_data_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
+            android:hint="@string/enter_full_name"
+            android:layout_marginTop="@dimen/standard_22"
+    />
+
+    <TextView
+            android:id="@+id/tv_change_user_data_email"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/change_email"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:paddingTop="@dimen/standard_8"
+            android:paddingBottom="@dimen/standard_8"
+            android:paddingStart="@dimen/standard_8"
+            android:drawableEnd="@drawable/ic_chevron_right_gray"
+            android:layout_marginTop="@dimen/standard_22"
+    />
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grayColor"/>
+    <TextView
+            android:id="@+id/tv_change_user_data_password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/change_password"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/standard_8"
+            android:paddingBottom="@dimen/standard_8"
+            android:paddingStart="@dimen/standard_8"
+            android:drawableEnd="@drawable/ic_chevron_right_gray"
+    />
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grayColor"/>
+
+    <Button
+            android:id="@+id/btn_change_user_data_save"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_corner_active_button"
+            android:layout_marginTop="@dimen/standard_22"/>
+
+</LinearLayout>
+</ScrollView>

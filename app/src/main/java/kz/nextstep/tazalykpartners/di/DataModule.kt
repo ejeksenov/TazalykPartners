@@ -116,6 +116,18 @@ class DataModule(private val mainApplication: Application) {
             return UserPartnerRepositoryImpl(userPartnerMapper)
         else {
             return object : UserPartnerRepository {
+                override fun changeUserPartnerData(imageUrl: String?, fullName: String): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+                override fun changePassword(password: String, newPassword: String): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+                override fun changeEmail(password: String, newEmail: String): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
                 override fun sendResetPassword(email: String): Observable<Boolean> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
