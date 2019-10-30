@@ -101,7 +101,14 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
             currentUser.reauthenticate(authCredential).addOnCompleteListener {
                 if (it.isSuccessful) {
                     currentUser.updateEmail(newEmail).addOnCompleteListener { it1 ->
-                        subscription.onNext(it1.isSuccessful)
+                        if (it1.isSuccessful) {
+                            databaseReference.child(currentUser.uid).child("email").setValue(newEmail).addOnCompleteListener {it2 ->
+                                subscription.onNext(it2.isSuccessful)
+                            }.addOnFailureListener {it2 ->
+                                subscription.onError(FirebaseException(it2.message!!))
+                            }
+                        }
+
                     }.addOnFailureListener { it1 ->
                         subscription.onError(FirebaseException(it1.message!!))
                     }

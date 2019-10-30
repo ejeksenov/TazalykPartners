@@ -9,9 +9,10 @@
         tools:context=".ui.editProfile.ChangeEmailFragment">
 
     <EditText
-            android:id="@+id/edt_change_user_password_old"
+            android:id="@+id/edt_change_user_email_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
             android:hint="@string/enter_new_email"/>
 
     <EditText
@@ -23,7 +24,7 @@
             android:hint="@string/current_password"/>
 
     <Button
-            android:id="@+id/btn_change_user_password"
+            android:id="@+id/btn_change_user_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

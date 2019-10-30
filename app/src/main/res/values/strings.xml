@@ -59,6 +59,7 @@
     <string name="passwords_not_match">Пароли не совпадают</string>
     <string name="success_change_password">Пароль успешно изменен</string>
     <string name="passwords_less_than_six_characters">Пароль не должен быть менее 6 символов</string>
+    <string name="success_change_email">Email успешно изменен</string>
 
 
     <string-array name="waste_id">
