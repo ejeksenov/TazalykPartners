@@ -10,7 +10,7 @@
     <string name="login_send">Отправить</string>
     <string name="login_cancel">Отмена</string>
 
-
+    <string name="nav_user_interactivity">Активность</string>
     <string name="nav_pin_list">Пункты приема</string>
     <string name="nav_statistics">Статистика</string>
     <string name="nav_edit_profile">Редактировать профиль</string>
@@ -48,8 +48,7 @@
     <string name="enter_full_name">Введите полное имя</string>
     <string name="save">Сохранить</string>
     <string name="success_change_data">Данные успешно изменены</string>
-    <string name="permission_denied_message">Разрешение отказано, вы не можете получить доступ к камере, фото и видео
-    </string>
+    <string name="permission_denied_message">Разрешение отказано, вы не можете получить доступ к камере, фото и видео</string>
     <string name="give_both_permissions">Вам нужно разрешить доступ к обоим разрешениям</string>
     <string name="error_change_data">Данные не изменены! Что-то пошло не так</string>
     <string name="current_password">Текущий пароль</string>
@@ -59,7 +58,7 @@
     <string name="passwords_not_match">Пароли не совпадают</string>
     <string name="success_change_password">Пароль успешно изменен</string>
     <string name="passwords_less_than_six_characters">Пароль не должен быть менее 6 символов</string>
-    <string name="success_change_email">Email успешно изменен</string>
+    <string name="success_change_email">Email успешно изменен. Подтвердите вашу почту нажав ссылку в сообщении который мы отправили</string>
 
 
     <string-array name="waste_id">
@@ -80,8 +79,7 @@
         <item>utilization,аккумуляторы,all,accumulator,accumulator_detailed_info</item>
         <item>utilization,батарейки,all,battery,battery_detailed_info</item>
         <item>utilization,лампочки,all,bulb,bulb_detailed_info</item>
-        <item>utilization,ртутьсодержащие отходы,all,mercury_containing_waste,mercury_containing_waste_detailed_info
-        </item>
+        <item>utilization,ртутьсодержащие отходы,all,mercury_containing_waste,mercury_containing_waste_detailed_info</item>
         <item>utilization,авто,all,auto,auto_detailed_info</item>
         <item>utilization,медицинское,all,med,medical_detailed_info</item>
         <item>utilization,пищевые отходы,all,food_waste,food_waste_detailed_info</item>

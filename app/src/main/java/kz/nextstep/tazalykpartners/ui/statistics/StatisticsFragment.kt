@@ -22,6 +22,9 @@ import kz.nextstep.domain.utils.ChangeDateFormat
 
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.StatisticsFragmentBinding
+import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.filterDateDays
+import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedDates
+import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedFilterType
 import kz.nextstep.tazalykpartners.ui.passedUserList.StatisticsPassedUserListActivity
 
 
@@ -29,9 +32,7 @@ class StatisticsFragment : Fragment() {
 
     companion object {
         fun newInstance() = StatisticsFragment()
-        var selectedDates = ""
-        var filterDateDays = 30
-        var selectedFilterType = "За месяц"
+
     }
 
     private lateinit var viewModel: StatisticsViewModel
@@ -58,7 +59,7 @@ class StatisticsFragment : Fragment() {
         val bundle: Bundle? = arguments
         if (bundle != null) {
             pinId = bundle.getString(AppConstants.PIN_ID)
-            if (pinId != null && pinId != "") {
+            if (!pinId.isNullOrBlank()) {
                 binding.tvStatisticsFilterPeriod.text = selectedFilterType
                 selectedDates = ChangeDateFormat.onGetFilterDate(filterDateDays)
 

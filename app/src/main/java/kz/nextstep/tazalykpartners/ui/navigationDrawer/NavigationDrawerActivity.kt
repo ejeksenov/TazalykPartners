@@ -3,7 +3,6 @@ package kz.nextstep.tazalykpartners.ui.navigationDrawer
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -21,6 +20,7 @@ import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.squareup.picasso.Picasso
@@ -33,19 +33,27 @@ import kz.nextstep.tazalykpartners.ui.login.LoginActivity
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListAdapter
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListFragment
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsFragment
+import kz.nextstep.tazalykpartners.ui.userInteractivity.UserInteractivityFragment
 import kz.nextstep.tazalykpartners.utils.CircleTransform
 
 
 class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    companion object {
+        var selectedWasteId = ""
+        var selectedDates = ""
+        var selectedFilterType = "За месяц"
+        var filterDateDays = 30
+    }
 
     lateinit var router: Router
     lateinit var navigationDrawerViewModel: NavigationDrawerViewModel
     lateinit var toggle: ActionBarDrawerToggle
 
     lateinit var toolbar: Toolbar
-    lateinit var iv_main_nav_profile: ImageView
-    lateinit var tv_main_nav_name: TextView
-    lateinit var layout_main_drawer: DrawerLayout
+    lateinit var ivMainNavProfile: ImageView
+    lateinit var tvMainNavName: TextView
+    lateinit var layoutMainDrawer: DrawerLayout
     lateinit var navView: NavigationView
     lateinit var navHeader: View
 
@@ -62,15 +70,15 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        layout_main_drawer = findViewById(R.id.layout_main_drawer)
+        layoutMainDrawer = findViewById(R.id.layout_main_drawer)
         navView = findViewById(R.id.nav_view)
         navHeader = navView.getHeaderView(0)
-        iv_main_nav_profile = navHeader.findViewById(R.id.iv_main_nav_profile)
-        tv_main_nav_name = navHeader.findViewById(R.id.tv_main_nav_name)
+        ivMainNavProfile = navHeader.findViewById(R.id.iv_main_nav_profile)
+        tvMainNavName = navHeader.findViewById(R.id.tv_main_nav_name)
         toggle = ActionBarDrawerToggle(
-            this, layout_main_drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, layoutMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
-        layout_main_drawer.addDrawerListener(toggle)
+        layoutMainDrawer.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
 
@@ -81,13 +89,13 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         loadNavHeader()
         selectNavMenu()
         selectToolbarTitle()
-        router.replaceScreen(SampleScreen(PinListFragment.newInstance()))
+        router.replaceScreen(SampleScreen(UserInteractivityFragment.newInstance()))
 
-        pinItemStatitisticsClicked()
+        pinItemStatisticsClicked()
 
     }
 
-    private fun pinItemStatitisticsClicked() {
+    private fun pinItemStatisticsClicked() {
         PinListAdapter.onStatisticsBtnClick = {
             cntPressed++
             navItemIndex = 3
@@ -95,7 +103,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
             val arg = bundleOf(AppConstants.PIN_ID to it)
             fragment.arguments = arg
             router.navigateTo(SampleScreen(fragment))
-            navView.menu.getItem(0).isChecked = false
+            navView.menu.getItem(1).isChecked = false
             selectToolbarTitle()
         }
     }
@@ -106,32 +114,35 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
             val imageUrl = it.imageUrl
             if (imageUrl != null && imageUrl != "")
                 Picasso.get().load(imageUrl).transform(CircleTransform()).placeholder(R.drawable.user_placeholder_image).into(
-                    iv_main_nav_profile
+                    ivMainNavProfile
                 )
-            tv_main_nav_name.text = it.name
+            tvMainNavName.text = it.name
         })
     }
 
     override fun onBackPressed() {
-        if (layout_main_drawer.isDrawerOpen(GravityCompat.START)) {
-            layout_main_drawer.closeDrawer(GravityCompat.START)
+        if (layoutMainDrawer.isDrawerOpen(GravityCompat.START)) {
+            layoutMainDrawer.closeDrawer(GravityCompat.START)
         } else {
-            toggle.isDrawerIndicatorEnabled = true
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            toggle.syncState()
+
             if (cntPressed > 0) {
                 cntPressed--
-                navItemIndex = if (navItemIndex == 0) 1 else 0
+                navItemIndex = if (navItemIndex == 3) 1 else 0
                 selectNavMenu()
                 selectToolbarTitle()
             }
             super.onBackPressed()
+
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.navigation_drawer, menu)
+        when (navItemIndex) {
+            0 -> menuInflater.inflate(R.menu.menu_user_interactivity, menu)
+            1 -> menu.clear()
+            else -> menuInflater.inflate(R.menu.navigation_drawer, menu)
+        }
         return true
     }
 
@@ -140,15 +151,18 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_filter -> {
-                var intent = if (navItemIndex == 0) {
-                    Intent(this, FilterByTypeActivity::class.java)
-                } else {
-                    Intent(this, FilterByDateActivity::class.java)
-                        .putExtra(AppConstants.SELECTED_DATES, StatisticsFragment.selectedDates)
-                        .putExtra(AppConstants.SELECTED_FILTER_TYPE, StatisticsFragment.selectedFilterType)
-                }
+            R.id.action_filter_by_date -> {
+                val intent = if (navItemIndex == 2) Intent(this, FilterByDateActivity::class.java)
+                else Intent(this, FilterByDateActivity::class.java)
+                intent.putExtra(AppConstants.SELECTED_DATES, selectedDates)
+                intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, selectedFilterType)
                 startActivityForResult(intent, REQUEST_CODE)
+                true
+            }
+            R.id.action_filter_by_waste -> {
+                val intent = Intent(this, FilterByTypeActivity::class.java)
+                    .putExtra(AppConstants.SELECTED_WASTE_ID, selectedWasteId)
+                startActivityForResult(intent, 2)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -156,38 +170,46 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
+        if (navItemIndex == 3)
+            router.exit()
         when (item.itemId) {
-            R.id.nav_pin_list -> {
+            R.id.nav_user_interactivity -> {
                 if (navItemIndex != 0) {
                     cntPressed++
                     navItemIndex = 0
-                    if (cntPressed >= 2) {
-                        cntPressed = 0
-                        router.exit()
-                    } else
+                    val fragment = UserInteractivityFragment.newInstance()
+                    onPutPinIdExtra(fragment)
+                    router.replaceScreen(SampleScreen(fragment))
+
+                }
+            }
+            R.id.nav_pin_list -> {
+                if (navItemIndex != 1) {
+                    cntPressed++
+                    //when back pressed go to initial UserInteractivity screen
+                    if (navItemIndex == 0)
                         router.navigateTo(SampleScreen(PinListFragment.newInstance()))
+                    else
+                        router.replaceScreen(SampleScreen(PinListFragment.newInstance()))
+                    navItemIndex = 1
+
                 }
             }
             R.id.nav_statistics -> {
-                if (navItemIndex != 1) {
+                if (navItemIndex != 2) {
                     val fragment = StatisticsFragment.newInstance()
-                    navigationDrawerViewModel.userPartnerPinIdsLiveData.observe(this, Observer {
-                        var arg = bundleOf(AppConstants.PIN_ID to it)
-                        fragment.arguments = arg
-                    })
-                    if (navItemIndex == 3)
-                        router.replaceScreen(SampleScreen(fragment))
-                    else {
-                        cntPressed++
+                    onPutPinIdExtra(fragment)
+                    cntPressed++
+                    if (navItemIndex == 0)
                         router.navigateTo(SampleScreen(fragment))
-                    }
-                    navItemIndex = 1
+                    else
+                        router.replaceScreen(SampleScreen(fragment))
+                    navItemIndex = 2
                 }
             }
             R.id.nav_edit_profile -> {
-                goToEditProfileAcitivity()
-                layout_main_drawer.closeDrawer(GravityCompat.START)
+                goToEditProfileActivity()
+                layoutMainDrawer.closeDrawer(GravityCompat.START)
                 return false
             }
             R.id.nav_sign_out -> {
@@ -200,9 +222,16 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         }
         selectNavMenu()
         selectToolbarTitle()
-        layout_main_drawer.closeDrawer(GravityCompat.START)
+        layoutMainDrawer.closeDrawer(GravityCompat.START)
 
         return true
+    }
+
+    private fun onPutPinIdExtra(fragment: Fragment) {
+        navigationDrawerViewModel.userPartnerPinIdsLiveData.observe(this, Observer {
+            val arg = bundleOf(AppConstants.PIN_ID to it)
+            fragment.arguments = arg
+        })
     }
 
     private fun selectNavMenu() {
@@ -210,10 +239,12 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
     }
 
     private fun selectToolbarTitle() {
-        if (navItemIndex == 0)
-            supportActionBar?.setTitle(R.string.nav_pin_list)
-        else
-            supportActionBar?.setTitle(R.string.nav_statistics)
+        invalidateOptionsMenu()
+        when (navItemIndex) {
+            0 -> supportActionBar?.setTitle(R.string.nav_user_interactivity)
+            1 -> supportActionBar?.setTitle(R.string.nav_pin_list)
+            2, 3 -> supportActionBar?.setTitle(R.string.nav_statistics)
+        }
     }
 
     private fun signOutDialog() {
@@ -232,7 +263,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         alertDialog.show()
     }
 
-    private fun goToEditProfileAcitivity() {
+    private fun goToEditProfileActivity() {
         val intent = Intent(this, EditProfileActivity::class.java)
         router.navigateTo(SampleScreen(intent))
     }
@@ -240,7 +271,6 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
 
     override fun onResume() {
         super.onResume()
-        selectNavMenu()
         MainApplication.INSTANCE?.getNavigatorHolder()?.setNavigator(navigator)
     }
 
@@ -256,4 +286,9 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
             fragment.onActivityResult(requestCode, resultCode, data)
         }
     }
+
+
+    /*toggle.isDrawerIndicatorEnabled = true
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            toggle.syncState()*/
 }

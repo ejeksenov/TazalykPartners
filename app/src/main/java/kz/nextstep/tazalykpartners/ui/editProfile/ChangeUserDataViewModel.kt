@@ -8,6 +8,7 @@ import kz.nextstep.domain.model.UserPartner
 import kz.nextstep.domain.usecase.partner.ChangeUserPartnerDataUseCase
 import kz.nextstep.domain.usecase.partner.GetUserPartnerByIdUseCase
 import kz.nextstep.domain.usecase.partner.GetUserPartnerIdUseCase
+import kz.nextstep.domain.usecase.partner.SignOutUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
@@ -24,6 +25,9 @@ class ChangeUserDataViewModel : BaseViewModel() {
 
     @Inject
     lateinit var changeUserPartnerDataUseCase: ChangeUserPartnerDataUseCase
+
+    @Inject
+    lateinit var signOutUseCase: SignOutUseCase
 
     val userPartnerLiveData = MutableLiveData<UserPartner>()
     val changeUserPartnerLiveData = MutableLiveData<Boolean>()

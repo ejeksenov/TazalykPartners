@@ -15,6 +15,7 @@ import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
 import kz.nextstep.tazalykpartners.ui.passedUserList.StatisticsPassedUserListViewModel
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsViewModel
+import kz.nextstep.tazalykpartners.ui.userInteractivity.UserInteractivityViewModel
 import javax.inject.Singleton
 
 @Singleton
@@ -22,6 +23,7 @@ import javax.inject.Singleton
 interface AppComponent {
     //fun inject(addPinViewModel: AddPinViewModel)
     fun inject(mainApplication: MainApplication)
+
     fun inject(loginViewModel: LoginViewModel)
     fun inject(pinListViewModel: PinListViewModel)
     fun inject(pinViewModel: PinViewModel)
@@ -35,4 +37,5 @@ interface AppComponent {
     fun inject(changeUserDataViewModel: ChangeUserDataViewModel)
     fun inject(changePasswordViewModel: ChangePasswordViewModel)
     fun inject(changeEmailViewModel: ChangeEmailViewModel)
+    fun inject(userInteractivityViewModel: UserInteractivityViewModel)
 }

@@ -5,6 +5,7 @@ import kz.nextstep.data.FirebaseHelper
 import kz.nextstep.tazalykpartners.di.AppComponent
 import kz.nextstep.tazalykpartners.di.DaggerAppComponent
 import kz.nextstep.tazalykpartners.di.DataModule
+import kz.nextstep.tazalykpartners.utils.SharedPrefManager
 import kz.nextstep.tazalykpartners.utils.TypefaceUtil
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.Cicerone
@@ -51,5 +52,10 @@ class MainApplication: Application() {
 
     public fun getApplicationComponent(): AppComponent {
         return appComponent
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        SharedPrefManager.saveSharedSetting(this, SharedPrefManager.SHARED_PREFS_FILE_NAME, "")
     }
 }

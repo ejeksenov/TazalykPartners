@@ -20,6 +20,7 @@ import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
 import kz.nextstep.tazalykpartners.utils.CustomProgressBar
+import kz.nextstep.tazalykpartners.utils.SharedPrefManager
 import kz.nextstep.tazalykpartners.utils.TypefaceUtil
 
 class LoginActivity : AppCompatActivity() {
@@ -111,6 +112,9 @@ class LoginActivity : AppCompatActivity() {
                     }
                     AppConstants.ERROR_USER_NOT_FOUND ->
                         layoutLoginEmail?.error = it.toString()
+                    AppConstants.ERROR_VERIFY_EMAIL -> {
+                        onAlertDialogVerifyEmail()
+                    }
                     else -> {
                         layoutLoginPassword?.error = it.toString()
                     }
@@ -139,14 +143,33 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    private fun onAlertDialogVerifyEmail() {
+        val alertDialog = AlertDialog.Builder(this).create()
+        alertDialog.setMessage(AppConstants.ERROR_VERIFY_EMAIL)
+        alertDialog.setButton(
+            AlertDialog.BUTTON_NEUTRAL,
+            "Ок"
+        ) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        alertDialog.show()
+
+    }
+
     private fun startProductSponsorActivity() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun startPinDirectorActivity() {
-        val intent = Intent(this, NavigationDrawerActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
+        if (SharedPrefManager.readSharedSetting(this, SharedPrefManager.PREF_EMAIL_VERIFICATION, "") == SharedPrefManager.NOT_VERIFIED_VALUE) {
+            SharedPrefManager.saveSharedSetting(this, SharedPrefManager.PREF_EMAIL_VERIFICATION, "")
+            finish()
+        } else {
+            val intent = Intent(this, NavigationDrawerActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+
     }
 
     private fun startPinAdminActivity() {

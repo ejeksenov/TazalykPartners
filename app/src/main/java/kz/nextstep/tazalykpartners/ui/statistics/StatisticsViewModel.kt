@@ -6,6 +6,7 @@ import kz.nextstep.domain.model.HistoryPin
 import kz.nextstep.domain.usecase.historyPin.GetHistoryPinListUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.domain.utils.ChangeDateFormat
+import kz.nextstep.domain.utils.ChangeDateFormat.isOnDate
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
 import kz.nextstep.tazalykpartners.utils.data.WasteItem
@@ -125,34 +126,6 @@ class StatisticsViewModel : BaseViewModel() {
 
     }
 
-
-    private fun isOnDate(passedDate: String, selectedDates: String): Boolean {
-        if (selectedDates == "")
-            return true
-        else {
-            var startDate = ""
-            var endDate = ""
-            if (selectedDates != "") {
-                val dates = selectedDates.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-
-                if (dates.size == 1) run {
-                    startDate = dates[0]
-                    endDate = ""
-                } else if (dates.size > 1) {
-                    startDate = dates[0]
-                    endDate = dates[dates.size - 1]
-                    endDate = ChangeDateFormat.onChangeDateFormat("$endDate 11:11:11")
-                }
-                startDate = ChangeDateFormat.onChangeDateFormat("$startDate 11:11:11")
-
-            }
-            if (endDate == "" && passedDate == startDate)
-                return true
-            else if (ChangeDateFormat.onCompareData(startDate, endDate, passedDate))
-                return true
-        }
-        return false
-    }
 
     override fun onCleared() {
         super.onCleared()

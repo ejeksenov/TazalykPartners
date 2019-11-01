@@ -1,5 +1,6 @@
 package kz.nextstep.tazalykpartners.ui.editProfile
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.Editable
@@ -12,9 +13,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import kz.nextstep.domain.utils.AppConstants
 
 import kz.nextstep.tazalykpartners.R
+import kz.nextstep.tazalykpartners.ui.login.LoginActivity
 import kz.nextstep.tazalykpartners.utils.CustomProgressBar
+import kz.nextstep.tazalykpartners.utils.SharedPrefManager
 
 class ChangeEmailFragment : Fragment() {
 
@@ -81,6 +85,7 @@ class ChangeEmailFragment : Fragment() {
                     resources.getString(R.string.success_change_email),
                     Toast.LENGTH_SHORT
                 ).show()
+                SharedPrefManager.saveSharedSetting(context!!, SharedPrefManager.PREF_EMAIL_VERIFICATION, SharedPrefManager.NOT_VERIFIED_VALUE)
                 activity?.onBackPressed()
             } else {
                 Toast.makeText(

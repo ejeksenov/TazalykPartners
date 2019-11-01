@@ -27,8 +27,10 @@ import kotlinx.android.synthetic.main.change_user_data_fragment.*
 import kz.nextstep.tazalykpartners.MainApplication
 
 import kz.nextstep.tazalykpartners.R
+import kz.nextstep.tazalykpartners.ui.login.LoginActivity
 import kz.nextstep.tazalykpartners.utils.CircleTransform
 import kz.nextstep.tazalykpartners.utils.CustomProgressBar
+import kz.nextstep.tazalykpartners.utils.SharedPrefManager
 import java.io.File
 
 class ChangeUserDataFragment : Fragment() {
@@ -204,6 +206,16 @@ class ChangeUserDataFragment : Fragment() {
                 ivChangeUserDataProfile.setImageURI(imageUri)
                 imageUrl = imageUri.toString()
             }
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (context != null && SharedPrefManager.readSharedSetting(context!!, SharedPrefManager.PREF_EMAIL_VERIFICATION, "") == SharedPrefManager.NOT_VERIFIED_VALUE
+            && ::viewModel.isInitialized && activity != null) {
+               viewModel.signOutUseCase.execute()
+                activity?.startActivity(Intent(activity, LoginActivity::class.java))
         }
     }
 

@@ -103,6 +103,8 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                     currentUser.updateEmail(newEmail).addOnCompleteListener { it1 ->
                         if (it1.isSuccessful) {
                             databaseReference.child(currentUser.uid).child("email").setValue(newEmail).addOnCompleteListener {it2 ->
+                                if (it2.isSuccessful)
+                                    currentUser.sendEmailVerification()
                                 subscription.onNext(it2.isSuccessful)
                             }.addOnFailureListener {it2 ->
                                 subscription.onError(FirebaseException(it2.message!!))
@@ -196,15 +198,22 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                             else if (productIds != "")
                                 responseString = AppConstants.SUCCESS_PRODUCT_SPONSOR
                         }
+                        val mAuth = FirebaseAuth.getInstance()
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnFailureListener {
                             if (it.message?.toLowerCase()?.contains("password")!!)
                                 subscription.onError(FirebaseException(AppConstants.ERROR_INVALID_PASSWORD))
                             else
                                 subscription.onError(FirebaseException(it.message!!))
                         }.addOnCompleteListener {
-                            subscription.onNext(responseString)
-                            subscription.onCompleted()
+                            if (mAuth.currentUser?.isEmailVerified!!) {
+                                subscription.onNext(responseString)
+                                subscription.onCompleted()
+                            } else {
+                                mAuth.signOut()
+                                subscription.onError(FirebaseException(AppConstants.ERROR_VERIFY_EMAIL))
+                            }
                         }
+
                     } else
                         subscription.onError(FirebaseException(AppConstants.ERROR_USER_NOT_FOUND))
                 }

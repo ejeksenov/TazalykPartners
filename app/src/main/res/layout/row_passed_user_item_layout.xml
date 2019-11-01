@@ -9,7 +9,7 @@
             android:layout_height="72dp"
             android:padding="@dimen/standard_12">
         <ImageView
-                android:id="@+id/pin_company_logo_iv"
+                android:id="@+id/iv_row_user_interactivity_profile_logo"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 circleImageUrl="@{viewModel.getUserImageUrl()}"
@@ -17,14 +17,14 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/pin_company_logo_iv"
-                android:layout_toStartOf="@+id/passed_waste_total_tv"
+                android:layout_toEndOf="@+id/iv_row_user_interactivity_profile_logo"
+                android:layout_toStartOf="@+id/tv_row_user_interactivity_total"
                 android:paddingLeft="@dimen/standard_12"
                 android:paddingRight="@dimen/standard_12"
                 android:orientation="vertical"
                 android:layout_centerVertical="true">
             <TextView
-                    android:id="@+id/pin_company_address_tv"
+                    android:id="@+id/tv_row_user_interactivity_company_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -32,7 +32,7 @@
                     android:textColor="@color/textColor"
             />
             <TextView
-                    android:id="@+id/passed_waste_date_tv"
+                    android:id="@+id/tv_row_user_interactivity_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
@@ -41,7 +41,7 @@
         </LinearLayout>
 
         <TextView
-                android:id="@+id/passed_waste_total_tv"
+                android:id="@+id/tv_row_user_interactivity_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/darker_gray"

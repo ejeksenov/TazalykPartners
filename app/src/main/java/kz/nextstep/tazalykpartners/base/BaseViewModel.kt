@@ -19,6 +19,7 @@ import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
 import kz.nextstep.tazalykpartners.ui.passedUserList.StatisticsPassedUserListViewModel
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsViewModel
+import kz.nextstep.tazalykpartners.ui.userInteractivity.UserInteractivityViewModel
 
 open class BaseViewModel : ViewModel() {
     private val injector: AppComponent = DaggerAppComponent.builder().dataModule(MainApplication.INSTANCE?.let {
@@ -47,6 +48,7 @@ open class BaseViewModel : ViewModel() {
             is ChangeUserDataViewModel -> injector.inject(this)
             is ChangePasswordViewModel -> injector.inject(this)
             is ChangeEmailViewModel -> injector.inject(this)
+            is UserInteractivityViewModel -> injector.inject(this)
         }
     }
 

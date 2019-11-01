@@ -17,6 +17,8 @@ import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.ui.SampleScreen
 import kz.nextstep.tazalykpartners.ui.addEditPin.AddEditPinActivity
 import kz.nextstep.tazalykpartners.ui.filterByDate.FilterByDateActivity
+import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedDates
+import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedFilterType
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsFragment
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
@@ -114,10 +116,10 @@ class PinDetailedInfoActivity : AppCompatActivity() {
                 router.navigateTo(SampleScreen(fragment))
                 true
             }
-            R.id.action_filter -> {
+            R.id.action_filter_by_date -> {
                 val intent = Intent(this, FilterByDateActivity::class.java)
-                intent.putExtra(AppConstants.SELECTED_DATES, StatisticsFragment.selectedDates)
-                intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, StatisticsFragment.selectedFilterType)
+                intent.putExtra(AppConstants.SELECTED_DATES, selectedDates)
+                intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, selectedFilterType)
                 startActivityForResult(intent, AppConstants.REQUEST_CODE)
                 true
             }

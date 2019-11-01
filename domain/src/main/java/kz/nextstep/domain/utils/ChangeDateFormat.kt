@@ -47,4 +47,33 @@ object ChangeDateFormat {
 
         return false
     }
+
+
+    fun isOnDate(passedDate: String, selectedDates: String): Boolean {
+        if (selectedDates == "")
+            return true
+        else {
+            var startDate = ""
+            var endDate = ""
+            if (selectedDates != "") {
+                val dates = selectedDates.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+
+                if (dates.size == 1) run {
+                    startDate = dates[0]
+                    endDate = ""
+                } else if (dates.size > 1) {
+                    startDate = dates[0]
+                    endDate = dates[dates.size - 1]
+                    endDate = onChangeDateFormat("$endDate 11:11:11")
+                }
+                startDate = onChangeDateFormat("$startDate 11:11:11")
+
+            }
+            if (endDate == "" && passedDate == startDate)
+                return true
+            else if (onCompareData(startDate, endDate, passedDate))
+                return true
+        }
+        return false
+    }
 }

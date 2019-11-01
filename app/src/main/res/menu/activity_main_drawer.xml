@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
+                android:id="@+id/nav_user_interactivity"
+                android:title="@string/nav_user_interactivity"
+        />
+        <item
                 android:id="@+id/nav_pin_list"
                 android:title="@string/nav_pin_list"
         />

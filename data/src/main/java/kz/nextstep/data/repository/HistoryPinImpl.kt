@@ -11,7 +11,6 @@ import rx.Observable
 import rx.subscriptions.Subscriptions
 
 class HistoryPinImpl(val historyPinMapper: HistoryPinMapper) : HistoryPinRepository {
-
     private var databaseReference: DatabaseReference =
         FirebaseDatabase.getInstance().reference.child(AppConstants.historyPinTree)
 
@@ -33,10 +32,7 @@ class HistoryPinImpl(val historyPinMapper: HistoryPinMapper) : HistoryPinReposit
                             }
                         }
                     }
-                    if (historyPinHashMap.isEmpty())
-                        it.onNext(null)
-                    else
-                        it.onNext(historyPinHashMap)
+                    it.onNext(historyPinHashMap)
                 }
 
             }

@@ -1,7 +1,6 @@
 package kz.nextstep.tazalykpartners.di
 
 import android.app.Application
-import android.view.inspector.PropertyMapper
 import dagger.Module
 import dagger.Provides
 import kz.nextstep.data.FirebaseHelper
@@ -10,7 +9,6 @@ import kz.nextstep.data.repository.*
 import kz.nextstep.domain.PinRepository
 import kz.nextstep.domain.model.*
 import kz.nextstep.domain.repository.*
-import kz.nextstep.tazalykpartners.MainApplication
 import rx.Observable
 import java.lang.RuntimeException
 import javax.inject.Singleton
@@ -197,6 +195,7 @@ class DataModule(private val mainApplication: Application) {
             return HistoryPinImpl(historyPinMapper)
         else {
             return object : HistoryPinRepository {
+
                 override fun getHistoryPinList(pinId: String): Observable<HashMap<String, HistoryPin>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
