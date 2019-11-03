@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.nextstep.domain.utils.AppConstants
+import kz.nextstep.domain.utils.AppConstants.REQUEST_CODE
 import kz.nextstep.domain.utils.ChangeDateFormat
 
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.UserInteractivityFragmentBinding
+import kz.nextstep.tazalykpartners.ui.filterByDate.FilterByDateActivity
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.filterDateDays
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedDates
@@ -59,14 +61,18 @@ class UserInteractivityFragment : Fragment() {
         binding.rvUserInteractivityList.layoutManager = LinearLayoutManager(context)
 
         viewModel.getPassedUserList(selectedWasteId, selectedDates)
+        customProgressBar.show()
 
         viewModel.customProgressBarLiveData.observe(this, Observer {
-            if (it)
-                customProgressBar.dismiss()
-            else
-                customProgressBar.show()
-
+            customProgressBar.dismiss()
         })
+
+        binding.tvUserInteractivityDateFilterType.setOnClickListener {
+            val intent = Intent(activity, FilterByDateActivity::class.java)
+            intent.putExtra(AppConstants.SELECTED_DATES, selectedDates)
+            intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, selectedFilterType)
+            activity?.startActivityForResult(intent, REQUEST_CODE)
+        }
 
         binding.viewModel = viewModel
 
@@ -76,14 +82,12 @@ class UserInteractivityFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && data != null ) {
-            if (requestCode == AppConstants.REQUEST_CODE) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            if (requestCode == REQUEST_CODE) {
                 selectedDates = data.getStringExtra(AppConstants.SELECTED_DATES)!!
                 selectedFilterType = data.getStringExtra(AppConstants.SELECTED_FILTER_TYPE)!!
                 filterDateDays = data.getIntExtra(AppConstants.FILTER_DATE_DAYS, 30)
                 binding.tvUserInteractivityDateFilterType.text = selectedFilterType
-            } else if (requestCode == 2) {
-                selectedWasteId = data.getStringExtra(AppConstants.SELECTED_WASTE_ID)!!
             }
             viewModel.getPassedUserList(selectedWasteId, selectedDates)
         }

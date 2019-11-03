@@ -14,11 +14,13 @@
             tools:context=".ui.userInteractivity.UserInteractivityFragment">
         <TextView
                 android:id="@+id/tv_user_interactivity_date_filter_type"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/standard_22"
-                android:paddingEnd="@dimen/standard_22"
-                android:paddingTop="@dimen/standard_8"/>
+                android:paddingEnd="@dimen/standard_8"
+                android:paddingTop="@dimen/standard_8"
+                android:gravity="center_vertical"
+                android:drawableEnd="@drawable/ic_chevron_right_gray"/>
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
               android:background="@color/grayColor"

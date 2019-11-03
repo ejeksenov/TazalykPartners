@@ -41,6 +41,12 @@ class StatisticsHistoryAdapter : RecyclerView.Adapter<StatisticsHistoryAdapter.S
         notifyDataSetChanged()
     }
 
+    fun clearAllList() {
+        wasteItemList.clear()
+        filteredWasteItemList.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: StatisticsHistoryViewHolder, position: Int) {
         val wasteItem = filteredWasteItemList[position]
         holder.bind(wasteItem, holder.binding.root.context)

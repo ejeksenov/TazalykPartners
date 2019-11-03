@@ -42,15 +42,16 @@ class UserInteractivityViewModel : BaseViewModel() {
     val userInteractivityAdapter = UserInteractivityAdapter()
 
     fun getPassedUserList(wasteId: String, selectedDate: String) {
-        customProgressBarLiveData.value = false
         val userPartnerId = getUserPartnerIdUseCase.execute()
 
         getUserPartnerByIdUseCase.execute(object : Subscriber<UserPartner>() {
             override fun onNext(t: UserPartner?) {
                 if (t != null) {
+
                     val pinIds = t.pinIds!!
                     onGetHistoryPinList(pinIds, wasteId, selectedDate)
                 }
+
             }
 
             override fun onCompleted() {}
@@ -78,11 +79,14 @@ class UserInteractivityViewModel : BaseViewModel() {
                                 if (!passedTotal.isNullOrBlank()) {
                                     for (wasteIdItem in wasteId.split(";")) {
                                         val wasteIdItemArr = wasteIdItem.split(",")
-                                        if (wasteId.isBlank() || passedTotal.contains(wasteIdItemArr[1])) {
+
+                                        if (wasteId.isBlank() || (wasteIdItemArr.size >= 5 && passedTotal.contains(wasteIdItemArr[1]))) {
                                             val itemPinId = historyPin.pinId
                                             val itemUserId = historyPin.userId
+
                                             filteredPinIds += "$itemPinId,"
                                             filteredUserIds += "$itemUserId,"
+
                                             passedUserItemMutableList.add(
                                                 PassedUserPinItem(
                                                     itemUserId,
@@ -101,8 +105,12 @@ class UserInteractivityViewModel : BaseViewModel() {
                             }
                         }
                     }
-
-                    onGetPassedUserList(passedUserItemMutableList, filteredPinIds, filteredUserIds)
+                    if (passedUserItemMutableList.isEmpty()) {
+                        userInteractivityAdapter.clearAllList()
+                        customProgressBarLiveData.value = true
+                        showToastMessage(AppConstants.NO_DATA)
+                    } else
+                        onGetPassedUserList(passedUserItemMutableList, filteredPinIds, filteredUserIds)
                 }
             }
 

@@ -10,8 +10,7 @@
             android:id="@+id/iv_row_user_interactivity_profile_logo"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/user_placeholder_image"
-            android:layout_centerVertical="true"/>
+            android:src="@drawable/user_placeholder_image"/>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,19 +42,22 @@
                 android:textSize="12sp"/>
 
         <TextView
-                android:id="@+id/tv_row_user_interactivity_date"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_row_user_interactivity_total_sum"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"/>
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/textColor"/>
     </LinearLayout>
 
+
     <TextView
-            android:id="@+id/tv_row_user_interactivity_total_sum"
+            android:id="@+id/tv_row_user_interactivity_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/textColor"
+            android:textSize="12sp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"/>
+
+
 </RelativeLayout>

@@ -33,11 +33,20 @@ class UserInteractivityAdapter: RecyclerView.Adapter<UserInteractivityAdapter.Us
         notifyDataSetChanged()
     }
 
+    fun clearAllList() {
+        passedUserItemList.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: UserInteractivityViewHolder, position: Int) {
         val passedUserPinItem = passedUserItemList[position]
+
         val imageUrl = passedUserPinItem.userImageUrl
         if (!imageUrl.isNullOrBlank())
             Picasso.get().load(imageUrl).transform(CircleTransform()).placeholder(R.drawable.user_placeholder_image).into(holder.ivRowUserInteractivityProfileLogo)
+        else
+            holder.ivRowUserInteractivityProfileLogo.setImageResource(R.drawable.user_placeholder_image)
+
         holder.tvRowUserInteractivityCompanyAddress.text = passedUserPinItem.pinAddress
         holder.tvRowUserInteractivityDate.text = passedUserPinItem.passedDate
         holder.tvRowUserInteractivityName.text = passedUserPinItem.userName

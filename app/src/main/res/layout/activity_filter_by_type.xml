@@ -1,10 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".ui.filterByType.FilterByTypeActivity">
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/layout_filter_by_date_appbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:title="@string/filter"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RadioGroup
+            android:id="@+id/rg_filter_by_type"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="@dimen/standard_16"
+            android:layout_marginTop="@dimen/standard_12"
+            android:layout_marginBottom="@dimen/standard_12"
+            android:layout_marginRight="@dimen/standard_16"
+            android:background="@drawable/pink_out_line"
+            android:checkedButton="@+id/recycle_rb"
+            android:divider="@drawable/custom_radiobutton_divider"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+        <RadioButton
+                android:id="@+id/rb_filter_by_type_recycle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/recycle"
+                android:textColor="@color/white"/>
+
+        <RadioButton
+                android:id="@+id/rb_filter_by_type_utilization"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/utilization"
+                android:textColor="@color/mainBackgroundColor"/>
+
+        <RadioButton
+                android:id="@+id/rb_filter_by_type_blago"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/blago"
+                android:textColor="@color/mainBackgroundColor"/>
+
+    </RadioGroup>
+
+    <GridView
+            android:id="@+id/gv_filter_by_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/standard_12"
+            android:layout_marginLeft="@dimen/standard_16"
+            android:layout_marginRight="@dimen/standard_16"
+            android:layout_marginBottom="@dimen/standard_12"
+            android:fastScrollEnabled="true"
+            android:numColumns="2"
+            android:scrollbars="none"
+            android:listSelector="#00000000"
+            android:overScrollMode="never"
+            android:horizontalSpacing="@dimen/standard_12"
+            android:verticalSpacing="@dimen/standard_12"/>
+
+</LinearLayout>

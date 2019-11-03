@@ -16,6 +16,8 @@ import javax.inject.Inject
 
 class StatisticsViewModel : BaseViewModel() {
 
+    val customProgressBarLiveData = MutableLiveData<Boolean>()
+
     @Inject
     lateinit var getHistoryPinListUseCase: GetHistoryPinListUseCase
 
@@ -87,12 +89,20 @@ class StatisticsViewModel : BaseViewModel() {
                     }
                 }
             }
-            if (total > 0.0 && filterDateDays > 0) {
-                val averageTotal = (total / filterDateDays).toBigDecimal().setScale(3, RoundingMode.UP)
-                totalPassedTextMutableLiveData.value = "${total.toBigDecimal().setScale(3, RoundingMode.UP)} кг"
-                averagePassedTextMutableLiveData.value = "$averageTotal кг в среднем"
+            if (wasteItemList.isEmpty()) {
+                customProgressBarLiveData.value = true
+                statisticsHistoryAdapter.clearAllList()
+                totalPassedTextMutableLiveData.value = "0 кг"
+                averagePassedTextMutableLiveData.value = "0 кг в среднем"
+                showToastMessage(AppConstants.NO_DATA)
+            } else {
+                if (total > 0.0 && filterDateDays > 0) {
+                    val averageTotal = (total / filterDateDays).toBigDecimal().setScale(3, RoundingMode.UP)
+                    totalPassedTextMutableLiveData.value = "${total.toBigDecimal().setScale(3, RoundingMode.UP)} кг"
+                    averagePassedTextMutableLiveData.value = "$averageTotal кг в среднем"
+                }
+                getWasteItemListByType(selectedWasteType, wasteItemList)
             }
-            getWasteItemListByType(selectedWasteType, wasteItemList)
         }
     }
 
@@ -122,6 +132,7 @@ class StatisticsViewModel : BaseViewModel() {
             }
             filteredWasteItemList.sortByDescending { it.passed_total }
             statisticsHistoryAdapter.upDateStatisticsHistoryAdapter(wasteItemList, filteredWasteItemList)
+            customProgressBarLiveData.value = true
         }
 
     }

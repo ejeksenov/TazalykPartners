@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,7 @@ import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedDates
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedFilterType
 import kz.nextstep.tazalykpartners.ui.passedUserList.StatisticsPassedUserListActivity
+import kz.nextstep.tazalykpartners.utils.CustomProgressBar
 
 
 class StatisticsFragment : Fragment() {
@@ -37,6 +39,7 @@ class StatisticsFragment : Fragment() {
 
     private lateinit var viewModel: StatisticsViewModel
     private lateinit var binding: StatisticsFragmentBinding
+    private lateinit var customProgressBar: CustomProgressBar
 
 
     private var selectedWasteType = waste_type_recycle
@@ -64,6 +67,12 @@ class StatisticsFragment : Fragment() {
                 selectedDates = ChangeDateFormat.onGetFilterDate(filterDateDays)
 
                 viewModel.getHistoryPinList(pinId!!, filterDateDays, selectedDates, selectedWasteType)
+                customProgressBar = CustomProgressBar(context!!)
+                customProgressBar.show()
+
+                viewModel.customProgressBarLiveData.observe(this, Observer {
+                    customProgressBar.dismiss()
+                })
 
                 binding.tvStatisticsPassedWasteType.setOnClickListener {
                     onManageTypeOfWasteFilter()

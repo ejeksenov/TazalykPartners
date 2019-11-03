@@ -152,8 +152,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_filter_by_date -> {
-                val intent = if (navItemIndex == 2) Intent(this, FilterByDateActivity::class.java)
-                else Intent(this, FilterByDateActivity::class.java)
+                val intent = Intent(this, FilterByDateActivity::class.java)
                 intent.putExtra(AppConstants.SELECTED_DATES, selectedDates)
                 intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, selectedFilterType)
                 startActivityForResult(intent, REQUEST_CODE)
