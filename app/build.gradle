@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -70,11 +71,22 @@ dependencies {
 
     compileOnly "javax.annotation:jsr250-api:$javax_annotation_version"
 
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    //manage changing screens
     implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
+
+    //load image
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //sliding image indicator
     implementation 'me.relex:circleindicator:1.2.2@aar'
+
+    //calendar picker
     implementation 'com.squareup:android-times-square:1.6.5@aar'
+
+    //whatsapp like photo taker
     implementation 'com.fxn769:pix:1.4.4'
+
+    //input phone number mask
+    implementation 'ru.egslava:MaskedEditText:1.0.5'
 
 }

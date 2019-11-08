@@ -39,6 +39,10 @@ class UserInteractivityFragment : Fragment() {
     private lateinit var binding: UserInteractivityFragmentBinding
     private lateinit var customProgressBar: CustomProgressBar
 
+    var selectedfilterDateType = "За месяц"
+    var selectedfilterDateDays = 30
+    var selectedFilterDates = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +54,9 @@ class UserInteractivityFragment : Fragment() {
             false
         )
 
-        selectedDates = ChangeDateFormat.onGetFilterDate(filterDateDays)
+        onAssignData()
+        if (selectedFilterDates.isBlank())
+            selectedFilterDates = ChangeDateFormat.onGetFilterDate(filterDateDays)
 
         viewModel = ViewModelProviders.of(this).get(UserInteractivityViewModel::class.java)
         customProgressBar = CustomProgressBar(context!!)
@@ -60,7 +66,7 @@ class UserInteractivityFragment : Fragment() {
         binding.rvUserInteractivityList.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
         binding.rvUserInteractivityList.layoutManager = LinearLayoutManager(context)
 
-        viewModel.getPassedUserList(selectedWasteId, selectedDates)
+        viewModel.getPassedUserList(selectedWasteId, selectedFilterDates)
         customProgressBar.show()
 
         viewModel.customProgressBarLiveData.observe(this, Observer {
@@ -69,14 +75,20 @@ class UserInteractivityFragment : Fragment() {
 
         binding.tvUserInteractivityDateFilterType.setOnClickListener {
             val intent = Intent(activity, FilterByDateActivity::class.java)
-            intent.putExtra(AppConstants.SELECTED_DATES, selectedDates)
-            intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, selectedFilterType)
+            intent.putExtra(AppConstants.SELECTED_DATES, selectedFilterDates)
+            intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, selectedfilterDateType)
             activity?.startActivityForResult(intent, REQUEST_CODE)
         }
 
         binding.viewModel = viewModel
 
         return binding.root
+    }
+
+    private fun onAssignData() {
+        selectedfilterDateType = selectedFilterType
+        selectedFilterDates = selectedDates
+        selectedfilterDateDays = filterDateDays
     }
 
 
@@ -88,8 +100,10 @@ class UserInteractivityFragment : Fragment() {
                 selectedFilterType = data.getStringExtra(AppConstants.SELECTED_FILTER_TYPE)!!
                 filterDateDays = data.getIntExtra(AppConstants.FILTER_DATE_DAYS, 30)
                 binding.tvUserInteractivityDateFilterType.text = selectedFilterType
+                onAssignData()
+                viewModel.getPassedUserList(selectedWasteId, selectedFilterDates)
             }
-            viewModel.getPassedUserList(selectedWasteId, selectedDates)
+
         }
     }
 

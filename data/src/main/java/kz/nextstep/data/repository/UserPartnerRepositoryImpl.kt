@@ -22,6 +22,45 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
     private var databaseReference: DatabaseReference =
         FirebaseDatabase.getInstance().reference.child(AppConstants.userPartnerTree)
 
+    override fun changeUserPartnerPinId(pinId: String): Observable<Boolean> {
+        return Observable.create {subscription ->
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            if (currentUser != null) {
+                val userPartnerId = currentUser.uid
+                val valueEventListener = object : ValueEventListener {
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        subscription.onError(FirebaseException(databaseError.message))
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (ds in dataSnapshot.children) {
+                            val userPartner = ds.getValue(UserPartner::class.java)
+                            if (userPartner != null) {
+                                var pinIds = userPartner.pinIds
+                                if (!pinIds.isNullOrBlank()) {
+                                    pinIds += ",$pinId"
+                                } else pinIds = pinId
+
+                                databaseReference.child(userPartnerId).child("pinIds").setValue(pinIds).addOnCompleteListener {
+                                    subscription.onNext(it.isSuccessful)
+                                }.addOnFailureListener {
+                                    subscription.onError(FirebaseException(it.message!!))
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                databaseReference.orderByKey().equalTo(userPartnerId).addValueEventListener(valueEventListener)
+
+                subscription.add(Subscriptions.create {
+                    databaseReference.removeEventListener(valueEventListener)
+                })
+            }
+        }
+    }
+
     override fun changeUserPartnerData(imageUrl: String?, fullName: String?): Observable<Boolean> {
         return Observable.create { subscription ->
             val userId = FirebaseAuth.getInstance().currentUser?.uid

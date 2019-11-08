@@ -31,14 +31,16 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
     }
 
 
-    override fun addPin(pin: Pin): Observable<Boolean> {
+    override fun addPin(pin: Pin): Observable<String> {
         return Observable.create {
             val pinId = databaseReference.push().key
             if (pinId != null) {
                 databaseReference.child(pinId).setValue(pin)
                     .addOnCompleteListener { it1 ->
-                        it.onNext(it1.isSuccessful)
-                        it.onCompleted()
+                        if (it1.isSuccessful) {
+                            it.onNext(pinId)
+                            it.onCompleted()
+                        }
                     }.addOnFailureListener { it1 ->
                         it.onError(FirebaseException(it1.message.toString()))
                     }

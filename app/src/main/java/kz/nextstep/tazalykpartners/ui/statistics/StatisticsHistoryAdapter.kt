@@ -42,9 +42,11 @@ class StatisticsHistoryAdapter : RecyclerView.Adapter<StatisticsHistoryAdapter.S
     }
 
     fun clearAllList() {
-        wasteItemList.clear()
-        filteredWasteItemList.clear()
-        notifyDataSetChanged()
+        if (::filteredWasteItemList.isInitialized && ::wasteItemList.isInitialized) {
+            wasteItemList.clear()
+            filteredWasteItemList.clear()
+            notifyDataSetChanged()
+        }
     }
 
     override fun onBindViewHolder(holder: StatisticsHistoryViewHolder, position: Int) {

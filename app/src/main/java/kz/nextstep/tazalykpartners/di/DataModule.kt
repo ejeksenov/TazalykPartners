@@ -72,7 +72,7 @@ class DataModule(private val mainApplication: Application) {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 
-                override fun addPin(pin: Pin): Observable<Boolean> {
+                override fun addPin(pin: Pin): Observable<String> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 
@@ -114,6 +114,10 @@ class DataModule(private val mainApplication: Application) {
             return UserPartnerRepositoryImpl(userPartnerMapper)
         else {
             return object : UserPartnerRepository {
+                override fun changeUserPartnerPinId(pinId: String): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
                 override fun changeUserPartnerData(imageUrl: String?, fullName: String?): Observable<Boolean> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }

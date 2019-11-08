@@ -13,4 +13,5 @@ interface UserPartnerRepository {
     fun changeUserPartnerData(imageUrl: String?, fullName: String?): Observable<Boolean>
     fun changePassword(password: String, newPassword: String): Observable<Boolean>
     fun changeEmail(password: String, newEmail: String): Observable<Boolean>
+    fun changeUserPartnerPinId(pinId: String): Observable<Boolean>
 }

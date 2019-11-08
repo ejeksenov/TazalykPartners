@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.squareup.picasso.Picasso
 import kz.nextstep.domain.utils.AppConstants
+import kz.nextstep.domain.utils.AppConstants.REQUEST_CODE
 import kz.nextstep.tazalykpartners.ui.SampleScreen
 import kz.nextstep.tazalykpartners.ui.editProfile.EditProfileActivity
 import kz.nextstep.tazalykpartners.ui.filterByDate.FilterByDateActivity
@@ -47,8 +48,8 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
     }
 
     lateinit var router: Router
-    lateinit var navigationDrawerViewModel: NavigationDrawerViewModel
     lateinit var toggle: ActionBarDrawerToggle
+    lateinit var navigationDrawerViewModel: NavigationDrawerViewModel
 
     lateinit var toolbar: Toolbar
     lateinit var ivMainNavProfile: ImageView
@@ -60,7 +61,6 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
     private var navItemIndex = 0
     private var cntPressed = 0
 
-    val REQUEST_CODE = 1
 
     private val navigator = SupportAppNavigator(this, R.id.activity_navigation_drawer_container)
 

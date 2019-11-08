@@ -1,19 +1,19 @@
 package kz.nextstep.domain.model
 
 data class Pin(
-    val name: String? = "",
-    val description: String? = "",
-    val address: String? = "",
-    val phone: String? = "",
-    val workTime: String? = "",
-    val qrCode: String? = "",
-    val imageLink: String? = "",
-    val phoneName: String? = "",
-    val logo: String? = "",
-    val city: String? = "",
-    val country: String? = "",
-    val wasteId: String? = "",
-    val partner: String? = "",
-    val latlng: String? = "",
-    val verificationCode: String? = ""
+    var name: String? = "",
+    var description: String? = "",
+    var address: String? = "",
+    var phone: String? = "",
+    var workTime: String? = "",
+    var qrCode: String? = "",
+    var imageLink: String? = "",
+    var phoneName: String? = "",
+    var logo: String? = "",
+    var city: String? = "",
+    var country: String? = "",
+    var wasteId: String? = "",
+    var partner: String? = "",
+    var latlng: String? = "",
+    var verificationCode: String? = ""
 )

@@ -13,7 +13,6 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
 
@@ -141,7 +140,7 @@ class FilterByTypeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_filter_by_waste_accept -> {
+            R.id.action_accept -> {
                 onReturnResult()
                 true
             }
@@ -161,7 +160,7 @@ class FilterByTypeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_filter_by_type, menu)
+        menuInflater.inflate(R.menu.menu_accept, menu)
         return true
     }
 

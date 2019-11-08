@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        tools:context=".ui.addEditPin.MainPinInfoFragment">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <EditText
+                android:id="@+id/edt_main_pin_info_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
+                android:imeOptions="actionDone"
+                android:layout_marginTop="@dimen/standard_16"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <EditText
+                android:id="@+id/edt_main_pin_info_admin_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/admin_name"
+                android:inputType="textPersonName"
+                android:imeOptions="actionDone"
+                android:layout_marginTop="@dimen/standard_16"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <Spinner
+                android:id="@+id/sp_main_pin_info_admin_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_16"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <br.com.sapereaude.maskedEditText.MaskedEditText
+                android:id="@+id/edt_main_pin_info_admin_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:typeface="monospace"
+                app:allowed_chars="1234567890"
+                app:mask="+7(###)###-##-##"
+                android:hint="1234567890"
+                app:keep_hint="true"
+                android:layout_marginTop="@dimen/standard_16"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayColor"
+                android:layout_marginTop="@dimen/standard_22"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <Button
+                android:id="@+id/btn_main_pin_info_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_chevron_right_gray"
+                android:background="@color/transparent"
+                android:text="@string/location"
+                android:textAllCaps="false"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_16"
+        />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayColor"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <Button
+                android:id="@+id/btn_main_pin_info_working_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_chevron_right_gray"
+                android:background="@color/transparent"
+                android:text="@string/work_time"
+                android:textAllCaps="false"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_16"
+        />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayColor"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <Button
+                android:id="@+id/btn_main_pin_info_waste_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_chevron_right_gray"
+                android:background="@color/transparent"
+                android:text="@string/waste_type"
+                android:textAllCaps="false"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_16"
+        />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayColor"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <Button
+                android:id="@+id/btn_main_pin_info_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_chevron_right_gray"
+                android:background="@color/transparent"
+                android:text="@string/logo_and_photo"
+                android:textAllCaps="false"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_16"
+        />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayColor"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <EditText
+                android:id="@+id/edt_main_pin_info_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/notice"
+                android:layout_marginTop="@dimen/standard_16"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"/>
+
+        <Button
+                android:id="@+id/btn_main_pin_info_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/save"
+                android:background="@drawable/rounded_corner_active_button"
+                android:layout_marginTop="@dimen/standard_16"
+                android:layout_marginStart="@dimen/standard_22"
+                android:layout_marginEnd="@dimen/standard_22"
+                android:layout_marginBottom="@dimen/standard_16"/>
+
+    </LinearLayout>
+</ScrollView>

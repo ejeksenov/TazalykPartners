@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_filter_by_date.*
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.domain.utils.ChangeDateFormat
 import kz.nextstep.tazalykpartners.R
+import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.filterDateDays
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedDates
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedFilterType
@@ -35,10 +36,14 @@ class FilterByDateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter_by_date)
 
-        if (intent != null) {
-            selectedFilterType = intent.getStringExtra(AppConstants.SELECTED_FILTER_TYPE)!!
+        /*if (intent != null) {
+            filterDateType = intent.getStringExtra(AppConstants.SELECTED_FILTER_TYPE)!!
             selectedDates = intent.getStringExtra(AppConstants.SELECTED_DATES)!!
-        }
+        }*/
+
+        filterDateType = selectedFilterType
+        filterDateDays = NavigationDrawerActivity.filterDateDays
+        selectedDates = NavigationDrawerActivity.selectedDates
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -62,7 +67,7 @@ class FilterByDateActivity : AppCompatActivity() {
                     if (index == it) {
                         onManageFilterDateDays(index)
                         item.isSelected = true
-                        selectedFilterType = item.dateType!!
+                        filterDateType = item.dateType!!
                         selectedDates = ChangeDateFormat.onGetFilterDate(filterDateDays)
                     } else
                         item.isSelected = false
@@ -87,7 +92,7 @@ class FilterByDateActivity : AppCompatActivity() {
         val intent = Intent()
         intent.putExtra(AppConstants.FILTER_DATE_DAYS, filterDateDays)
         intent.putExtra(AppConstants.SELECTED_DATES, selectedDates)
-        intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, selectedFilterType)
+        intent.putExtra(AppConstants.SELECTED_FILTER_TYPE, filterDateType)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -104,13 +109,13 @@ class FilterByDateActivity : AppCompatActivity() {
 
 
     private fun onManageFilterDateList(filterDateArray: Array<String>) {
-        var arrayIndex = filterDateArray.indexOf(selectedFilterType)
-        if (selectedDates == selectedFilterType) {
+        var arrayIndex = filterDateArray.indexOf(filterDateType)
+        if (selectedDates == filterDateType) {
             arrayIndex = filterDateArray.size - 1
         }
         for ((index, arrayItem) in filterDateArray.withIndex()) {
             val dateTypeItem = DateTypeItem(
-                if (index == arrayIndex && arrayIndex == filterDateArray.size - 1) "$arrayItem($selectedFilterType)" else arrayItem,
+                if (index == arrayIndex && arrayIndex == filterDateArray.size - 1) "$arrayItem($filterDateType)" else arrayItem,
                 index == arrayIndex,
                 ""
             )

@@ -139,6 +139,13 @@ class DomainModule {
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = ChangeUserPartnerEmailUseCase(userPartnerRepository, mainScheduler, ioScheduler)
 
+    @Provides
+    fun provideChangeUserPartnerPinIdUseCase(
+        userPartnerRepository: UserPartnerRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = ChangeUserPartnerPinIdUseCase(userPartnerRepository, mainScheduler, ioScheduler)
+
     // Providing requests use case
     @Provides
     fun provideGetRequestsByPinIdUseCase(

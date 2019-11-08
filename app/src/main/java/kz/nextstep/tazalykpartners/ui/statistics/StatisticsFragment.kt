@@ -43,6 +43,9 @@ class StatisticsFragment : Fragment() {
 
 
     private var selectedWasteType = waste_type_recycle
+    var selectedfilterDateType = "За месяц"
+    var selectedfilterDateDays = 30
+    var selectedFilterDates = ""
     private var cnt = 1
 
     private var pinId: String? = ""
@@ -64,9 +67,13 @@ class StatisticsFragment : Fragment() {
             pinId = bundle.getString(AppConstants.PIN_ID)
             if (!pinId.isNullOrBlank()) {
                 binding.tvStatisticsFilterPeriod.text = selectedFilterType
-                selectedDates = ChangeDateFormat.onGetFilterDate(filterDateDays)
 
-                viewModel.getHistoryPinList(pinId!!, filterDateDays, selectedDates, selectedWasteType)
+                onAssignData()
+
+                if (selectedFilterDates.isBlank())
+                    selectedFilterDates = ChangeDateFormat.onGetFilterDate(filterDateDays)
+
+                viewModel.getHistoryPinList(pinId!!, selectedfilterDateDays, selectedFilterDates, selectedWasteType)
                 customProgressBar = CustomProgressBar(context!!)
                 customProgressBar.show()
 
@@ -91,6 +98,12 @@ class StatisticsFragment : Fragment() {
 
         binding.viewModel = viewModel
         return binding.root
+    }
+
+    private fun onAssignData() {
+        selectedfilterDateType = selectedFilterType
+        selectedFilterDates = selectedDates
+        selectedfilterDateDays = filterDateDays
     }
 
     private fun onManageTypeOfWasteFilter() {
@@ -122,7 +135,8 @@ class StatisticsFragment : Fragment() {
             selectedFilterType = data.getStringExtra(AppConstants.SELECTED_FILTER_TYPE)!!
             filterDateDays = data.getIntExtra(AppConstants.FILTER_DATE_DAYS, 30)
             binding.tvStatisticsFilterPeriod.text = selectedFilterType
-            viewModel.getHistoryPinList(pinId!!, filterDateDays, selectedDates, selectedWasteType)
+            onAssignData()
+            viewModel.getHistoryPinList(pinId!!, selectedfilterDateDays, selectedFilterDates, selectedWasteType)
         }
     }
 

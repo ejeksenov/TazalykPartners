@@ -6,6 +6,7 @@ import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.di.AppComponent
 import kz.nextstep.tazalykpartners.di.DaggerAppComponent
 import kz.nextstep.tazalykpartners.di.DataModule
+import kz.nextstep.tazalykpartners.ui.addEditPin.AddEditPinViewModel
 import kz.nextstep.tazalykpartners.ui.editProfile.ChangeEmailViewModel
 import kz.nextstep.tazalykpartners.ui.editProfile.ChangePasswordViewModel
 import kz.nextstep.tazalykpartners.ui.editProfile.ChangeUserDataViewModel
@@ -49,6 +50,7 @@ open class BaseViewModel : ViewModel() {
             is ChangePasswordViewModel -> injector.inject(this)
             is ChangeEmailViewModel -> injector.inject(this)
             is UserInteractivityViewModel -> injector.inject(this)
+            is AddEditPinViewModel -> injector.inject(this)
         }
     }
 

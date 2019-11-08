@@ -2,6 +2,7 @@ package kz.nextstep.tazalykpartners.di
 
 import dagger.Component
 import kz.nextstep.tazalykpartners.MainApplication
+import kz.nextstep.tazalykpartners.ui.addEditPin.AddEditPinViewModel
 import kz.nextstep.tazalykpartners.ui.editProfile.ChangeEmailViewModel
 import kz.nextstep.tazalykpartners.ui.editProfile.ChangePasswordViewModel
 import kz.nextstep.tazalykpartners.ui.editProfile.ChangeUserDataViewModel
@@ -38,4 +39,5 @@ interface AppComponent {
     fun inject(changePasswordViewModel: ChangePasswordViewModel)
     fun inject(changeEmailViewModel: ChangeEmailViewModel)
     fun inject(userInteractivityViewModel: UserInteractivityViewModel)
+    fun inject(addEditPinViewModel: AddEditPinViewModel)
 }
