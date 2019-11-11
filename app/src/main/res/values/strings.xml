@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="mapbox_access_token">pk.eyJ1IjoieWVsbnVyMDUiLCJhIjoiY2pvODlkcHZnMDN3NDNrcGdwbGQ4b2l2ZSJ9.Yz2I6Gw6ypt6YjCqV0VqDg</string>
+
     <string name="app_name">Tazalyk Partners</string>
     <string name="signIn">Войти</string>
     <string name="password">Пароль</string>
@@ -240,6 +243,50 @@
         <item>ВС</item>
     </string-array>
 
+    <string-array name="countries">
+        <item>Казахстан,cities_kz</item>
+    </string-array>
+
+    <string-array name="cities_kz">
+        <item>Алматы</item>
+        <item>Нур-Султан</item>
+        <item>Шымкент</item>
+        <item>Караганда</item>
+        <item>Актобе</item>
+        <item>Тараз</item>
+        <item>Павлодар</item>
+        <item>Усть-Каменогорск</item>
+        <item>Семей</item>
+        <item>Кызылорда</item>
+        <item>Костанай</item>
+        <item>Атырау</item>
+        <item>Петропавлск</item>
+        <item>Актау</item>
+        <item>Кокшетау</item>
+        <item>Талдыкорган</item>
+        <item>Жезказган</item>
+    </string-array>
+
+    <string-array name="cities_kz_latlng">
+        <item>43.238949,76.889709</item>
+        <item>51.169392,71.449074</item>
+        <item>42.340782,69.596329</item>
+        <item>49.83333,73.1658</item>
+        <item>50.27969,57.20718</item>
+        <item>42.9,71.36667</item>
+        <item>52.28333,76.96667</item>
+        <item>49.97143,82.60586</item>
+        <item>50.42675,80.26669</item>
+        <item>44.85278,65.50917</item>
+        <item>53.21435,63.62463</item>
+        <item>47.11667,51.88333</item>
+        <item>54.86667,69.15</item>
+        <item>43.65,51.16667</item>
+        <item>53.28333,69.4</item>
+        <item>45.01556,78.37389</item>
+        <item>47.78333,67.76667</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit">Редактировать</string>
@@ -258,5 +305,13 @@
     <string name="choose_location">Выберите местположение пункта</string>
     <string name="choose_work_schedule">Выберите график работы</string>
     <string name="choose_waste_type">Выберите тип отходов</string>
+    <string name="address">Адрес</string>
+    <string name="permission_title">Требуются разрешения</string>
+    <string name="location_permission_message">Для полноценной работы необходимо дать Tazalyk Partners разрешение на определение местоположения</string>
+    <string name="show_settings">Показать настройки</string>
+    <string name="enable_gps">Включите GPS чтобы определить ваше точное местоположение</string>
+    <string name="enable">Включить</string>
+    <string name="cancel">Отмена</string>
+    <string name="enter_address">Напишите адрес пункта</string>
 
 </resources>

@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import br.com.sapereaude.maskedEditText.MaskedEditText
 import kz.nextstep.domain.model.Pin
 
 import kz.nextstep.tazalykpartners.R
+import kz.nextstep.tazalykpartners.ui.addEditPin.AddEditPinActivity.Companion.pin
 
 
 class MainPinInfoFragment : Fragment() {
@@ -28,11 +28,16 @@ class MainPinInfoFragment : Fragment() {
     lateinit var btnMainPinInfoWasteId: Button
     lateinit var btnMainPinInfoImage: Button
     lateinit var btnMainPinInfoSave: Button
+    lateinit var spMainPinInfoAdminRole: Spinner
 
     var pinName = ""
     var pinAdminName = ""
     var pinAdminPhone = ""
     var pinNotice = ""
+
+    var rolesID = arrayOf("k", "t", "b")
+    var roles = arrayOf("KWR","Tazalyk", "Другие")
+    var role = ""
 
     lateinit var mPin: Pin
 
@@ -51,6 +56,7 @@ class MainPinInfoFragment : Fragment() {
         btnMainPinInfoWasteId = view.findViewById(R.id.btn_main_pin_info_waste_id)
         btnMainPinInfoImage = view.findViewById(R.id.btn_main_pin_info_image)
         btnMainPinInfoSave = view.findViewById(R.id.btn_main_pin_info_save)
+        spMainPinInfoAdminRole = view.findViewById(R.id.sp_main_pin_info_admin_role)
 
         if (activity != null) {
             val addEditPinActivity = (activity as AddEditPinActivity)
@@ -76,7 +82,7 @@ class MainPinInfoFragment : Fragment() {
             }
         }
 
-        mPin = AddEditPinActivity.pin
+        mPin = pin
 
         edtMainPinInfoName.setText(mPin.name)
         edtMainPinInfoAdminName.setText(mPin.phoneName)
@@ -85,8 +91,28 @@ class MainPinInfoFragment : Fragment() {
         pinAdminPhone = if (mPin.phone!!.contains("+7")) mPin.phone!!.replace("+7", "") else mPin.phone!!
         edtMainPinInfoAdminPhone.setText(pinAdminPhone)
 
+        onSetRoleAdapter()
 
         return view
+    }
+
+    private fun onSetRoleAdapter() {
+        val roleAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_spinner_item, roles)
+        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spMainPinInfoAdminRole.adapter = roleAdapter
+        var selectionIndex = 0
+        if (!mPin.partner.isNullOrBlank()) {
+            selectionIndex = rolesID.indexOf(mPin.partner)
+        }
+        spMainPinInfoAdminRole.setSelection(selectionIndex)
+        spMainPinInfoAdminRole.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                role = rolesID[position]
+            }
+
+        }
     }
 
     private fun onCheckFields(): Boolean {
@@ -107,6 +133,11 @@ class MainPinInfoFragment : Fragment() {
             edtMainPinInfoAdminName.error = resources.getString(R.string.enter_admin_name)
             return false
         }
+
+        pin.name = pinName
+        pin.phone = pinAdminPhone
+        pin.phoneName = pinAdminName
+        pin.description = pinNotice
 
         return true
     }

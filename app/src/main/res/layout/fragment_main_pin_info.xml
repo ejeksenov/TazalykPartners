@@ -38,6 +38,7 @@
                 android:id="@+id/sp_main_pin_info_admin_role"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
                 android:layout_marginTop="@dimen/standard_16"
                 android:layout_marginStart="@dimen/standard_22"
                 android:layout_marginEnd="@dimen/standard_22"/>

@@ -37,6 +37,7 @@ android {
 
 repositories {
     maven { url 'https://jitpack.io' }
+    mavenCentral()
 }
 
 dependencies {
@@ -89,4 +90,6 @@ dependencies {
     //input phone number mask
     implementation 'ru.egslava:MaskedEditText:1.0.5'
 
+    //map box
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.4.0'
 }
