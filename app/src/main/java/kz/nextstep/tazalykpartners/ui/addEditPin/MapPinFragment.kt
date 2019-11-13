@@ -111,7 +111,7 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
 
         btnMapPinCurrentLocation.setOnClickListener {
             val style = mapboxMap.style
-            if (style != null)
+            if (style != null && onCheckGPS())
                 enableLocationComponent(style)
         }
 
@@ -192,21 +192,23 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 city = cities[position]
-                onAnimateCameratToThisCity(cityArrayName, position)
+                onAnimateCameraToCity(city)
             }
 
         }
     }
 
-    private fun onAnimateCameratToThisCity(cityArrayName: String, position: Int) {
-        val cityLatLngArrayName = resources.getIdentifier("${cityArrayName}_latlng", "array", context!!.packageName)
-        val cityLatLngArray = resources.getStringArray(cityLatLngArrayName)
-        val latLngStr = cityLatLngArray[position].split(",")
-        val latitude = latLngStr[0].toDouble()
-        val longitude = latLngStr[1].toDouble()
-        val location = LatLng(latitude, longitude)
-        val cameraPositon = CameraPosition.Builder().target(location).zoom(10.0).build()
-        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositon))
+    private fun onAnimateCameraToCity(city: String) {
+        val locale = Locale("RU")
+        val geoCoder = Geocoder(context, locale)
+        val addresses = geoCoder.getFromLocationName(city, 1)
+        if (addresses.isNotEmpty()) {
+            for (item in addresses) {
+                val latLong = LatLng(item.latitude, item.longitude)
+                val cameraPositon = CameraPosition.Builder().target(latLong).zoom(10.0).build()
+                mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositon))
+            }
+        }
     }
 
 

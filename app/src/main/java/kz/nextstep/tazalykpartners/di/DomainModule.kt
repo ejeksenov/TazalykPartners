@@ -2,7 +2,7 @@ package kz.nextstep.tazalykpartners.di
 
 import dagger.Module
 import dagger.Provides
-import kz.nextstep.domain.PinRepository
+import kz.nextstep.domain.repository.PinRepository
 import kz.nextstep.domain.repository.*
 import kz.nextstep.domain.usecase.historyPin.GetHistoryPinListUseCase
 import kz.nextstep.domain.usecase.marking.GetMarkingListByTypeUseCase

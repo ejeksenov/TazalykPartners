@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
 
@@ -155,6 +156,7 @@ class FilterByTypeActivity : AppCompatActivity() {
         }
         NavigationDrawerActivity.selectedWasteId = selectedWasteId
         val intent = Intent()
+        intent.putExtra(AppConstants.SELECTED_WASTE_ID, selectedWasteId)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

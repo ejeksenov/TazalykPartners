@@ -1,8 +1,7 @@
 package kz.nextstep.domain.usecase.pin
 
 import io.reactivex.annotations.NonNull
-import kz.nextstep.domain.PinRepository
-import kz.nextstep.domain.model.Pin
+import kz.nextstep.domain.repository.PinRepository
 import kz.nextstep.domain.usecase.BaseUseCase
 import rx.Observable
 import rx.Scheduler

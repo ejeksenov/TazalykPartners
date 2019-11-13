@@ -1,14 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".ui.addEditPin.PinWorkTimeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        tools:context=".ui.addEditPin.PinWorkTimeFragment">
+<LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+    
+    <GridView
+            android:id="@+id/rv_pin_work_time_week_days_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:layout_height="144dp"
+            android:layout_marginTop="@dimen/standard_16"
+            android:fastScrollEnabled="true"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:listSelector="#00000000"
+            android:overScrollMode="never"
+            android:horizontalSpacing="@dimen/standard_12"
+            android:verticalSpacing="@dimen/standard_12"
+            android:paddingStart="@dimen/standard_8"
+            android:paddingEnd="@dimen/standard_8"/>
 
-</FrameLayout>
+    <TextView
+            android:id="@+id/tv_pin_work_time_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/work_time"
+            android:textColor="@color/textColor"
+            android:layout_marginTop="@dimen/standard_16"
+            android:layout_marginStart="@dimen/standard_16"
+            android:layout_marginEnd="@dimen/standard_16"/>
+
+    <com.jaygoo.widget.RangeSeekBar
+            android:id="@+id/sb_pin_work_time_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:rsb_steps="180"
+            app:rsb_step_width="@dimen/standard_8"
+            app:rsb_step_height="1dp"
+            app:rsb_step_color="@color/grayColor"
+            app:rsb_min_interval="60"
+            app:rsb_min="480"
+            app:rsb_max="1380"
+            app:rsb_step_auto_bonding="true"
+            android:layout_marginStart="@dimen/standard_8"
+            android:layout_marginEnd="@dimen/standard_8"
+            android:layout_marginTop="@dimen/standard_16"/>
+
+
+    <TextView
+            android:id="@+id/tv_pin_work_time_lunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lunch_time"
+            android:textSize="16sp"
+            android:textColor="@color/textColor"
+            android:layout_marginStart="@dimen/standard_16"
+            android:layout_marginEnd="@dimen/standard_16"/>
+
+    <com.jaygoo.widget.RangeSeekBar
+            android:id="@+id/sb_pin_work_time_lunch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:rsb_min_interval="30"
+            app:rsb_min="600"
+            app:rsb_max="1020"
+            app:rsb_steps="84"
+            app:rsb_step_width="@dimen/standard_8"
+            app:rsb_step_height="1dp"
+            app:rsb_step_color="@color/grayColor"
+            android:layout_marginStart="@dimen/standard_8"
+            android:layout_marginEnd="@dimen/standard_8"
+            android:layout_marginTop="@dimen/standard_16"/>
+
+    <EditText
+            android:id="@+id/edt_pin_work_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:minLines="2"
+            android:hint="@string/work_time"
+            android:layout_marginStart="@dimen/standard_16"
+            android:layout_marginEnd="@dimen/standard_16"/>
+
+    <Button
+            android:id="@+id/btn_pin_work_time_get_data"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:text="@string/get_data"
+            android:padding="@dimen/standard_16"
+            android:background="@drawable/rounded_corner_active_button"
+            android:layout_marginTop="@dimen/standard_16"/>
+
+    <Button
+            android:id="@+id/btn_pin_work_time_save"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:text="@string/save"
+            android:padding="@dimen/standard_16"
+            android:background="@drawable/rounded_corner_active_button"
+            android:layout_marginTop="@dimen/standard_16"
+            android:layout_marginBottom="@dimen/standard_16"/>
+
+
+</LinearLayout>
+</androidx.core.widget.NestedScrollView>

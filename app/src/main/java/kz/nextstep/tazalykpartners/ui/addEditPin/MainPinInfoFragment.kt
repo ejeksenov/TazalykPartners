@@ -1,5 +1,7 @@
 package kz.nextstep.tazalykpartners.ui.addEditPin
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import br.com.sapereaude.maskedEditText.MaskedEditText
 import kz.nextstep.domain.model.Pin
+import kz.nextstep.domain.utils.AppConstants
 
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.ui.addEditPin.AddEditPinActivity.Companion.pin
@@ -36,7 +39,7 @@ class MainPinInfoFragment : Fragment() {
     var pinNotice = ""
 
     var rolesID = arrayOf("k", "t", "b")
-    var roles = arrayOf("KWR","Tazalyk", "Другие")
+    var roles = arrayOf("KWR", "Tazalyk", "Другие")
     var role = ""
 
     lateinit var mPin: Pin
@@ -77,8 +80,9 @@ class MainPinInfoFragment : Fragment() {
             }
 
             btnMainPinInfoSave.setOnClickListener {
-                if (onCheckFields())
+                if (onCheckFields()) {
                     addEditPinActivity.onSaveData()
+                }
             }
         }
 
@@ -116,21 +120,42 @@ class MainPinInfoFragment : Fragment() {
     }
 
     private fun onCheckFields(): Boolean {
-        pinName = edtMainPinInfoAdminName.text.toString()
+        pinName = edtMainPinInfoName.text.toString()
         pinAdminPhone = edtMainPinInfoAdminPhone.rawText
+
         if (pinAdminPhone.isNotBlank()) pinAdminPhone = "+7$pinAdminPhone"
         pinAdminName = edtMainPinInfoAdminName.text.toString()
         pinNotice = edtMainPinInfoNotice.text.toString()
+
         if (pinName.isBlank()) {
             edtMainPinInfoName.error = resources.getString(R.string.enter_pin_name)
             return false
         }
+
+        if (pinAdminName.isBlank()) {
+            edtMainPinInfoAdminName.error = resources.getString(R.string.enter_admin_name)
+            return false
+        }
+
         if (pinAdminPhone.isBlank()) {
             edtMainPinInfoAdminPhone.error = resources.getString(R.string.enter_admin_phone)
             return false
         }
-        if (pinAdminName.isBlank()) {
-            edtMainPinInfoAdminName.error = resources.getString(R.string.enter_admin_name)
+
+        if (pin.address.isNullOrBlank()
+            || pin.latlng.isNullOrBlank()
+            || pin.country.isNullOrBlank()
+            || pin.city.isNullOrBlank()
+        ) {
+            showToastMessage(resources.getString(R.string.choose_location))
+            return false
+        }
+        if (pin.workTime.isNullOrBlank()) {
+            showToastMessage(resources.getString(R.string.choose_work_schedule))
+            return false
+        }
+        if (pin.wasteId.isNullOrBlank()) {
+            showToastMessage(resources.getString(R.string.choose_waste_type))
             return false
         }
 
@@ -142,5 +167,14 @@ class MainPinInfoFragment : Fragment() {
         return true
     }
 
+
+    private fun showToastMessage(message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppConstants.REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            pin.wasteId = data.getStringExtra(AppConstants.SELECTED_WASTE_ID)
+        }
+    }
 
 }

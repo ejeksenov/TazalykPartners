@@ -6,7 +6,7 @@ import dagger.Provides
 import kz.nextstep.data.FirebaseHelper
 import kz.nextstep.data.mapper.*
 import kz.nextstep.data.repository.*
-import kz.nextstep.domain.PinRepository
+import kz.nextstep.domain.repository.PinRepository
 import kz.nextstep.domain.model.*
 import kz.nextstep.domain.repository.*
 import rx.Observable

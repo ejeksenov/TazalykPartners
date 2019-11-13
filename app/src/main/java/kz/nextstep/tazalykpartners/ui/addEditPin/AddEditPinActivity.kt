@@ -67,6 +67,7 @@ class AddEditPinActivity : AppCompatActivity() {
                 router.replaceScreen(SampleScreen(MainPinInfoFragment.newInstance()))
             })
         } else {
+            pin = Pin()
             selectToolbarTitle()
             router.replaceScreen(SampleScreen(MainPinInfoFragment.newInstance()))
         }
@@ -113,30 +114,12 @@ class AddEditPinActivity : AppCompatActivity() {
 
     fun onSaveData() {
         customProgressBar.show()
-        if (pinId.isBlank() && onCheckFields())
+        if (pinId.isBlank())
             addEditPinViewModel.addNewPin(pin)
         else
             addEditPinViewModel.updatePinData(pinId, pin)
     }
 
-    private fun onCheckFields(): Boolean {
-        if (pin.address.isNullOrBlank()
-            || pin.latlng.isNullOrBlank()
-            || pin.country.isNullOrBlank()
-            || pin.city.isNullOrBlank()) {
-            showToastMessage(resources.getString(R.string.choose_location))
-            return false
-        }
-        if (pin.workTime.isNullOrBlank()) {
-            showToastMessage(resources.getString(R.string.choose_work_schedule))
-            return false
-        }
-        if (pin.wasteId.isNullOrBlank()) {
-            showToastMessage(resources.getString(R.string.choose_waste_type))
-            return false
-        }
-        return true
-    }
 
 
     fun goToMapPinFragment() {
@@ -166,7 +149,7 @@ class AddEditPinActivity : AppCompatActivity() {
 
     fun goToFilterByType() {
         val intent = Intent(this, FilterByTypeActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, AppConstants.REQUEST_CODE)
     }
 
 
@@ -184,10 +167,6 @@ class AddEditPinActivity : AppCompatActivity() {
         MainApplication.INSTANCE?.getNavigatorHolder()?.removeNavigator()
         super.onPause()
     }
-
-    private fun showToastMessage(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
-
 
     @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

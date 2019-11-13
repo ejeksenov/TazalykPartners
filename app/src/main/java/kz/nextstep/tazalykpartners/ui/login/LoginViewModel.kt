@@ -45,11 +45,11 @@ class LoginViewModel : BaseViewModel(){
             override fun onNext(t: UserPartner?) {
                 val pinIds = t?.pinIds
                 val productIds = t?.productIds
-                if (pinIds?.contains(",")!!)
+                if (!pinIds.isNullOrBlank() && pinIds.contains(","))
                     userRoleLiveData.value = AppConstants.SUCCESS_PIN_DIRECTOR
-                else if (pinIds != "" && !pinIds.contains(","))
+                else if (!pinIds.isNullOrBlank() && !pinIds.contains(","))
                     userRoleLiveData.value = AppConstants.SUCCESS_PIN_ADMIN
-                else if (productIds != "")
+                else if (!productIds.isNullOrBlank())
                     userRoleLiveData.value = AppConstants.SUCCESS_PRODUCT_SPONSOR
             }
 

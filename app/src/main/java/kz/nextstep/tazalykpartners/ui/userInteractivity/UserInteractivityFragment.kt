@@ -101,9 +101,8 @@ class UserInteractivityFragment : Fragment() {
                 filterDateDays = data.getIntExtra(AppConstants.FILTER_DATE_DAYS, 30)
                 binding.tvUserInteractivityDateFilterType.text = selectedFilterType
                 onAssignData()
-                viewModel.getPassedUserList(selectedWasteId, selectedFilterDates)
             }
-
+            viewModel.getPassedUserList(selectedWasteId, selectedFilterDates)
         }
     }
 

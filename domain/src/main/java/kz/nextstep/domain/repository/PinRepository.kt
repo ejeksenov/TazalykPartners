@@ -1,4 +1,4 @@
-package kz.nextstep.domain
+package kz.nextstep.domain.repository
 
 import kz.nextstep.domain.model.Pin
 import rx.Observable

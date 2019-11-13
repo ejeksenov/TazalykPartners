@@ -4,13 +4,11 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.database.*
 import kz.nextstep.data.entity.PinEntity
 import kz.nextstep.data.mapper.PinMapper
-import kz.nextstep.domain.PinRepository
+import kz.nextstep.domain.repository.PinRepository
 import kz.nextstep.domain.model.Pin
 import kz.nextstep.domain.utils.AppConstants
 import rx.Observable
-import rx.Subscriber
 import rx.subscriptions.Subscriptions
-import kotlin.collections.ArrayList
 
 class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
 
@@ -34,7 +32,7 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
     override fun addPin(pin: Pin): Observable<String> {
         return Observable.create {
             val pinId = databaseReference.push().key
-            if (pinId != null) {
+            if (!pinId.isNullOrBlank()) {
                 databaseReference.child(pinId).setValue(pin)
                     .addOnCompleteListener { it1 ->
                         if (it1.isSuccessful) {
