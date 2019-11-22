@@ -1,5 +1,6 @@
 package kz.nextstep.tazalykpartners.ui.userInteractivity
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.HistoryPin
 import kz.nextstep.domain.model.Pin
@@ -15,6 +16,7 @@ import kz.nextstep.domain.usecase.user.GetUserByIdUseCase
 import kz.nextstep.domain.usecase.user.GetUserListByIdsUseCase
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.domain.utils.ChangeDateFormat.isOnDate
+import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
 import rx.Subscriber
 import javax.inject.Inject
@@ -47,7 +49,6 @@ class UserInteractivityViewModel : BaseViewModel() {
         getUserPartnerByIdUseCase.execute(object : Subscriber<UserPartner>() {
             override fun onNext(t: UserPartner?) {
                 if (t != null) {
-
                     val pinIds = t.pinIds!!
                     onGetHistoryPinList(pinIds, wasteId, selectedDate)
                 }
@@ -80,7 +81,10 @@ class UserInteractivityViewModel : BaseViewModel() {
                                     for (wasteIdItem in wasteId.split(";")) {
                                         val wasteIdItemArr = wasteIdItem.split(",")
 
-                                        if (wasteId.isBlank() || (wasteIdItemArr.size >= 5 && passedTotal.contains(wasteIdItemArr[1]))) {
+                                        if (wasteId.isBlank() || (wasteIdItemArr.size >= 5 && passedTotal.contains(
+                                                wasteIdItemArr[1]
+                                            ))
+                                        ) {
                                             val itemPinId = historyPin.pinId
                                             val itemUserId = historyPin.userId
 
@@ -106,12 +110,12 @@ class UserInteractivityViewModel : BaseViewModel() {
                         }
                     }
                     if (passedUserItemMutableList.isEmpty()) {
-                        userInteractivityAdapter.clearAllList()
-                        customProgressBarLiveData.value = true
+                        noData()
                         showToastMessage(AppConstants.NO_DATA)
                     } else
                         onGetPassedUserList(passedUserItemMutableList, filteredPinIds, filteredUserIds)
-                }
+                } else
+                    noData()
             }
 
             override fun onCompleted() {}
@@ -121,6 +125,11 @@ class UserInteractivityViewModel : BaseViewModel() {
             }
 
         }, pinIds, AppConstants.emptyParam)
+    }
+
+    private fun noData() {
+        userInteractivityAdapter.clearAllList()
+        customProgressBarLiveData.value = true
     }
 
     private fun onGetPassedUserList(
@@ -185,5 +194,14 @@ class UserInteractivityViewModel : BaseViewModel() {
 
         }, filteredPinIds, AppConstants.emptyParam)
 
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        getUserPartnerByIdUseCase.unsubscribe()
+        getHistoryPinListUseCase.unsubscribe()
+        getUserListByIdsUseCase.unsubscribe()
+        getPinListUseCase.unsubscribe()
     }
 }

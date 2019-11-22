@@ -7,11 +7,7 @@ import kz.nextstep.domain.repository.*
 import kz.nextstep.domain.usecase.historyPin.GetHistoryPinListUseCase
 import kz.nextstep.domain.usecase.marking.GetMarkingListByTypeUseCase
 import kz.nextstep.domain.usecase.partner.*
-import kz.nextstep.domain.usecase.pin.AddPinUseCase
-import kz.nextstep.domain.usecase.pin.GetPinListUseCase
-import kz.nextstep.domain.usecase.pin.GetPinUseCase
-import kz.nextstep.domain.usecase.pin.UpdatePinDataUseCase
-import kz.nextstep.domain.usecase.pin.DeletePinUseCase
+import kz.nextstep.domain.usecase.pin.*
 import kz.nextstep.domain.usecase.request.GetRequestsByPinIdUseCase
 import kz.nextstep.domain.usecase.user.GetUserByIdUseCase
 import kz.nextstep.domain.usecase.user.GetUserListByIdsUseCase
@@ -60,6 +56,20 @@ class DomainModule {
         @Named(RxModule.MAIN) mainScheduler: Scheduler,
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = UpdatePinDataUseCase(pinRepository, mainScheduler, ioScheduler)
+
+    @Provides
+    fun provideDeletePinImages(
+        pinRepository: PinRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = DeletePinImagesUseCase(pinRepository, mainScheduler, ioScheduler)
+
+    @Provides
+    fun provideUploadPinImages(
+        pinRepository: PinRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = UploadPinImagesUseCase(pinRepository, mainScheduler, ioScheduler)
 
 
     //Providing User use cases

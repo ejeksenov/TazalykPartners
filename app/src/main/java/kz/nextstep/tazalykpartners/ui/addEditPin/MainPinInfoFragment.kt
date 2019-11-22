@@ -26,6 +26,8 @@ class MainPinInfoFragment : Fragment() {
     lateinit var edtMainPinInfoAdminName: EditText
     lateinit var edtMainPinInfoAdminPhone: MaskedEditText
     lateinit var edtMainPinInfoNotice: EditText
+    lateinit var edtMainPinInfoQrCode: EditText
+    lateinit var edtMainPinInfoVerificationQrCode: EditText
     lateinit var btnMainPinInfoLocation: Button
     lateinit var btnMainPinInfoWorkingTime: Button
     lateinit var btnMainPinInfoWasteId: Button
@@ -37,6 +39,7 @@ class MainPinInfoFragment : Fragment() {
     var pinAdminName = ""
     var pinAdminPhone = ""
     var pinNotice = ""
+    var pinWasteId = ""
 
     var rolesID = arrayOf("k", "t", "b")
     var roles = arrayOf("KWR", "Tazalyk", "Другие")
@@ -54,6 +57,8 @@ class MainPinInfoFragment : Fragment() {
         edtMainPinInfoAdminName = view.findViewById(R.id.edt_main_pin_info_admin_name)
         edtMainPinInfoAdminPhone = view.findViewById(R.id.edt_main_pin_info_admin_phone)
         edtMainPinInfoNotice = view.findViewById(R.id.edt_main_pin_info_notice)
+        edtMainPinInfoQrCode = view.findViewById(R.id.edt_main_pin_info_qr_code)
+        edtMainPinInfoVerificationQrCode = view.findViewById(R.id.edt_main_pin_info_verification_qr_code)
         btnMainPinInfoLocation = view.findViewById(R.id.btn_main_pin_info_location)
         btnMainPinInfoWorkingTime = view.findViewById(R.id.btn_main_pin_info_working_time)
         btnMainPinInfoWasteId = view.findViewById(R.id.btn_main_pin_info_waste_id)
@@ -88,9 +93,26 @@ class MainPinInfoFragment : Fragment() {
 
         mPin = pin
 
+        if (!pin.wasteId.isNullOrBlank())
+            pinWasteId = pin.wasteId!!
+
         edtMainPinInfoName.setText(mPin.name)
         edtMainPinInfoAdminName.setText(mPin.phoneName)
         edtMainPinInfoNotice.setText(mPin.description)
+
+        if (mPin.qrCode.isNullOrBlank())
+            edtMainPinInfoQrCode.visibility = View.GONE
+        else {
+            edtMainPinInfoQrCode.visibility = View.VISIBLE
+            edtMainPinInfoQrCode.setText(mPin.qrCode)
+        }
+
+        if (mPin.verificationCode.isNullOrBlank())
+            edtMainPinInfoVerificationQrCode.visibility = View.GONE
+        else {
+            edtMainPinInfoVerificationQrCode.visibility = View.VISIBLE
+            edtMainPinInfoVerificationQrCode.setText(mPin.verificationCode)
+        }
 
         pinAdminPhone = if (mPin.phone!!.contains("+7")) mPin.phone!!.replace("+7", "") else mPin.phone!!
         edtMainPinInfoAdminPhone.setText(pinAdminPhone)
@@ -150,19 +172,24 @@ class MainPinInfoFragment : Fragment() {
             showToastMessage(resources.getString(R.string.choose_location))
             return false
         }
+
         if (pin.workTime.isNullOrBlank()) {
             showToastMessage(resources.getString(R.string.choose_work_schedule))
             return false
         }
-        if (pin.wasteId.isNullOrBlank()) {
+
+        if (pinWasteId.isBlank()) {
             showToastMessage(resources.getString(R.string.choose_waste_type))
             return false
         }
+
 
         pin.name = pinName
         pin.phone = pinAdminPhone
         pin.phoneName = pinAdminName
         pin.description = pinNotice
+        pin.partner = role
+        pin.wasteId = pinWasteId
 
         return true
     }
@@ -173,7 +200,18 @@ class MainPinInfoFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AppConstants.REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            pin.wasteId = data.getStringExtra(AppConstants.SELECTED_WASTE_ID)
+            val wasteId = data.getStringExtra(AppConstants.SELECTED_WASTE_ID)
+            if (!wasteId.isNullOrBlank()) {
+                var convertedWasteId = ""
+                for (item in wasteId.split(";")) {
+                    val itemArr = item.split(",")
+                    if (itemArr.size >= 5) {
+                        convertedWasteId += "${itemArr[0]},${itemArr[1]},${itemArr[2]};"
+                    }
+                }
+                pinWasteId = convertedWasteId
+                pin.wasteId = pinWasteId
+            }
         }
     }
 

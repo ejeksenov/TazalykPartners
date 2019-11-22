@@ -37,15 +37,17 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                             val userPartner = ds.getValue(UserPartner::class.java)
                             if (userPartner != null) {
                                 var pinIds = userPartner.pinIds
-                                if (!pinIds.isNullOrBlank()) {
+                                if (!pinIds.isNullOrBlank() && pinIds.contains(pinId)) {
                                     pinIds += ",$pinId"
                                 } else pinIds = pinId
 
                                 databaseReference.child(userPartnerId).child("pinIds").setValue(pinIds).addOnCompleteListener {
                                     subscription.onNext(it.isSuccessful)
+                                    subscription.onCompleted()
                                 }.addOnFailureListener {
                                     subscription.onError(FirebaseException(it.message!!))
                                 }
+                                break
                             }
                         }
                     }
@@ -89,8 +91,6 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                         } else if (task.exception != null) {
                             subscription.onError(task.exception)
                         }
-                    }.addOnFailureListener {
-                        subscription.onError(it)
                     }
                 } else if (!fullName.isNullOrBlank())
                     onChangeUserPartnerName(subscription, userId, fullName)
@@ -106,6 +106,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
         databaseReference.child(userId).child("name").setValue(fullName)
             .addOnCompleteListener { it1 ->
                 subscription.onNext(it1.isSuccessful)
+                subscription.onCompleted()
             }.addOnFailureListener { it1 ->
                 subscription.onError(it1)
             }
@@ -120,6 +121,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                 if (it.isSuccessful) {
                     currentUser.updatePassword(newPassword).addOnCompleteListener { it1 ->
                         subscription.onNext(it1.isSuccessful)
+                        subscription.onCompleted()
                     }.addOnFailureListener { it1 ->
                         subscription.onError(FirebaseException(it1.message!!))
                     }
@@ -145,6 +147,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                                 if (it2.isSuccessful)
                                     currentUser.sendEmailVerification()
                                 subscription.onNext(it2.isSuccessful)
+                                subscription.onCompleted()
                             }.addOnFailureListener {it2 ->
                                 subscription.onError(FirebaseException(it2.message!!))
                             }

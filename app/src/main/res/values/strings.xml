@@ -258,8 +258,8 @@
     </string-array>
 
     <string-array name="cities_kz">
-        <item>Алматы</item>
         <item>Нур-Султан</item>
+        <item>Алматы</item>
         <item>Шымкент</item>
         <item>Караганда</item>
         <item>Актобе</item>
@@ -306,5 +306,9 @@
     <string name="get_data">Получить данные</string>
     <string name="lunch_time">Время обеда</string>
     <string name="set_work_schedule">Выберите график работы</string>
+    <string name="qr_code">QR код</string>
+    <string name="verification_qr_code">QR код верификации</string>
+    <string name="logo">Лого</string>
+    <string name="photo">Изображения</string>
 
 </resources>

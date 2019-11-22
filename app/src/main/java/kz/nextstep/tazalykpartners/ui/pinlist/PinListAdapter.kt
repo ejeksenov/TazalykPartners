@@ -48,6 +48,13 @@ class PinListAdapter: RecyclerView.Adapter<PinListAdapter.PinViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun clearAll() {
+        if (pinList.isNotEmpty() && pinIdList.isNotEmpty()) {
+            pinList.clear()
+            pinIdList.clear()
+            notifyDataSetChanged()
+        }
+    }
 
 
     var onItemClick: ((String) -> Unit)? = null

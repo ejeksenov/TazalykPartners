@@ -22,6 +22,11 @@ object AppConstants {
     const val ERROR_VERIFY_EMAIL = "На вашу почту отправлено письмо с подтверждением, пожалуйста подтвердите почту"
     const val NO_DATA = "Нет данных"
 
+    const val ERROR_SOMETHING_WENT_WRONG = "Что-то пошло не так"
+
+    const val PICTURE_TYPE_LOGO = "logo"
+    const val PICTURE_TYPE_IMAGE = "image"
+
     const val REQUEST_CODE = 1
     const val PIN_ID = "pin_id"
     const val RESULT_FILTER_DATA = "result_filter_data"

@@ -38,7 +38,8 @@ class StatisticsViewModel : BaseViewModel() {
                         historyPinList.add(t[key]!!)
                     }
                     getWasteItemList(filterDateDays, selectedDates, historyPinList, selectedWasteType)
-                }
+                } else
+                    noData()
             }
 
             override fun onCompleted() {}
@@ -90,10 +91,7 @@ class StatisticsViewModel : BaseViewModel() {
                 }
             }
             if (wasteItemList.isEmpty()) {
-                customProgressBarLiveData.value = true
-                statisticsHistoryAdapter.clearAllList()
-                totalPassedTextMutableLiveData.value = "0 кг"
-                averagePassedTextMutableLiveData.value = "0 кг в среднем"
+                noData()
                 showToastMessage(AppConstants.NO_DATA)
             } else {
                 if (total > 0.0 && filterDateDays > 0) {
@@ -104,6 +102,13 @@ class StatisticsViewModel : BaseViewModel() {
                 getWasteItemListByType(selectedWasteType, wasteItemList)
             }
         }
+    }
+
+    private fun noData() {
+        customProgressBarLiveData.value = true
+        statisticsHistoryAdapter.clearAllList()
+        totalPassedTextMutableLiveData.value = "0 кг"
+        averagePassedTextMutableLiveData.value = "0 кг в среднем"
     }
 
     private fun getWasteItemListByType(selectedWasteType: String, wasteItemList: MutableList<WasteItem>) {

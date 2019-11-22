@@ -13,6 +13,7 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +39,7 @@ import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.ui.addEditPin.AddEditPinActivity.Companion.pin
 import java.util.*
 
-class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListener{
+class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListener {
 
     companion object {
         fun newInstance() = MapPinFragment()
@@ -63,7 +64,10 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
 
     private lateinit var countries: Array<String>
     private lateinit var cities: Array<String>
+    private var location: LatLng? = null
 
+    private val locale = Locale("RU")
+    lateinit var geoCoder: Geocoder
 
 
     override fun onCreateView(
@@ -74,6 +78,7 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
         val mContext = context
         if (mContext != null) {
             Mapbox.getInstance(mContext, resources.getString(R.string.mapbox_access_token))
+            geoCoder = Geocoder(mContext, locale)
         }
         val view = inflater.inflate(R.layout.fragment_map_pin, container, false)
 
@@ -85,8 +90,6 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
         btnMapPinCurrentLocation = view.findViewById(R.id.btn_map_pin_current_location)
         btnMapPinZoomIn = view.findViewById(R.id.btn_map_pin_zoom_in)
         btnMapPinZoomOut = view.findViewById(R.id.btn_map_pin_zoom_out)
-
-        onSetCountriesAdapter()
 
 
         return view
@@ -110,6 +113,8 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
         }
 
         btnMapPinCurrentLocation.setOnClickListener {
+
+
             val style = mapboxMap.style
             if (style != null && onCheckGPS())
                 enableLocationComponent(style)
@@ -155,12 +160,17 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spMapPinCountry.adapter = countryAdapter
         var selectionIndex = 0
+        var countryName = ""
         if (!pin.country.isNullOrBlank()) {
-            val countryName = pin.country
-            selectionIndex = countryArr.indexOf(countryName)
+            countryName = pin.country!!
+        } else if (location != null) {
+            countryName = onGetCountryName()
+        }
+        for ((index,item) in countryArr.withIndex()) {
+            if (item.contains(countryName))
+                selectionIndex = index
         }
         spMapPinCountry.setSelection(selectionIndex)
-
         spMapPinCountry.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
@@ -174,6 +184,17 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
 
     }
 
+    private fun onGetCountryName(): String {
+        try {
+            val addressList = geoCoder.getFromLocation(location!!.latitude, location!!.longitude, 1)
+            if (!addressList.isNullOrEmpty())
+                return addressList[0].countryName
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
     private fun onSetCityAdapter(cityArrayName: String) {
         val cityArrayId = resources.getIdentifier(cityArrayName, "array", context!!.packageName)
         cities = resources.getStringArray(cityArrayId)
@@ -181,10 +202,12 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spMapPinCity.adapter = cityAdapter
         var selectionIndex = 0
+        var cityName = ""
         if (!pin.city.isNullOrBlank()) {
-            val cityName = pin.city
-            selectionIndex = cities.indexOf(cityName)
-        }
+            cityName = pin.city!!
+        } else if (location != null)
+            cityName = onGetCityName()
+        selectionIndex = cities.indexOf(cityName)
         spMapPinCity.setSelection(selectionIndex)
 
         spMapPinCity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -196,7 +219,21 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
             }
 
         }
+
     }
+
+    private fun onGetCityName(): String {
+        try {
+            val addressList = geoCoder.getFromLocation(location!!.latitude, location!!.longitude, 1)
+            if (!addressList.isNullOrEmpty())
+                return addressList[0].locality
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+
 
     private fun onAnimateCameraToCity(city: String) {
         val locale = Locale("RU")
@@ -222,6 +259,8 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
             if (onCheckGPS())
                 enableLocationComponent(mapboxMap.style!!)
         }
+
+        onSetCountriesAdapter()
 
         onSetData()
 
@@ -275,7 +314,7 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
             }
             val lastKnownLocation = mapboxMap.locationComponent.lastKnownLocation
             if (lastKnownLocation != null) {
-                val location = LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
+                location = LatLng(lastKnownLocation.latitude, lastKnownLocation.longitude)
                 val cameraPosition = CameraPosition.Builder().target(location).zoom(zoomLevel).build()
                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
             }
@@ -288,19 +327,25 @@ class MapPinFragment : Fragment(), OnMapReadyCallback, MapboxMap.OnMapClickListe
     private fun getAddressByLatLng(location: LatLng) {
         val locale = Locale("RU")
         val geoCoder = Geocoder(context, locale)
-        val addressList = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
-        if (addressList.isNotEmpty()) {
-            for (item in addressList) {
-                val addressLine = item.getAddressLine(0)
-                if (!addressLine.isNullOrBlank()) {
-                    val addressArr = addressLine.split(",")
-                    if (addressArr.isNotEmpty()) {
-                        val address = addressArr[0]
-                        edtMapPinAddress.setText(address)
+        try {
+            val addressList = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
+            if (addressList.isNotEmpty()) {
+                for (item in addressList) {
+                    val addressLine = item.getAddressLine(0)
+                    if (!addressLine.isNullOrBlank()) {
+                        val addressArr = addressLine.split(",")
+                        if (addressArr.isNotEmpty()) {
+                            val address = addressArr[0]
+                            edtMapPinAddress.setText(address)
+                        }
                     }
                 }
             }
+        } catch (e: Exception) {
+            edtMapPinAddress.text.clear()
+            e.printStackTrace()
         }
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

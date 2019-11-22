@@ -51,7 +51,11 @@ class PinListViewModel : BaseViewModel() {
 
         getPinListUseCase.execute(object : Subscriber<HashMap<String, Pin>>() {
             override fun onNext(t: HashMap<String, Pin>?) {
-                pinListAdapter.updatePinList(t!!)
+                if (t.isNullOrEmpty()) {
+                    pinListAdapter.clearAll()
+                    showToastMessage(AppConstants.NO_DATA)
+                } else
+                    pinListAdapter.updatePinList(t)
             }
 
             override fun onCompleted() {}

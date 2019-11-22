@@ -21,7 +21,7 @@ class PinWorkTimeAdapter : RecyclerView.Adapter<PinWorkTimeAdapter.PinWorkTimeVi
     }
 
     override fun getItemCount(): Int {
-        return if (::workTimeList.isInitialized) workTimeList.size - 1 else 0
+        return if (::workTimeList.isInitialized) workTimeList.size else 0
     }
 
     fun updateWorkTimeList(workTimeList: MutableList<WorkTime>, currentDayOfTheWeek: Int, isPointOpen: Boolean) {

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -30,7 +31,7 @@ class FilterByTypeActivity : AppCompatActivity() {
     var typeId = "recycle"
     private var filterWasteIdList: MutableList<String> = ArrayList()
     private val selectedTypeItemList: MutableList<String> = ArrayList()
-    var selectedWasteId = NavigationDrawerActivity.selectedWasteId
+    var selectedWasteId: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +48,12 @@ class FilterByTypeActivity : AppCompatActivity() {
         rbFilterByTypeUtilization = findViewById(R.id.rb_filter_by_type_utilization)
         rbFilterByTypeBlago = findViewById(R.id.rb_filter_by_type_blago)
 
-        if (!selectedWasteId.isBlank()) {
+        if (intent != null)
+            selectedWasteId = intent.getStringExtra(AppConstants.SELECTED_WASTE_ID)
+
+        if (!selectedWasteId.isNullOrBlank()) {
             selectedTypeItemList.clear()
-            for (item in selectedWasteId.split(";")) {
+            for (item in selectedWasteId!!.split(";")) {
                 if (!item.isBlank())
                     selectedTypeItemList.add(item)
             }
@@ -154,7 +158,7 @@ class FilterByTypeActivity : AppCompatActivity() {
         for (item in selectedTypeItemList) {
             selectedWasteId += "$item;"
         }
-        NavigationDrawerActivity.selectedWasteId = selectedWasteId
+        NavigationDrawerActivity.selectedWasteId = selectedWasteId!!
         val intent = Intent()
         intent.putExtra(AppConstants.SELECTED_WASTE_ID, selectedWasteId)
         setResult(Activity.RESULT_OK, intent)

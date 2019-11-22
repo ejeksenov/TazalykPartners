@@ -64,6 +64,14 @@ class DataModule(private val mainApplication: Application) {
             return PinRepositoryImpl(pinMapper)
         else {
             return object : PinRepository {
+                override fun deletePinImages(deletedImagesList: String): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+                override fun uploadPinImages(hashMap: HashMap<String, String>, pinId: String): Observable<String> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
                 override fun getPinList(pinIds: String, filterTypes: String): Observable<HashMap<String, Pin>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
