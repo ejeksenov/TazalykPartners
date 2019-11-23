@@ -64,7 +64,7 @@ class DataModule(private val mainApplication: Application) {
             return PinRepositoryImpl(pinMapper)
         else {
             return object : PinRepository {
-                override fun deletePinImages(deletedImagesList: String): Observable<Boolean> {
+                override fun deletePinImages(imageUrl: String): Observable<Boolean> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 

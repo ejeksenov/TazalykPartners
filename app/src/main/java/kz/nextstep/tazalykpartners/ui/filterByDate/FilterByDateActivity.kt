@@ -8,15 +8,11 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_filter_by_date.*
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.domain.utils.ChangeDateFormat
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.selectedFilterType
 import kz.nextstep.tazalykpartners.R
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.filterDateDays
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedDates
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedFilterType
-import kz.nextstep.tazalykpartners.ui.statistics.StatisticsFragment
 import kz.nextstep.tazalykpartners.utils.data.DateTypeItem
 
 class FilterByDateActivity : AppCompatActivity() {
@@ -42,8 +38,8 @@ class FilterByDateActivity : AppCompatActivity() {
         }*/
 
         filterDateType = selectedFilterType
-        filterDateDays = NavigationDrawerActivity.filterDateDays
-        selectedDates = NavigationDrawerActivity.selectedDates
+        filterDateDays = BaseNavigationViewActivity.filterDateDays
+        selectedDates = BaseNavigationViewActivity.selectedDates
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)

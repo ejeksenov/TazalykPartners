@@ -13,12 +13,12 @@ import androidx.core.content.res.ResourcesCompat
 import android.graphics.Color
 import androidx.core.os.bundleOf
 import kz.nextstep.domain.utils.AppConstants
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.selectedDates
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.selectedFilterType
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.ui.SampleScreen
 import kz.nextstep.tazalykpartners.ui.addEditPin.AddEditPinActivity
 import kz.nextstep.tazalykpartners.ui.filterByDate.FilterByDateActivity
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedDates
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedFilterType
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsFragment
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator

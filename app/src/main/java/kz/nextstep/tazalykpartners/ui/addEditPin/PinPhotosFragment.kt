@@ -273,9 +273,6 @@ class PinPhotosFragment : Fragment() {
                 }
                 onCheckLogo()
                 onCheckPhotosListSize()
-                for (item in addedImageUriList) {
-                    Log.e("ImageUri", item.toString())
-                }
             }
         }
     }

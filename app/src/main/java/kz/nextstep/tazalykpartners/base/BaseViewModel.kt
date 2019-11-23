@@ -19,6 +19,7 @@ import kz.nextstep.tazalykpartners.ui.pinDetailedInfo.RequestViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinListViewModel
 import kz.nextstep.tazalykpartners.ui.pinlist.PinViewModel
 import kz.nextstep.tazalykpartners.ui.passedUserList.StatisticsPassedUserListViewModel
+import kz.nextstep.tazalykpartners.ui.pinAdmin.PinAdminViewModel
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsViewModel
 import kz.nextstep.tazalykpartners.ui.userInteractivity.UserInteractivityViewModel
 
@@ -35,7 +36,6 @@ open class BaseViewModel : ViewModel() {
 
     private fun inject() {
         when (this) {
-            //is AddPinViewModel -> injector.inject(this)
             is LoginViewModel -> injector.inject(this)
             is PinListViewModel -> injector.inject(this)
             is NavigationDrawerViewModel -> injector.inject(this)
@@ -51,6 +51,7 @@ open class BaseViewModel : ViewModel() {
             is ChangeEmailViewModel -> injector.inject(this)
             is UserInteractivityViewModel -> injector.inject(this)
             is AddEditPinViewModel -> injector.inject(this)
+            is PinAdminViewModel -> injector.inject(this)
         }
     }
 

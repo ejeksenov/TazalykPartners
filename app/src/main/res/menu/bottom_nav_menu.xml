@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/navigation_user_interactivity"
+            android:icon="@drawable/ic_inbox_gray"
+            android:title="@string/nav_user_interactivity"/>
+
+    <item
+            android:id="@+id/navigation_statistics"
+            android:icon="@drawable/ic_insert_chart_gray"
+            android:title="@string/nav_statistics"/>
+
+    <item
+            android:id="@+id/navigation_profile"
+            android:icon="@drawable/ic_person_gray"
+            android:title="@string/nav_profile"/>
+
+</menu>

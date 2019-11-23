@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,12 +19,12 @@ import kz.nextstep.domain.utils.AppConstants.waste_type_blago
 import kz.nextstep.domain.utils.AppConstants.waste_type_recycle
 import kz.nextstep.domain.utils.AppConstants.waste_type_utilization
 import kz.nextstep.domain.utils.ChangeDateFormat
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.filterDateDays
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.selectedDates
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.selectedFilterType
 
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.databinding.StatisticsFragmentBinding
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.filterDateDays
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedDates
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity.Companion.selectedFilterType
 import kz.nextstep.tazalykpartners.ui.passedUserList.StatisticsPassedUserListActivity
 import kz.nextstep.tazalykpartners.utils.CustomProgressBar
 

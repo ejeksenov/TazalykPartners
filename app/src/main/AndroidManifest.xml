@@ -15,6 +15,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity
+                android:name=".ui.pinAdmin.PinAdminActivity"
+                android:label="@string/title_activity_pin_admin">
+        </activity>
         <activity android:name=".ui.filterByDate.CalendarActivity">
         </activity>
         <activity android:name=".ui.passedUserList.StatisticsPassedUserListActivity">
@@ -32,15 +36,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.addEditPin.AddEditPinActivity"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+                android:name=".ui.addEditPin.AddEditPinActivity"
+                android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".ui.filterByDate.FilterByDateActivity">
         </activity>
         <activity android:name=".ui.filterByType.FilterByTypeActivity">
         </activity>
-        <activity android:name=".ui.editProfile.EditProfileActivity"
-                  android:windowSoftInputMode="stateHidden">
+        <activity
+                android:name=".ui.editProfile.EditProfileActivity"
+                android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".ui.login.LoginActivity"/>
         <activity

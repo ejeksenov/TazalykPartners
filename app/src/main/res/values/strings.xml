@@ -1,6 +1,8 @@
 <resources>
 
-    <string name="mapbox_access_token">pk.eyJ1IjoieWVsbnVyMDUiLCJhIjoiY2pvODlkcHZnMDN3NDNrcGdwbGQ4b2l2ZSJ9.Yz2I6Gw6ypt6YjCqV0VqDg</string>
+    <string name="mapbox_access_token">
+        pk.eyJ1IjoieWVsbnVyMDUiLCJhIjoiY2pvODlkcHZnMDN3NDNrcGdwbGQ4b2l2ZSJ9.Yz2I6Gw6ypt6YjCqV0VqDg
+    </string>
 
     <string name="app_name">Tazalyk Partners</string>
     <string name="signIn">Войти</string>
@@ -16,6 +18,7 @@
     <string name="nav_user_interactivity">Активность</string>
     <string name="nav_pin_list">Пункты приема</string>
     <string name="nav_statistics">Статистика</string>
+    <string name="nav_profile">Профиль</string>
     <string name="nav_edit_profile">Редактировать профиль</string>
     <string name="nav_sign_out">Выход</string>
 
@@ -297,7 +300,9 @@
     <string name="choose_waste_type">Выберите тип отходов</string>
     <string name="address">Адрес</string>
     <string name="permission_title">Требуются разрешения</string>
-    <string name="location_permission_message">Для полноценной работы необходимо дать Tazalyk Partners разрешение на определение местоположения</string>
+    <string name="location_permission_message">Для полноценной работы необходимо дать Tazalyk Partners разрешение на
+        определение местоположения
+    </string>
     <string name="show_settings">Показать настройки</string>
     <string name="enable_gps">Включите GPS чтобы определить ваше точное местоположение</string>
     <string name="enable">Включить</string>
@@ -310,5 +315,6 @@
     <string name="verification_qr_code">QR код верификации</string>
     <string name="logo">Лого</string>
     <string name="photo">Изображения</string>
+    <string name="title_activity_pin_admin">PinAdminActivity</string>
 
 </resources>

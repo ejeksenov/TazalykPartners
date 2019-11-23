@@ -26,6 +26,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.squareup.picasso.Picasso
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.domain.utils.AppConstants.REQUEST_CODE
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.selectedDates
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.selectedFilterType
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity.Companion.selectedWasteId
 import kz.nextstep.tazalykpartners.ui.SampleScreen
 import kz.nextstep.tazalykpartners.ui.editProfile.EditProfileActivity
 import kz.nextstep.tazalykpartners.ui.filterByDate.FilterByDateActivity
@@ -40,12 +43,12 @@ import kz.nextstep.tazalykpartners.utils.CircleTransform
 
 class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    companion object {
+    /*companion object {
         var selectedWasteId = ""
         var selectedDates = ""
         var selectedFilterType = "За месяц"
         var filterDateDays = 30
-    }
+    }*/
 
     lateinit var router: Router
     lateinit var toggle: ActionBarDrawerToggle
@@ -71,7 +74,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         layoutMainDrawer = findViewById(R.id.layout_main_drawer)
-        navView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nv_pin_admin_bottom)
         navHeader = navView.getHeaderView(0)
         ivMainNavProfile = navHeader.findViewById(R.id.iv_main_nav_profile)
         tvMainNavName = navHeader.findViewById(R.id.tv_main_nav_name)
@@ -256,7 +259,7 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
             }
             dialogInterface.dismiss()
         }
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getText(R.string.no)) { dialogInterface, i ->
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getText(R.string.no)) { dialogInterface, _ ->
             dialogInterface.dismiss()
         }
         alertDialog.show()

@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
+import kz.nextstep.tazalykpartners.ui.pinAdmin.PinAdminActivity
 import kz.nextstep.tazalykpartners.utils.CustomProgressBar
 import kz.nextstep.tazalykpartners.utils.SharedPrefManager
 import kz.nextstep.tazalykpartners.utils.TypefaceUtil
@@ -89,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
                     sendResetPasswordAlertDialog(emailStr)
             }
 
-            edtLoginPassword?.setOnEditorActionListener { p0, actionId, p2 ->
+            edtLoginPassword?.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     onStartSignIn()
                     return@setOnEditorActionListener true
@@ -173,7 +174,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun startPinAdminActivity() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (SharedPrefManager.readSharedSetting(this, SharedPrefManager.PREF_EMAIL_VERIFICATION, "") == SharedPrefManager.NOT_VERIFIED_VALUE) {
+            SharedPrefManager.saveSharedSetting(this, SharedPrefManager.PREF_EMAIL_VERIFICATION, "")
+            finish()
+        } else {
+            val intent = Intent(this, PinAdminActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
     }
 
 

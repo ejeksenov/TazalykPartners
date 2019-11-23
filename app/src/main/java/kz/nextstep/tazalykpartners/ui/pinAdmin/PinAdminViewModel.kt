@@ -1,19 +1,17 @@
-package kz.nextstep.tazalykpartners.ui.navigationDrawer
+package kz.nextstep.tazalykpartners.ui.pinAdmin
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.UserPartner
-import kz.nextstep.domain.usecase.partner.GetCurrentUserPartnerUseCase
 import kz.nextstep.domain.usecase.partner.GetUserPartnerByIdUseCase
 import kz.nextstep.domain.usecase.partner.GetUserPartnerIdUseCase
 import kz.nextstep.domain.usecase.partner.SignOutUseCase
 import kz.nextstep.domain.utils.AppConstants
-import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
 import rx.Subscriber
 import javax.inject.Inject
 
-class NavigationDrawerViewModel: BaseViewModel() {
+class PinAdminViewModel: BaseViewModel() {
+
     @Inject
     lateinit var getUserPartnerIdUseCase: GetUserPartnerIdUseCase
 
@@ -24,14 +22,12 @@ class NavigationDrawerViewModel: BaseViewModel() {
     lateinit var signOutUseCase: SignOutUseCase
 
     val userPartnerLiveData = MutableLiveData<UserPartner>()
-    val userPartnerPinIdsLiveData = MutableLiveData<String>()
 
     fun getCurrentUserPartner(){
         val mUserId = getUserPartnerIdUseCase.execute()
         getUserPartnerByIdUseCase.execute(object : Subscriber<UserPartner>() {
             override fun onNext(t: UserPartner?) {
                 userPartnerLiveData.value = t
-                userPartnerPinIdsLiveData.value = t?.pinIds!!
             }
 
             override fun onCompleted() {}
@@ -44,11 +40,4 @@ class NavigationDrawerViewModel: BaseViewModel() {
     }
 
     fun signOut() = signOutUseCase.execute()
-
-
-    override fun onCleared() {
-        super.onCleared()
-        getUserPartnerByIdUseCase.unsubscribe()
-    }
-
 }

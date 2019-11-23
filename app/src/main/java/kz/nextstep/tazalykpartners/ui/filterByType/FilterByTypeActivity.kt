@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,8 +14,8 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import kz.nextstep.domain.utils.AppConstants
+import kz.nextstep.tazalykpartners.base.BaseNavigationViewActivity
 import kz.nextstep.tazalykpartners.R
-import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerActivity
 
 class FilterByTypeActivity : AppCompatActivity() {
 
@@ -87,7 +86,7 @@ class FilterByTypeActivity : AppCompatActivity() {
             onSetAdapter()
         }
 
-        gvFilterByType.setOnItemClickListener { parent, view, position, id -> onItemClicked(view, position) }
+        gvFilterByType.setOnItemClickListener { _, view, position, _ -> onItemClicked(view, position) }
 
     }
 
@@ -158,7 +157,7 @@ class FilterByTypeActivity : AppCompatActivity() {
         for (item in selectedTypeItemList) {
             selectedWasteId += "$item;"
         }
-        NavigationDrawerActivity.selectedWasteId = selectedWasteId!!
+        BaseNavigationViewActivity.selectedWasteId = selectedWasteId!!
         val intent = Intent()
         intent.putExtra(AppConstants.SELECTED_WASTE_ID, selectedWasteId)
         setResult(Activity.RESULT_OK, intent)
