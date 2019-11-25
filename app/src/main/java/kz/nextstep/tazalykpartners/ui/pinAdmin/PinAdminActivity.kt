@@ -8,6 +8,7 @@ import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.core.view.get
@@ -23,6 +24,7 @@ import kz.nextstep.tazalykpartners.ui.adminProfile.AdminProfileFragment
 import kz.nextstep.tazalykpartners.ui.editProfile.EditProfileActivity
 import kz.nextstep.tazalykpartners.ui.filterByDate.FilterByDateActivity
 import kz.nextstep.tazalykpartners.ui.filterByType.FilterByTypeActivity
+import kz.nextstep.tazalykpartners.ui.login.LoginActivity
 import kz.nextstep.tazalykpartners.ui.navigationDrawer.NavigationDrawerViewModel
 import kz.nextstep.tazalykpartners.ui.statistics.StatisticsFragment
 import kz.nextstep.tazalykpartners.ui.userInteractivity.UserInteractivityFragment
@@ -86,7 +88,6 @@ class PinAdminActivity : BaseNavigationViewActivity() {
             }
             R.id.navigation_statistics -> {
                 if (navItemIndex != 1) {
-
                     if (!userPartner.pinIds.isNullOrBlank()) {
                         val pinIds = userPartner.pinIds!!
                         val arg = bundleOf(AppConstants.PIN_ID to pinIds)
@@ -133,7 +134,7 @@ class PinAdminActivity : BaseNavigationViewActivity() {
         when (navItemIndex) {
             0 -> menuInflater.inflate(R.menu.menu_user_interactivity, menu)
             1 -> menuInflater.inflate(R.menu.navigation_drawer, menu)
-            2 -> menuInflater.inflate(R.menu.menu_accept, menu) //TODO profile menu
+            2 -> menuInflater.inflate(R.menu.menu_sign_out, menu)
         }
         return true
     }
@@ -153,11 +154,32 @@ class PinAdminActivity : BaseNavigationViewActivity() {
                 startActivityForResult(intent, 2)
                 true
             }
+            R.id.action_sign_out -> {
+                onSignOutAlertDialog()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun goToEditProfileActivity() {
+    private fun onSignOutAlertDialog() {
+        val alertDialog = AlertDialog.Builder(this).create()
+        alertDialog.setMessage(resources.getText(R.string.ask_sign_out))
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getText(R.string.yes)) { dialogInterface, i ->
+            if (pinAdminViewModel.signOut()) {
+                val intent = Intent(this, LoginActivity::class.java)
+                router.newRootChain(SampleScreen(intent))
+            }
+            dialogInterface.dismiss()
+        }
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getText(R.string.no)) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    fun goToEditProfileActivity() {
         val intent = Intent(this, EditProfileActivity::class.java)
         router.navigateTo(SampleScreen(intent))
     }

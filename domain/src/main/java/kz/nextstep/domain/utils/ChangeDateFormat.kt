@@ -13,6 +13,12 @@ object ChangeDateFormat {
         return simpleDateFormat.format(date)
     }
 
+    fun getCurrentDate(): String {
+        val date = Date()
+        val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale("ru"))
+        return simpleDateFormat.format(date)
+    }
+
 
     fun onGetFilterDate(valueofDays: Int): String {
         val str: String

@@ -103,6 +103,14 @@ class DataModule(private val mainApplication: Application) {
             return UserRepositoryImpl(userMapper)
         else {
             return object : UserRepository {
+                override fun getUserByEmail(email: String): Observable<HashMap<String, User>> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
+                override fun getUserByPhone(phoneNumber: String): Observable<HashMap<String, User>> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
                 override fun getUserById(userId: String): Observable<HashMap<String,User>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
@@ -207,6 +215,9 @@ class DataModule(private val mainApplication: Application) {
             return HistoryPinImpl(historyPinMapper)
         else {
             return object : HistoryPinRepository {
+                override fun addHistoryPin(historyPin: HistoryPin): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
 
                 override fun getHistoryPinList(pinId: String): Observable<HashMap<String, HistoryPin>> {
                     return Observable.error(RuntimeException(errorFirebase))

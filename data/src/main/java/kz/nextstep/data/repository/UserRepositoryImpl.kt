@@ -73,4 +73,59 @@ class UserRepositoryImpl(val userMapper: UserMapper) : UserRepository {
         }
     }
 
+
+    override fun getUserByEmail(email: String): Observable<HashMap<String, User>> {
+        return Observable.create {
+            val valueEventListener = object : ValueEventListener {
+                override fun onCancelled(databaseError: DatabaseError) {
+                    it.onError(FirebaseException(databaseError.message))
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val userHashMap: HashMap<String,User> = HashMap()
+                    for (ds in dataSnapshot.children) {
+                        val userEntity = ds.getValue(UserEntity::class.java)
+                        userHashMap[ds.key!!] = userMapper.map(userEntity!!)
+                    }
+                    it.onNext(userHashMap)
+                    it.onCompleted()
+                }
+
+            }
+
+            databaseReference.orderByChild("email").equalTo(email).addValueEventListener(valueEventListener)
+
+            it.add(Subscriptions.create {
+                databaseReference.removeEventListener(valueEventListener)
+            })
+        }
+    }
+
+    override fun getUserByPhone(phoneNumber: String): Observable<HashMap<String, User>> {
+        return Observable.create {
+            val valueEventListener = object : ValueEventListener {
+                override fun onCancelled(databaseError: DatabaseError) {
+                    it.onError(FirebaseException(databaseError.message))
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val userHashMap: HashMap<String,User> = HashMap()
+                    for (ds in dataSnapshot.children) {
+                        val userEntity = ds.getValue(UserEntity::class.java)
+                        userHashMap[ds.key!!] = userMapper.map(userEntity!!)
+                    }
+                    it.onNext(userHashMap)
+                    it.onCompleted()
+                }
+
+            }
+
+            databaseReference.orderByChild("phoneNumber").equalTo(phoneNumber).addValueEventListener(valueEventListener)
+
+            it.add(Subscriptions.create {
+                databaseReference.removeEventListener(valueEventListener)
+            })
+        }
+    }
+
 }

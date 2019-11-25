@@ -316,5 +316,12 @@
     <string name="logo">Лого</string>
     <string name="photo">Изображения</string>
     <string name="title_activity_pin_admin">PinAdminActivity</string>
+    <string name="add_points_manually">Добавить баллы вручную</string>
+    <string name="enter_email_or_phone">Email или номер телефона</string>
+    <string name="quantity_of_kg">Количество кг</string>
+    <string name="enter_correct_email_or_phone">Напишите корректный Email или номер телефона</string>
+    <string name="select_type_write_total">Выберите тип вторсырья и напишите сколько кг сдано</string>
+    <string name="enter_total_amount_of_kg">Введите сколько кг сдано</string>
+    <string name="success_added_total">Баллы успешно добавлены пользователью</string>
 
 </resources>

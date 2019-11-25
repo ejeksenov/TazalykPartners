@@ -11,6 +11,7 @@ import rx.Observable
 import rx.subscriptions.Subscriptions
 
 class HistoryPinImpl(val historyPinMapper: HistoryPinMapper) : HistoryPinRepository {
+
     private var databaseReference: DatabaseReference =
         FirebaseDatabase.getInstance().reference.child(AppConstants.historyPinTree)
 
@@ -37,6 +38,39 @@ class HistoryPinImpl(val historyPinMapper: HistoryPinMapper) : HistoryPinReposit
 
             }
             databaseReference.addValueEventListener(valueEventListener)
+
+            it.add(Subscriptions.create {
+                databaseReference.removeEventListener(valueEventListener)
+            })
+        }
+    }
+
+    override fun addHistoryPin(historyPin: HistoryPin): Observable<Boolean> {
+        return Observable.create {
+            val valueEventListener = object : ValueEventListener {
+                override fun onCancelled(databaseError: DatabaseError) {
+                    it.onError(FirebaseException(databaseError.message))
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var historyPinId = 0
+                    for (ds in dataSnapshot.children) {
+                        historyPinId = ds.key!!.toInt()
+                    }
+                    historyPinId++
+                    databaseReference.child(historyPinId.toString()).setValue(historyPin)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                it.onNext(true)
+                                it.onCompleted()
+                            } else
+                                it.onError(task.exception)
+                        }
+                }
+
+            }
+
+            databaseReference.orderByKey().limitToLast(1).addListenerForSingleValueEvent(valueEventListener)
 
             it.add(Subscriptions.create {
                 databaseReference.removeEventListener(valueEventListener)

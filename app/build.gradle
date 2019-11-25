@@ -38,6 +38,7 @@ android {
 repositories {
     maven { url 'https://jitpack.io' }
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -95,4 +96,8 @@ dependencies {
 
     //seekbar for work schedule
     implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
+
+    //qr code generator
+    implementation 'com.google.zxing:core:3.3.0'
+    implementation('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
 }

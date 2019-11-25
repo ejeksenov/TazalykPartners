@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:id="@+id/layout_add_waste_item_dialog_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/mainBackgroundColor">
+
+        <ImageButton
+                android:id="@+id/any_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:padding="10dp"
+                android:src="@drawable/ic_remove_green" />
+
+        <ImageButton
+                android:id="@+id/btn_add_waste_item_dialog_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@color/transparent"
+                android:padding="10dp"
+                android:src="@drawable/ic_close_white_24dp" />
+
+        <TextView
+                android:id="@+id/tv_add_waste_item_dialog_title"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toStartOf="@+id/btn_add_waste_item_dialog_close"
+                android:layout_toEndOf="@+id/any_btn"
+                android:gravity="center"
+                android:paddingTop="@dimen/standard_16"
+                android:paddingBottom="@dimen/standard_16"
+                android:text="@string/select_type_write_total"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+    </RelativeLayout>
+
+    <Spinner
+            android:id="@+id/sp_add_waste_item_dialog_passed_trash_id"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_add_waste_item_dialog_top"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/standard_16" />
+
+    <EditText
+            android:id="@+id/edt_add_waste_item_dialog_passed_trash_total"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sp_add_waste_item_dialog_passed_trash_id"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/standard_16"
+            android:gravity="center"
+            android:hint="0"
+            android:inputType="numberDecimal" />
+
+    <Button
+            android:id="@+id/btn_add_waste_item_dialog_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_add_waste_item_dialog_passed_trash_total"
+            android:layout_marginLeft="@dimen/standard_30"
+            android:layout_marginTop="@dimen/standard_16"
+            android:layout_marginRight="@dimen/standard_30"
+            android:layout_marginBottom="@dimen/standard_16"
+            android:background="@drawable/rounded_bordered_button"
+            android:text="@string/add"
+            android:textColor="@color/mainBackgroundColor"
+            android:textSize="14sp"
+            android:textStyle="bold|normal" />
+</RelativeLayout>

@@ -4,12 +4,15 @@ import dagger.Module
 import dagger.Provides
 import kz.nextstep.domain.repository.PinRepository
 import kz.nextstep.domain.repository.*
+import kz.nextstep.domain.usecase.historyPin.AddHistoryPinUseCase
 import kz.nextstep.domain.usecase.historyPin.GetHistoryPinListUseCase
 import kz.nextstep.domain.usecase.marking.GetMarkingListByTypeUseCase
 import kz.nextstep.domain.usecase.partner.*
 import kz.nextstep.domain.usecase.pin.*
 import kz.nextstep.domain.usecase.request.GetRequestsByPinIdUseCase
+import kz.nextstep.domain.usecase.user.GetUserByEmailUseCase
 import kz.nextstep.domain.usecase.user.GetUserByIdUseCase
+import kz.nextstep.domain.usecase.user.GetUserByPhoneUseCase
 import kz.nextstep.domain.usecase.user.GetUserListByIdsUseCase
 import rx.Scheduler
 import javax.inject.Named
@@ -87,6 +90,20 @@ class DomainModule {
         @Named(RxModule.MAIN) mainScheduler: Scheduler,
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = GetUserListByIdsUseCase(userRepository, mainScheduler, ioScheduler)
+
+    @Provides
+    fun provideGetUserByEmailUseCase(
+        userRepository: UserRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = GetUserByEmailUseCase(userRepository, mainScheduler, ioScheduler)
+
+    @Provides
+    fun provideGetUserByPhoneUseCase(
+        userRepository: UserRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = GetUserByPhoneUseCase(userRepository, mainScheduler, ioScheduler)
 
 
     //Providing User partner use cases
@@ -180,5 +197,12 @@ class DomainModule {
         @Named(RxModule.MAIN) mainScheduler: Scheduler,
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = GetHistoryPinListUseCase(historyPinRepository, mainScheduler, ioScheduler)
+
+    @Provides
+    fun provideAddHistoryPinUseCase(
+        historyPinRepository: HistoryPinRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = AddHistoryPinUseCase(historyPinRepository, mainScheduler, ioScheduler)
 
 }
