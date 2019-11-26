@@ -15,7 +15,7 @@ class CustomProgressBar(context: Context) : AlertDialog(context) {
 
     override fun show() {
         super.show()
-        setContentView(R.layout.custom_progress_bar)
+        setContentView(R.layout.custom_progressbar)
         window?.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 

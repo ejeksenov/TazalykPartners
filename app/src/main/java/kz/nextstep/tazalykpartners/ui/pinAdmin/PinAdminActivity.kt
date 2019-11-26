@@ -1,8 +1,12 @@
 package kz.nextstep.tazalykpartners.ui.pinAdmin
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,6 +18,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.firebase.iid.FirebaseInstanceId
 import kz.nextstep.domain.model.UserPartner
 import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.MainApplication

@@ -1,11 +1,13 @@
 package kz.nextstep.data.repository
 
 import android.net.Uri
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import kz.nextstep.data.entity.UserPartnerEntity
 import kz.nextstep.data.mapper.UserPartnerMapper
@@ -23,7 +25,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
         FirebaseDatabase.getInstance().reference.child(AppConstants.userPartnerTree)
 
     override fun changeUserPartnerPinId(pinId: String): Observable<Boolean> {
-        return Observable.create {subscription ->
+        return Observable.create { subscription ->
             val currentUser = FirebaseAuth.getInstance().currentUser
             if (currentUser != null) {
                 val userPartnerId = currentUser.uid
@@ -41,12 +43,13 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                                     pinIds += ",$pinId"
                                 } else pinIds = pinId
 
-                                databaseReference.child(userPartnerId).child("pinIds").setValue(pinIds).addOnCompleteListener {
-                                    subscription.onNext(it.isSuccessful)
-                                    subscription.onCompleted()
-                                }.addOnFailureListener {
-                                    subscription.onError(FirebaseException(it.message!!))
-                                }
+                                databaseReference.child(userPartnerId).child("pinIds").setValue(pinIds)
+                                    .addOnCompleteListener {
+                                        subscription.onNext(it.isSuccessful)
+                                        subscription.onCompleted()
+                                    }.addOnFailureListener {
+                                        subscription.onError(FirebaseException(it.message!!))
+                                    }
                                 break
                             }
                         }
@@ -143,14 +146,15 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                 if (it.isSuccessful) {
                     currentUser.updateEmail(newEmail).addOnCompleteListener { it1 ->
                         if (it1.isSuccessful) {
-                            databaseReference.child(currentUser.uid).child("email").setValue(newEmail).addOnCompleteListener {it2 ->
-                                if (it2.isSuccessful)
-                                    currentUser.sendEmailVerification()
-                                subscription.onNext(it2.isSuccessful)
-                                subscription.onCompleted()
-                            }.addOnFailureListener {it2 ->
-                                subscription.onError(FirebaseException(it2.message!!))
-                            }
+                            databaseReference.child(currentUser.uid).child("email").setValue(newEmail)
+                                .addOnCompleteListener { it2 ->
+                                    if (it2.isSuccessful)
+                                        currentUser.sendEmailVerification()
+                                    subscription.onNext(it2.isSuccessful)
+                                    subscription.onCompleted()
+                                }.addOnFailureListener { it2 ->
+                                    subscription.onError(FirebaseException(it2.message!!))
+                                }
                         }
 
                     }.addOnFailureListener { it1 ->
@@ -227,6 +231,7 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var responseString: String? = null
                     if (dataSnapshot.value != null) {
+                        var adminId = ""
                         for (ds in dataSnapshot.children) {
                             val userPartnerEntity = ds.getValue(UserPartnerEntity::class.java)
                             val pinIds = userPartnerEntity?.pinIds
@@ -235,9 +240,10 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                                 subscription.onError(FirebaseException(AppConstants.ERROR_USER_NOT_FOUND))
                             else if (pinIds?.contains(",")!!)
                                 responseString = AppConstants.SUCCESS_PIN_DIRECTOR
-                            else if (pinIds != "" && !pinIds.contains(","))
+                            else if (pinIds != "" && !pinIds.contains(",")) {
+                                adminId = pinIds
                                 responseString = AppConstants.SUCCESS_PIN_ADMIN
-                            else if (productIds != "")
+                            } else if (productIds != "")
                                 responseString = AppConstants.SUCCESS_PRODUCT_SPONSOR
                         }
                         val mAuth = FirebaseAuth.getInstance()
@@ -248,6 +254,8 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                                 subscription.onError(FirebaseException(it.message!!))
                         }.addOnCompleteListener {
                             if (mAuth.currentUser?.isEmailVerified!!) {
+                                if (responseString == AppConstants.SUCCESS_PIN_ADMIN)
+                                    onSaveNewToken(adminId)
                                 subscription.onNext(responseString)
                                 subscription.onCompleted()
                             } else {
@@ -271,5 +279,16 @@ class UserPartnerRepositoryImpl(val userPartnerMapper: UserPartnerMapper) : User
                 databaseReference.removeEventListener(valueEventListener)
             })
         }
+    }
+
+    private fun onSaveNewToken(adminId: String) {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val token = it.result?.token
+                    if (!token.isNullOrBlank())
+                    FirebaseDatabase.getInstance().reference.child(AppConstants.messagingTree).child(adminId).setValue(token)
+                }
+            }
     }
 }

@@ -100,4 +100,9 @@ dependencies {
     //qr code generator
     implementation 'com.google.zxing:core:3.3.0'
     implementation('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
+
+    //firebase messaging
+    implementation 'com.google.firebase:firebase-messaging:20.0.1'
 }
+
+apply plugin: 'com.google.gms.google-services'

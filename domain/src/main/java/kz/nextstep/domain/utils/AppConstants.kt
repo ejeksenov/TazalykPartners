@@ -8,6 +8,7 @@ object AppConstants {
     const val userPartnerTree = "UserPartner"
     const val markingsTree = "Markings"
     const val historyPinTree = "HistoryPin"
+    const val messagingTree = "Messaging"
     const val emptyParam = ""
 
     const val SUCCESS_PIN_DIRECTOR = "success_pin_director"
@@ -46,5 +47,5 @@ object AppConstants {
 
     const val PASSED_USER_LIST = "passed_user_list"
 
-    const val DATE_FORMAT = "MMM dd, yyyy"
+    const val DATE_FORMAT = "MMM dd, yyyy HH:mm"
 }

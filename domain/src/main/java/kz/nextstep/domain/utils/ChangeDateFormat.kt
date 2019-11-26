@@ -70,9 +70,9 @@ object ChangeDateFormat {
                 } else if (dates.size > 1) {
                     startDate = dates[0]
                     endDate = dates[dates.size - 1]
-                    endDate = onChangeDateFormat("$endDate 11:11:11")
+                    endDate = onChangeDateFormat("$endDate 23:59:59")
                 }
-                startDate = onChangeDateFormat("$startDate 11:11:11")
+                startDate = onChangeDateFormat("$startDate 23:59:59")
 
             }
             if (endDate == "" && passedDate == startDate)

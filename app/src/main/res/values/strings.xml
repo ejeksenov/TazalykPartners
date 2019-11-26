@@ -4,6 +4,8 @@
         pk.eyJ1IjoieWVsbnVyMDUiLCJhIjoiY2pvODlkcHZnMDN3NDNrcGdwbGQ4b2l2ZSJ9.Yz2I6Gw6ypt6YjCqV0VqDg
     </string>
 
+    <string name="default_notification_channel_id">tazalyk_partners_my_channel_id</string>
+
     <string name="app_name">Tazalyk Partners</string>
     <string name="signIn">Войти</string>
     <string name="password">Пароль</string>
