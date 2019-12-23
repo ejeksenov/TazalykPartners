@@ -16,6 +16,7 @@ class RequestsRepositoryImpl(val requestsMapper: RequestsMapper): RequestReposit
         FirebaseDatabase.getInstance().reference.child(AppConstants.requestsTree)
 
     override fun getRequestsByPinId(pinId: String): Observable<HashMap<String,Requests>> {
+        val requestType = "pin_comment"
         return Observable.create {
             val valueEventListener = object : ValueEventListener {
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -28,7 +29,9 @@ class RequestsRepositoryImpl(val requestsMapper: RequestsMapper): RequestReposit
                         if (ds != null) {
                             val requestsEntity = ds.getValue(RequestsEntity::class.java)
                             val requests = requestsMapper.map(requestsEntity!!)
-                            if (pinId.contains(requests.pin_id!!)) {
+                            val requestsPinId = requests.pin_id
+                            val requestTypeId = requests.request_type
+                            if (pinId.contains(requestsPinId!!) && requestType == requestTypeId) {
                                 requestHashMap[ds.key!!] = requests
                             }
                         }

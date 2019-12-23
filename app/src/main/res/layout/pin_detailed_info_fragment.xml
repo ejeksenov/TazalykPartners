@@ -288,6 +288,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     buttonText="@{viewModel.getCommentsHashMapSize()}"
+                    android:visibility="gone"
                     android:background="@color/white"
             />
         </LinearLayout>

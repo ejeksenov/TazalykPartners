@@ -74,6 +74,13 @@ class DomainModule {
         @Named(RxModule.IO) ioScheduler: Scheduler
     ) = UploadPinImagesUseCase(pinRepository, mainScheduler, ioScheduler)
 
+    @Provides
+    fun provideGeneratePinVerificationCodeUseCase(
+        pinRepository: PinRepository,
+        @Named(RxModule.MAIN) mainScheduler: Scheduler,
+        @Named(RxModule.IO) ioScheduler: Scheduler
+    ) = GeneratePinVerificationCodeUseCase(pinRepository, mainScheduler, ioScheduler)
+
 
     //Providing User use cases
     @Provides

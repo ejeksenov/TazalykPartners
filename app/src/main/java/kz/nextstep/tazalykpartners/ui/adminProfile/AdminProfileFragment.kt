@@ -3,6 +3,7 @@ package kz.nextstep.tazalykpartners.ui.adminProfile
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,15 +31,16 @@ class AdminProfileFragment : Fragment() {
     companion object {
         fun newInstance() = AdminProfileFragment()
         var wasteType = ""
+        var historyPinSize = 0
     }
 
-    private lateinit var iv_admin_profile_image: ImageView
-    private lateinit var tv_admin_profile_name: TextView
-    private lateinit var tv_admin_profile_email: TextView
-    private lateinit var btn_admin_profile_edit: Button
-    private lateinit var btn_admin_profile_add_points: Button
-    private lateinit var edt_admin_profile_email_or_phone: EditText
-    private lateinit var iv_admin_profile_verification_qr_code: ImageView
+    private lateinit var ivAdminProfileImage: ImageView
+    private lateinit var tvAdminProfileName: TextView
+    private lateinit var tvAdminProfileEmail: TextView
+    private lateinit var btnAdminProfileEdit: Button
+    private lateinit var btnAdminProfileAddPoints: Button
+    private lateinit var edtAdminProfileEmailOrPhone: EditText
+    private lateinit var ivAdminProfileVerificationQrCode: ImageView
 
     private lateinit var viewModel: AdminProfileViewModel
     private lateinit var customProgressBar: CustomProgressBar
@@ -54,22 +56,24 @@ class AdminProfileFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(AdminProfileViewModel::class.java)
         customProgressBar = CustomProgressBar(context!!)
 
-        iv_admin_profile_image = view.findViewById(R.id.iv_admin_profile_image)
-        tv_admin_profile_name = view.findViewById(R.id.tv_admin_profile_name)
-        tv_admin_profile_email = view.findViewById(R.id.tv_admin_profile_email)
-        btn_admin_profile_edit = view.findViewById(R.id.btn_admin_profile_edit)
-        iv_admin_profile_verification_qr_code = view.findViewById(R.id.iv_admin_profile_verification_qr_code)
-        btn_admin_profile_add_points = view.findViewById(R.id.btn_admin_profile_add_points)
-        edt_admin_profile_email_or_phone = view.findViewById(R.id.edt_admin_profile_email_or_phone)
+        ivAdminProfileImage = view.findViewById(R.id.iv_admin_profile_image)
+        tvAdminProfileName = view.findViewById(R.id.tv_admin_profile_name)
+        tvAdminProfileEmail = view.findViewById(R.id.tv_admin_profile_email)
+        btnAdminProfileEdit = view.findViewById(R.id.btn_admin_profile_edit)
+        ivAdminProfileVerificationQrCode =
+            view.findViewById(R.id.iv_admin_profile_verification_qr_code)
+        btnAdminProfileAddPoints = view.findViewById(R.id.btn_admin_profile_add_points)
+        edtAdminProfileEmailOrPhone = view.findViewById(R.id.edt_admin_profile_email_or_phone)
 
         onAssumeUserPartnerData()
 
-        btn_admin_profile_edit.setOnClickListener {
+
+        btnAdminProfileEdit.setOnClickListener {
             val activity = activity as PinAdminActivity
             activity.goToEditProfileActivity()
         }
 
-        btn_admin_profile_add_points.setOnClickListener {
+        btnAdminProfileAddPoints.setOnClickListener {
             onAddPointsToUser()
         }
 
@@ -77,16 +81,19 @@ class AdminProfileFragment : Fragment() {
     }
 
     private fun onAddPointsToUser() {
-        edt_admin_profile_email_or_phone.error = null
-        val emailOrPhone = edt_admin_profile_email_or_phone.text.toString()
+        edtAdminProfileEmailOrPhone.error = null
+        val emailOrPhone = edtAdminProfileEmailOrPhone.text.toString()
 
         if (emailOrPhone.isBlank()) {
-            edt_admin_profile_email_or_phone.error = context!!.resources.getString(R.string.enter_email_or_phone)
+            edtAdminProfileEmailOrPhone.error =
+                context!!.resources.getString(R.string.enter_email_or_phone)
             return
         }
         customProgressBar.show()
         when {
-            android.util.Patterns.EMAIL_ADDRESS.matcher(emailOrPhone).matches() -> viewModel.getUserByEmail(emailOrPhone)
+            android.util.Patterns.EMAIL_ADDRESS.matcher(emailOrPhone).matches() -> viewModel.getUserByEmail(
+                emailOrPhone
+            )
             android.util.Patterns.PHONE.matcher(emailOrPhone).matches() -> {
                 val phone = when (val firstChar = emailOrPhone[0]) {
                     '8' -> emailOrPhone.replaceFirst(firstChar.toString(), "+7")
@@ -97,7 +104,8 @@ class AdminProfileFragment : Fragment() {
             }
             else -> {
                 customProgressBar.dismiss()
-                edt_admin_profile_email_or_phone.error = context!!.resources.getString(R.string.enter_correct_email_or_phone)
+                edtAdminProfileEmailOrPhone.error =
+                    context!!.resources.getString(R.string.enter_correct_email_or_phone)
                 return
             }
         }
@@ -122,16 +130,20 @@ class AdminProfileFragment : Fragment() {
         val adminEmail = userPartner.email
         pinId = userPartner.pinIds
 
+        if (!pinId.isNullOrBlank())
+            viewModel.getHistoryPinSize(pinId!!)
+
         if (!imageUrl.isNullOrBlank())
             Picasso.get().load(imageUrl).transform(CircleTransform()).placeholder(R.drawable.user_placeholder_image).into(
-                iv_admin_profile_image
+                ivAdminProfileImage
             )
         if (!adminName.isNullOrBlank())
-            tv_admin_profile_name.text = adminName
+            tvAdminProfileName.text = adminName
         if (!adminEmail.isNullOrBlank())
-            tv_admin_profile_email.text = adminEmail
+            tvAdminProfileEmail.text = adminEmail
         if (!pinId.isNullOrBlank())
             viewModel.getPinById(pinId!!)
+
 
         viewModel.pinMutableLiveData.observe(this, Observer {
             val verificationQrCode = it.verificationCode
@@ -139,14 +151,22 @@ class AdminProfileFragment : Fragment() {
             if (!verificationQrCode.isNullOrBlank())
                 onViewQRCode(verificationQrCode)
         })
+
+        viewModel.historyPinSize.observe(this, Observer {
+            if (historyPinSize != it && !pinId.isNullOrBlank()) {
+                viewModel.generatePinVerificationCode(pinId!!)
+                historyPinSize = it
+            }
+        })
     }
 
 
     private fun onViewQRCode(verificationQrCode: String) {
         try {
             val barcodeEncoder = BarcodeEncoder()
-            val bitmap = barcodeEncoder.encodeBitmap(verificationQrCode, BarcodeFormat.QR_CODE, 800, 800)
-            iv_admin_profile_verification_qr_code.setImageBitmap(bitmap)
+            val bitmap =
+                barcodeEncoder.encodeBitmap(verificationQrCode, BarcodeFormat.QR_CODE, 800, 800)
+            ivAdminProfileVerificationQrCode.setImageBitmap(bitmap)
         } catch (e: Exception) {
             e.printStackTrace()
         }

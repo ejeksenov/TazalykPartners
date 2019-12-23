@@ -12,4 +12,5 @@ interface PinRepository {
     fun updatePinData(pinId: String, pin: Pin): Observable<Boolean>
     fun deletePinImages(imageUrl: String): Observable<Boolean>
     fun uploadPinImages(hashMap: HashMap<String, String>, pinId: String): Observable<String>
+    fun generatePinVerificationCode(pinId: String): Observable<Boolean>
 }

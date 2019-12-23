@@ -13,18 +13,20 @@ object AppConstants {
 
     const val SUCCESS_PIN_DIRECTOR = "success_pin_director"
     const val SUCCESS_PIN_ADMIN = "success_pin_admin"
-
     const val SUCCESS_PRODUCT_SPONSOR = "success_product_sponsor"
+
     const val ERROR_USER_NOT_FOUND = "Пользователь не зарегистрирован"
     const val ERROR_PIN_NOT_FOUND = "Пункт не найден"
     const val ERROR_INVALID_PASSWORD = "Неверный пароль. Попробуйте заново"
 
+    const val SUCCESS_OPERATION = "Операция успешно завершена"
     const val SUCCESS_MESSAGE_SENT = "Сообщение успешно отправлено. Пожалуйста, проверьте почту"
     const val ERROR_MESSAGE_NOT_SENT = "Не удалось отправить сообщение!"
     const val ERROR_VERIFY_EMAIL = "На вашу почту отправлено письмо с подтверждением, пожалуйста подтвердите почту"
     const val NO_DATA = "Нет данных"
 
     const val ERROR_SOMETHING_WENT_WRONG = "Что-то пошло не так"
+    const val ERROR_QR_CODE_NOT_GENERATED = "Ошибка! Подтверждающий QR код не изменен"
 
     const val PICTURE_TYPE_LOGO = "logo"
     const val PICTURE_TYPE_IMAGE = "image"

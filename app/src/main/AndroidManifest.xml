@@ -40,23 +40,26 @@
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
                 android:value="@string/default_notification_channel_id" />
 
-        <activity android:name=".ui.addPointsToUser.AddPointsToUserActivity">
-        </activity>
+        <activity android:name=".ui.addPointsToUser.AddPointsToUserActivity"
+                android:screenOrientation="portrait"/>
+
         <activity
                 android:name=".ui.pinAdmin.PinAdminActivity"
-                android:label="@string/title_activity_pin_admin">
-        </activity>
-        <activity android:name=".ui.filterByDate.CalendarActivity">
-        </activity>
-        <activity android:name=".ui.passedUserList.StatisticsPassedUserListActivity">
-        </activity>
-        <activity android:name=".ui.pinComments.PinCommentsActivity">
-        </activity>
-        <activity android:name=".ui.pinDetailedInfo.PinDetailedInfoActivity">
-        </activity>
+                android:label="@string/title_activity_pin_admin"
+                android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.filterByDate.CalendarActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.passedUserList.StatisticsPassedUserListActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.pinComments.PinCommentsActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.pinDetailedInfo.PinDetailedInfoActivity"
+                android:screenOrientation="portrait"/>
         <activity
                 android:name=".ui.SplashScreenActivity"
-                android:theme="@style/SplashScreenTheme">
+                android:theme="@style/SplashScreenTheme"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -65,21 +68,23 @@
         </activity>
         <activity
                 android:name=".ui.addEditPin.AddEditPinActivity"
-                android:windowSoftInputMode="stateHidden">
-        </activity>
-        <activity android:name=".ui.filterByDate.FilterByDateActivity">
-        </activity>
-        <activity android:name=".ui.filterByType.FilterByTypeActivity">
-        </activity>
+                android:windowSoftInputMode="stateHidden"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.filterByDate.FilterByDateActivity"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.filterByType.FilterByTypeActivity"
+                android:screenOrientation="portrait"/>
         <activity
                 android:name=".ui.editProfile.EditProfileActivity"
-                android:windowSoftInputMode="stateHidden">
-        </activity>
-        <activity android:name=".ui.login.LoginActivity"/>
+                android:windowSoftInputMode="stateHidden"
+                android:screenOrientation="portrait"/>
+        <activity android:name=".ui.login.LoginActivity"
+                android:screenOrientation="portrait"/>
         <activity
                 android:name=".ui.navigationDrawer.NavigationDrawerActivity"
                 android:label="@string/title_activity_navigation_drawer"
-                android:theme="@style/AppTheme.NoActionBar"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

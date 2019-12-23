@@ -7,7 +7,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 object FirebaseHelper {
 
-    fun setPersistanceEnabled() {
+    fun setPersistenceEnabled() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
     }
 

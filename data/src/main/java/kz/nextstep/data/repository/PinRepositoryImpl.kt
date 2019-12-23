@@ -175,7 +175,7 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
             }
             databaseReference.orderByKey().equalTo(pinId).addValueEventListener(valueEventListener)
 
-            it.add(Subscriptions.create {
+             it.add(Subscriptions.create {
                 databaseReference.removeEventListener(valueEventListener)
             })
         }
@@ -227,6 +227,26 @@ class PinRepositoryImpl(val pinMapper: PinMapper) : PinRepository {
 
             }
 
+        }
+    }
+
+    override fun generatePinVerificationCode(pinId: String): Observable<Boolean> {
+        return Observable.create { subscription ->
+            val key = databaseReference.push().key
+            if (!key.isNullOrBlank()) {
+                val qrCode = "tazalyk_pin,$pinId"
+                val randomString = generateRandomString(12)
+                val preVerCode = "${qrCode},$randomString"
+                val verificationCode = hashString("SHA-512", preVerCode)
+                databaseReference.child(pinId).child("verificationCode").setValue(verificationCode).addOnCompleteListener {
+                    when {
+                        it.isSuccessful -> subscription.onNext(true)
+                        it.exception != null -> subscription.onError(FirebaseException(it.exception?.message!!))
+                        else -> subscription.onNext(false)
+                    }
+                    subscription.onCompleted()
+                }
+            }
         }
     }
 

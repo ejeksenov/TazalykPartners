@@ -30,7 +30,7 @@ class MainApplication: Application() {
 
         TypefaceUtil.overrideFont(applicationContext, "SERIF", "fonts/Montserrat-Regular.ttf")
 
-        FirebaseHelper.setPersistanceEnabled()
+        FirebaseHelper.setPersistenceEnabled()
 
         INSTANCE = this
         cicerone = Cicerone.create()
@@ -50,7 +50,7 @@ class MainApplication: Application() {
         appComponent.inject(this)
     }
 
-    public fun getApplicationComponent(): AppComponent {
+    fun getApplicationComponent(): AppComponent {
         return appComponent
     }
 

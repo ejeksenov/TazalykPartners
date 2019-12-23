@@ -72,6 +72,10 @@ class DataModule(private val mainApplication: Application) {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
 
+                override fun generatePinVerificationCode(pinId: String): Observable<Boolean> {
+                    return Observable.error(RuntimeException(errorFirebase))
+                }
+
                 override fun getPinList(pinIds: String, filterTypes: String): Observable<HashMap<String, Pin>> {
                     return Observable.error(RuntimeException(errorFirebase))
                 }
