@@ -1,5 +1,6 @@
 package kz.nextstep.tazalykpartners.ui.userInteractivity
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import kz.nextstep.domain.model.HistoryPin
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class UserInteractivityViewModel : BaseViewModel() {
 
     val customProgressBarLiveData = MutableLiveData<Boolean>()
+    val passedPinUserListDatas = MutableLiveData<MutableList<PassedUserPinItem>>()
 
     @Inject
     lateinit var getHistoryPinListUseCase: GetHistoryPinListUseCase
@@ -87,6 +89,7 @@ class UserInteractivityViewModel : BaseViewModel() {
                                         ) {
                                             val itemPinId = historyPin.pinId
                                             val itemUserId = historyPin.userId
+                                            val totalStr = onGetTotalSum(historyPin.total!!)
 
                                             filteredPinIds += "$itemPinId,"
                                             filteredUserIds += "$itemUserId,"
@@ -97,9 +100,12 @@ class UserInteractivityViewModel : BaseViewModel() {
                                                     itemPinId,
                                                     "",
                                                     "",
+                                                    "",
+                                                    "",
                                                     historyPin.total,
                                                     "",
-                                                    historyPin.time
+                                                    historyPin.time,
+                                                    totalStr
                                                 )
                                             )
                                             break
@@ -127,6 +133,19 @@ class UserInteractivityViewModel : BaseViewModel() {
         }, pinIds, AppConstants.emptyParam)
     }
 
+    private fun onGetTotalSum(total: String): String {
+        var totalSum = 0.0
+        for (item in total.split(";")) {
+            if (item.contains(",")) {
+                val itemArr = item.split(",")
+                if (itemArr.size >= 3) {
+                    totalSum += itemArr[2].toDouble()
+                }
+            }
+        }
+        return totalSum.toString()
+    }
+
     private fun noData() {
         userInteractivityAdapter.clearAllList()
         customProgressBarLiveData.value = true
@@ -148,6 +167,8 @@ class UserInteractivityViewModel : BaseViewModel() {
                             if (user != null) {
                                 item.userName = user.userName
                                 item.userImageUrl = user.imageLink
+                                item.userPhone = user.phoneNumber
+                                item.userEmail = user.email
                             }
                         }
                     }
@@ -183,6 +204,7 @@ class UserInteractivityViewModel : BaseViewModel() {
                     }
                     customProgressBarLiveData.value = true
                     userInteractivityAdapter.updatePassedUserPinList(passedUserItemMutableList)
+                    passedPinUserListDatas.value = passedUserItemMutableList
                 }
             }
 

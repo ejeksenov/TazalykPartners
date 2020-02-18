@@ -5,7 +5,10 @@ data class PassedUserPinItem(
     var pinId: String? = "",
     var userName: String? = "",
     var userImageUrl: String? = "",
+    var userPhone: String? = "",
+    var userEmail: String? = "",
     var passedTotal: String? = "",
     var pinAddress: String? = "",
-    var passedDate: String? = ""
+    var passedDate: String? = "",
+    var total: String? = ""
 )
