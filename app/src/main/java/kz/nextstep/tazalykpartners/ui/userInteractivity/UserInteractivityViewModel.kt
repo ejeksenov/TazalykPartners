@@ -20,6 +20,7 @@ import kz.nextstep.domain.utils.ChangeDateFormat.isOnDate
 import kz.nextstep.tazalykpartners.MainApplication
 import kz.nextstep.tazalykpartners.base.BaseViewModel
 import rx.Subscriber
+import java.math.RoundingMode
 import javax.inject.Inject
 
 class UserInteractivityViewModel : BaseViewModel() {
@@ -143,6 +144,7 @@ class UserInteractivityViewModel : BaseViewModel() {
                 }
             }
         }
+        totalSum = totalSum.toBigDecimal().setScale(3, RoundingMode.UP).toDouble()
         return totalSum.toString()
     }
 

@@ -5,6 +5,7 @@
     </string>
 
     <string name="default_notification_channel_id">tazalyk_partners_my_channel_id</string>
+    <string name="fileprovider_authorities">kz.nextstep.app.fileprovider</string>
 
     <string name="app_name">Tazalyk Partners</string>
     <string name="signIn">Войти</string>
@@ -325,5 +326,6 @@
     <string name="select_type_write_total">Выберите тип вторсырья и напишите сколько кг сдано</string>
     <string name="enter_total_amount_of_kg">Введите сколько кг сдано</string>
     <string name="success_added_total">Баллы успешно добавлены пользователью</string>
+    <string name="file_not_saved">Файл не сохранен</string>
 
 </resources>

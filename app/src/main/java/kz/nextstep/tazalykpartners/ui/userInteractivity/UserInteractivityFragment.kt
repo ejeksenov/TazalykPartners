@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -53,6 +54,8 @@ class UserInteractivityFragment : Fragment() {
 
     private val statisticsFileName = "Statistics.json"
     private val gson = Gson()
+
+    var kwrFile: File? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -112,6 +115,20 @@ class UserInteractivityFragment : Fragment() {
                 )
         })
 
+        binding.fbUserInteractivityShare.setOnClickListener {
+            if (kwrFile != null) {
+                val path =
+                    FileProvider.getUriForFile(context!!, context?.resources?.getString(R.string.fileprovider_authorities)!!, kwrFile!!)
+                val i = Intent(Intent.ACTION_SEND)
+                i.putExtra(Intent.EXTRA_TEXT, "Statistics")
+                i.putExtra(Intent.EXTRA_STREAM, path)
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                i.type = "plain/*"
+                startActivity(i)
+            } else
+                viewModel.showToastMessage(context?.resources?.getString(R.string.file_not_saved))
+        }
+
         binding.viewModel = viewModel
 
         return binding.root
@@ -119,9 +136,9 @@ class UserInteractivityFragment : Fragment() {
 
     private fun onSaveJsonFile(it: MutableList<PassedUserPinItem>?) {
         try {
-            val kwrFile =
-                File(Environment.getExternalStorageDirectory().path, statisticsFileName)
-            val fileWriter = FileWriter(kwrFile)
+            kwrFile =
+                File(context?.filesDir, statisticsFileName)
+            val fileWriter = FileWriter(kwrFile!!)
             val bufferedWriter = BufferedWriter(fileWriter)
             val list = gson.toJson(it)
             bufferedWriter.write(list)

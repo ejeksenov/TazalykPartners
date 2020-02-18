@@ -11,6 +11,7 @@ import kz.nextstep.domain.utils.AppConstants
 import kz.nextstep.tazalykpartners.R
 import kz.nextstep.tazalykpartners.utils.CircleTransform
 import kz.nextstep.tazalykpartners.utils.data.PassedUserPinItem
+import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -71,6 +72,7 @@ class UserInteractivityAdapter : RecyclerView.Adapter<UserInteractivityAdapter.U
                 total += itemArr[2].toDouble()
             }
         }
+        total = total.toBigDecimal().setScale(3, RoundingMode.UP).toDouble()
         holder.tvRowUserInteractivityTotal.text = totalStr
         holder.tvRowUserInteractivityTotalSum.text = "Итого: $total кг"
     }
